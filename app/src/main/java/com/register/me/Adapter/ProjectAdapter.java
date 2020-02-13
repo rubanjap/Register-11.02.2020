@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.register.me.R;
+import com.register.me.view.fragments.dashboardClient.activeProjects.CompletedProjectFragment;
 
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
 
@@ -30,7 +32,11 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        if (from == 0) {
+        holder.bid_country.setText("$ 1000.0");
+        } else {
+            holder.bid_country.setText("India");
+        }
     }
 
     @Override
@@ -41,11 +47,13 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView pay;
+        TextView bid_country;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             pay = itemView.findViewById(R.id.payIcon);
+            bid_country = itemView.findViewById(R.id.txtBid_country);
             if (from == 0) {
                 pay.setVisibility(View.VISIBLE);
             } else {

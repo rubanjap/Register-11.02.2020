@@ -28,4 +28,8 @@ public interface FragmentChannel {
     void showActiveProjectsSub();
 
     void showCompleteProject();
+
+    void showCountryScreen();
+
+    void showRREDashboard();
 }

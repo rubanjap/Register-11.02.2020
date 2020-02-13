@@ -1,5 +1,7 @@
 package com.register.me.Adapter;
 
+import com.register.me.view.BaseFragment;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -19,6 +21,5 @@ public class AdapterModule {
     ProjectAdapter provideProjectAdapter() {
         return new ProjectAdapter();
     }
-
 
 }

@@ -5,6 +5,7 @@
     <color name="colorAccent">#f48024</color>
     <color name="appBackground">#fafafa</color>
     <color name="dark_gray_color">#cccccc</color>
+    <color name="darker_gray_color">#A7A5A5</color>
     <color name="defaultTextColor">#212121</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>

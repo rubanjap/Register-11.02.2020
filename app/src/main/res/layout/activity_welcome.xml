@@ -75,7 +75,7 @@
             android:weightSum="2">
 
             <ImageView
-                android:id="@+id/img_new_proj"
+                android:id="@+id/img_tab_one"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="5dp"
@@ -83,7 +83,7 @@
                 android:src="@drawable/new_proj"/>
 
             <ImageView
-                android:id="@+id/img_new_geo"
+                android:id="@+id/img_tab_two"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="5dp"
@@ -99,7 +99,7 @@
             android:layout_weight="1"
             android:weightSum="2">
             <ImageView
-                android:id="@+id/img_renewal"
+                android:id="@+id/img_tab_three"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -107,7 +107,7 @@
                 android:src="@drawable/my_renewal"/>
 
             <ImageView
-                android:id="@+id/img_my_board"
+                android:id="@+id/img_tab_four"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

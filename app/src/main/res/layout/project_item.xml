@@ -32,10 +32,11 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/txtBid_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="YES"
+            android:text="$100.00"
             android:paddingEnd="5dp"
             android:layout_weight="1"/>
     </LinearLayout>

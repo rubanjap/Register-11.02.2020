@@ -33,19 +33,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.productNumber.setText(String.valueOf(position + 1));
-       /* if (clickedPosition == position) {
-            if (holder.countrylist.getVisibility() != View.VISIBLE) {
-                holder.countrylist.setVisibility(View.VISIBLE);
-                holder.add_minus_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_minus_24));
-            } else {
-                holder.countrylist.setVisibility(View.GONE);
-                holder.add_minus_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_add24dp));
-            }
-        } else {
-            holder.countrylist.setVisibility(View.GONE);
-            holder.add_minus_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_add24dp));
-        }*/
     }
 
     @Override
@@ -121,7 +108,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     Toast.makeText(context, "Error Clicked", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.country_icon:
-                    Toast.makeText(context, "Country Clicked", Toast.LENGTH_SHORT).show();
+                    listener.onCountryIconClick(getAdapterPosition());
                     break;
             }
         }
@@ -134,5 +121,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         void onAuctionIconClick(int position);
 
         void onSendIconClick(int adapterPosition);
+
+        void onCountryIconClick(int adapterPosition);
     }
 }

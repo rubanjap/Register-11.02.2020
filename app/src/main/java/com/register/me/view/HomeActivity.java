@@ -14,16 +14,18 @@ import com.register.me.R;
 import com.register.me.presenter.HomePresenter;
 import com.register.me.view.fragmentmanager.FragmentChannel;
 import com.register.me.view.fragmentmanager.manager.FragmentManagerHandler;
-import com.register.me.view.fragments.dashboard.activeProjects.ActiveProjectSubFragment;
-import com.register.me.view.fragments.dashboard.activeProjects.ActiveProjectsFragment;
-import com.register.me.view.fragments.dashboard.activeProjects.CompletedProjectFragment;
-import com.register.me.view.fragments.addProducts.AddProductFragment;
-import com.register.me.view.fragments.addProducts.directAssignment.CRREDirectFragment;
-import com.register.me.view.fragments.addProducts.initiateProductRegistration.InitiateRegistrationFragment;
-import com.register.me.view.fragments.addProducts.viewProductDetails.ViewProductDetailsFragment;
-import com.register.me.view.fragments.dashboard.auctions.AuctionFragment;
-import com.register.me.view.fragments.dashboard.DashBoardFragment;
-import com.register.me.view.fragments.dashboard.portfolio.PortFolioFragment;
+import com.register.me.view.fragments.dashboardClient.activeProjects.ActiveProjectSubFragment;
+import com.register.me.view.fragments.dashboardClient.activeProjects.ActiveProjectsFragment;
+import com.register.me.view.fragments.dashboardClient.activeProjects.CompletedProjectFragment;
+import com.register.me.view.fragments.dashboardClient.portfolio.addProducts.AddProductFragment;
+import com.register.me.view.fragments.dashboardClient.portfolio.country.CountryFragment;
+import com.register.me.view.fragments.dashboardClient.portfolio.directAssignment.CRREDirectFragment;
+import com.register.me.view.fragments.dashboardClient.portfolio.initiateProductRegistration.InitiateRegistrationFragment;
+import com.register.me.view.fragments.dashboardClient.portfolio.viewProductDetails.ViewProductDetailsFragment;
+import com.register.me.view.fragments.dashboardClient.auctions.AuctionFragment;
+import com.register.me.view.fragments.dashboardClient.DashBoardFragment;
+import com.register.me.view.fragments.dashboardClient.portfolio.PortFolioFragment;
+import com.register.me.view.fragments.REA.applicationSubmission.ApplicationSubmissionFragment;
 
 import javax.inject.Inject;
 
@@ -45,6 +47,7 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
     TextView mHeaderText;
     @BindView(R.id.img_back_pressed)
     ImageView mBackPressed;
+    private String from;
 
     @Override
     protected int getLayoutId() {
@@ -57,11 +60,14 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
         super.onCreate(savedInstanceState);
         injector().inject(this);
         fragmentManagerHandler.setFragmentContainerId(flContainer);
-
+        if(getIntent()!=null){
+            from = getIntent().getStringExtra("from");
+        }
         homePresenter.setView(this);
         if (savedInstanceState == null) {
-            homePresenter.init();
+            homePresenter.init(this,from);
         }
+
     }
 
     @Override
@@ -136,8 +142,18 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
     }
 
     @Override
-    public void showDashBoard() {
+    public void showClientDashBoard() {
         fragmentManagerHandler.replaceFragment(DashBoardFragment.newInstance(), this);
+    }
+
+    @Override
+    public void showNewProject() {
+        showAddProduct();
+    }
+
+    @Override
+    public void showRRE_DashBoard() {
+        showRREDashboard();
     }
 
     @Override
@@ -171,6 +187,16 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
     }
 
     @Override
+    public void showCountryScreen() {
+        fragmentManagerHandler.replaceFragment(CountryFragment.newInstance(),this);
+    }
+
+    @Override
+    public void showRREDashboard() {
+        fragmentManagerHandler.replaceFragment(ApplicationSubmissionFragment.newInstance(), this);
+    }
+
+    @Override
     public void setTitle() {
 
     }
@@ -188,5 +214,6 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
     @Override
     public void onBackPressed() {
         fragmentManagerHandler.onBackPressed();
+
     }
 }

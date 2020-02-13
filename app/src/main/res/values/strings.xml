@@ -9,13 +9,15 @@
     <string name="profile">Profile</string>
     <string name="notification">Notification</string>
     <string name="client_dashboard">CLIENT DASHBOARD</string>
-    <string name="awarded_prod_dash">AWARDED PRODUCT DASHBOARD</string>
-    <string name="project_details">PROJECT DETAILS</string>
+    <string name="awarded_prod_dash">PRODUCT DASHBOARD</string>
+    <string name="add_product">ADD NEW PRODUCT</string>
+    <string name="product_registration">PRODUCT REGISTRATION</string>
     <string name="product_number">Product Number</string>
     <string name="product_name">Product Name</string>
-    <string name="view_product_detail">View product detail</string>
+    <string name="view_product">VIEW PRODUCT</string>
+    <string name="crre_direct">CRRE Direct Assignment</string>
+    <string name="country">COUNTRY DASHBOARD</string>
     <string name="product_details">PRODUCT DETAILS</string>
-    <string name="products_awarded">PRODUCTS AWARDED</string>
     <string name="add_new_product">Add New Product</string>
     <string name="product_classification">Product Classification</string>
     <string name="is_it_idv">Is it IDV?</string>
@@ -41,10 +43,16 @@
     <string name="do_you_have_substance_of_biological_origin_in_your_device">Do you have substance of biological origin in your device?</string>
     <string name="products_details">Product Details</string>
     <string name="initiate_product_registration">Initiate Product Registration</string>
+
     <string-array name="country_name">
         <item>Select</item>
         <item>US</item>
         <item>India</item>
         <item>Australia</item>
     </string-array>
+
+
+    <!--RRE PROJECT-->
+    <string name="rre_dashboard">REGULATORY EXPERT APPLICATION</string>
+
 </resources>
