@@ -1,0 +1,6 @@
+
+csquid:UselessImportCheck"8Remove this unused import 'android.widget.CalendarView'.(úŞÒ¨8ÊŒÍËƒ.
+]squid:UselessImportCheck"-Remove this unused import 'org.w3c.dom.Text'.(¶Äè‹şÿÿÿÿ8±í¸Ëƒ.
+nsquid:UselessImportCheck">Remove this unused import 'com.register.me.view.extras.Utils'.(”ÉÕ ûÿÿÿÿ8œÒ×Ìƒ.
+wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ÿ¶ûôùÿÿÿÿ
+Dsquid:S11855"(Remove this method to simply inherit it.(ÿÄ¥Áøÿÿÿÿ

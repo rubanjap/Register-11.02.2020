@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Register Me</string>
+    <string name="any_username">Any username</string>
+    <string name="any_password">Any password</string>
+    <string name="login">Login</string>
+    <string name="field_cannot_be_empty">Field cannot be empty</string>
+    <string name="welcome">WELCOME</string>
+    <string name="lets_get_started">Let\'s get started!</string>
+    <string name="profile">Profile</string>
+    <string name="notification">Notification</string>
+    <string name="client_dashboard">CLIENT DASHBOARD</string>
+    <string name="awarded_prod_dash">AWARDED PRODUCT DASHBOARD</string>
+    <string name="project_details">PROJECT DETAILS</string>
+    <string name="product_number">Product Number</string>
+    <string name="product_name">Product Name</string>
+    <string name="view_product_detail">View product detail</string>
+    <string name="product_details">PRODUCT DETAILS</string>
+    <string name="products_awarded">PRODUCTS AWARDED</string>
+    <string name="add_new_product">Add New Product</string>
+    <string name="product_classification">Product Classification</string>
+    <string name="is_it_idv">Is it IDV?</string>
+    <string name="is_it_life_supporting_life_sustaining">Is it life supporting / life sustaining?</string>
+    <string name="any_direct_or_indirect_patients_contacting_components">Any direct or indirect patients contacting components?</string>
+    <string name="if_yes_is_it_implant">If yes, is it implant?</string>
+    <string name="does_the_product_use_software_firmware">Does the product use software and / or firmware?</string>
+    <string name="if_yes_does_it_contains_digital_health_technology">If yes, does it contains digital health technology?</string>
+    <string name="connection_type">Connection Type</string>
+    <string name="wireless_communication_in_any_form">Wireless communication in any form</string>
+    <string name="does_the_product_need_sterlization">Does the product need sterilization?</string>
+    <string name="sterilization_type">Sterilization Type</string>
+    <string name="intended_population">Intended Population</string>
+    <string name="is_this_a_combination_product">Is this a combination product?</string>
+    <string name="indications_for_use">Indications for Use</string>
+    <string name="device_type">Device Type</string>
+    <string name="electrical_product_type">Electrical Product Type</string>
+    <string name="usage_environment">Usage Environment</string>
+    <string name="does_the_device_emit_radiation">Does the device emit radiation?</string>
+    <string name="is_the_product_electrical">Is the product electrical?</string>
+    <string name="will_the_device_be_reprocessed_for_resale">Will the device be reprocessed for resale?</string>
+    <string name="is_the_device_for_pediatric_use">Is the device for pediatric use?</string>
+    <string name="do_you_have_substance_of_biological_origin_in_your_device">Do you have substance of biological origin in your device?</string>
+    <string name="products_details">Product Details</string>
+    <string name="initiate_product_registration">Initiate Product Registration</string>
+    <string-array name="country_name">
+        <item>Select</item>
+        <item>US</item>
+        <item>India</item>
+        <item>Australia</item>
+    </string-array>
+</resources>

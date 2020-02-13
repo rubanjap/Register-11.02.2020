@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:paddingBottom="15dp"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_PDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/sub_header"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/black"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="PRODUCT DETAILS"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="parent" />
+
+         <!--   <TextView
+                android:id="@+id/pn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Product Number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sub_header" />
+
+            <TextView
+                android:id="@+id/txtProductNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textColor="@color/text_orange"
+                app:layout_constraintBottom_toBottomOf="@+id/pn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/pn"
+                app:layout_constraintTop_toBottomOf="@+id/sub_header" />
+
+            <TextView
+                android:id="@+id/pName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Product Name"
+                app:layout_constraintStart_toStartOf="@+id/pn"
+                app:layout_constraintTop_toBottomOf="@+id/pn" />
+
+            <TextView
+                android:id="@+id/txtProductName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtProductNumber"
+                app:layout_constraintTop_toBottomOf="@+id/txtProductNumber" />-->
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                app:layout_constraintTop_toBottomOf="@id/sub_header"/>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shape_blue_bg"
+                app:layout_constraintTop_toBottomOf="@id/container">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="View product detail"
+                    android:textColor="#00acd3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/scroll" />
+
+                <View
+                    android:id="@+id/viewProduct"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView4"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/content_bg"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/layout_PDetails">
+
+           <TextView
+                android:id="@+id/PNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins"
+                android:text="Product Number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textPNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="HHS412SN"
+                app:layout_constraintStart_toStartOf="@id/PNumber"
+                app:layout_constraintTop_toBottomOf="@id/PNumber" />
+
+            <View
+                android:id="@+id/numberView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPNumber"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Product Name"
+                app:layout_constraintStart_toStartOf="@+id/textPNumber"
+                app:layout_constraintTop_toTopOf="@id/numberView" />
+
+            <TextView
+                android:id="@+id/textPName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="HHS412SN"
+                android:textColor="@color/text_orange"
+                android:layout_marginRight="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/PName"
+                app:layout_constraintTop_toBottomOf="@id/PName" />
+
+            <View
+                android:id="@+id/nameView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPName"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PClassification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Product Classification"
+                app:layout_constraintStart_toStartOf="@+id/textPName"
+                app:layout_constraintTop_toTopOf="@id/nameView" />
+
+            <TextView
+                android:id="@+id/textPClassification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Class I"
+                app:layout_constraintStart_toStartOf="@id/PClassification"
+                app:layout_constraintTop_toBottomOf="@id/PClassification" />
+
+            <View
+                android:id="@+id/classifyView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPClassification"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PIDV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Is it IDV?"
+                app:layout_constraintStart_toStartOf="@+id/textPClassification"
+                app:layout_constraintTop_toTopOf="@id/classifyView" />
+
+            <TextView
+                android:id="@+id/textPIDV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PIDV"
+                app:layout_constraintTop_toBottomOf="@id/PIDV" />
+
+            <View
+                android:id="@+id/IDV_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPIDV"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PLS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/is_it_life_supporting_life_sustaining"
+                app:layout_constraintStart_toStartOf="@+id/textPClassification"
+                app:layout_constraintTop_toTopOf="@id/IDV_View" />
+
+            <TextView
+                android:id="@+id/textPLS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PLS"
+                app:layout_constraintTop_toBottomOf="@id/PLS" />
+
+            <View
+                android:id="@+id/PLS_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPLS"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PPCC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/any_direct_or_indirect_patients_contacting_components"
+                app:layout_constraintStart_toStartOf="@+id/textPLS"
+                app:layout_constraintTop_toTopOf="@id/PLS_View" />
+
+            <TextView
+                android:id="@+id/textPCC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PPCC"
+                app:layout_constraintTop_toBottomOf="@id/PPCC" />
+
+            <View
+                android:id="@+id/PCC_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPCC"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PImplant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/if_yes_is_it_implant"
+                app:layout_constraintStart_toStartOf="@+id/textPCC"
+                app:layout_constraintTop_toTopOf="@id/PCC_View" />
+
+            <TextView
+                android:id="@+id/textPImplant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PImplant"
+                app:layout_constraintTop_toBottomOf="@id/PImplant" />
+
+            <View
+                android:id="@+id/Implant_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPImplant"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/Psoft_firm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/does_the_product_use_software_firmware"
+                app:layout_constraintStart_toStartOf="@+id/textPImplant"
+                app:layout_constraintTop_toTopOf="@id/Implant_View" />
+
+            <TextView
+                android:id="@+id/textPSoft_Firm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/Psoft_firm"
+                app:layout_constraintTop_toBottomOf="@id/Psoft_firm" />
+
+            <View
+                android:id="@+id/Soft_Firm_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPSoft_Firm"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+            android:id="@+id/PDHT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/if_yes_does_it_contains_digital_health_technology"
+            app:layout_constraintStart_toStartOf="@+id/textPSoft_Firm"
+            app:layout_constraintTop_toTopOf="@id/Soft_Firm_View" />
+
+            <TextView
+                android:id="@+id/textPDHT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PDHT"
+                app:layout_constraintTop_toBottomOf="@id/PDHT" />
+
+            <View
+                android:id="@+id/DHT_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPDHT"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PConnection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/connection_type"
+                app:layout_constraintStart_toStartOf="@+id/textPDHT"
+                app:layout_constraintTop_toTopOf="@id/DHT_View" />
+
+            <TextView
+                android:id="@+id/textConnection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Wireless Communication in any form"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/text_orange"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/PConnection"
+                app:layout_constraintTop_toBottomOf="@id/PConnection" />
+
+            <View
+                android:id="@+id/Connection_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textConnection"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+<!--888888888888888888888888888888888888888-->
+
+         <TextView
+             android:id="@+id/PNeedSterilize"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="10dp"
+             android:text="@string/does_the_product_need_sterlization"
+             app:layout_constraintStart_toStartOf="@+id/textConnection"
+             app:layout_constraintTop_toTopOf="@id/Connection_View" />
+
+         <TextView
+             android:id="@+id/textNeedSterilize"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@color/text_orange"
+             android:text="Yes"
+             app:layout_constraintStart_toStartOf="@id/PNeedSterilize"
+             app:layout_constraintTop_toBottomOf="@id/PNeedSterilize" />
+
+         <View
+             android:id="@+id/NeedSterilize_View"
+             android:layout_width="match_parent"
+             android:layout_height="1dp"
+             app:layout_constraintTop_toBottomOf="@id/textNeedSterilize"
+             android:background="@color/dark_gray_color"
+             android:layout_marginTop="5dp"
+             android:layout_marginBottom="10dp"
+             />
+<!--888888888888888888888888888888888888888-->
+
+            <TextView
+                android:id="@+id/PSterilize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/sterilization_type"
+                app:layout_constraintStart_toStartOf="@+id/textNeedSterilize"
+                app:layout_constraintTop_toTopOf="@id/NeedSterilize_View" />
+
+            <TextView
+                android:id="@+id/textSterilize"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="E-Beam, Heat - moist"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/PSterilize"
+                app:layout_constraintTop_toBottomOf="@id/PSterilize" />
+
+            <View
+                android:id="@+id/Sterilize_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textSterilize"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+
+            <TextView
+                android:id="@+id/PPopulation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/intended_population"
+                app:layout_constraintStart_toStartOf="@+id/textSterilize"
+                app:layout_constraintTop_toTopOf="@id/Sterilize_View" />
+
+            <TextView
+                android:id="@+id/textPopulation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Neonate/Newborn (Birth through 28 days), Child
+                (from 2 years to 12 years of age)"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/PPopulation"
+                app:layout_constraintTop_toBottomOf="@id/PPopulation" />
+
+            <View
+                android:id="@+id/Population_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPopulation"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PCombination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/is_this_a_combination_product"
+                app:layout_constraintStart_toStartOf="@+id/textPopulation"
+                app:layout_constraintTop_toTopOf="@id/Population_View" />
+
+            <TextView
+                android:id="@+id/textCombination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PCombination"
+                app:layout_constraintTop_toBottomOf="@id/PCombination" />
+
+            <View
+                android:id="@+id/Combination_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textCombination"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PIndication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/indications_for_use"
+                app:layout_constraintStart_toStartOf="@+id/textCombination"
+                app:layout_constraintTop_toTopOf="@id/Combination_View" />
+
+            <TextView
+                android:id="@+id/textIndication"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Over-the-Counter(OTC)"
+                android:textColor="@color/text_orange"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/PIndication"
+                app:layout_constraintTop_toBottomOf="@id/PIndication" />
+
+            <View
+                android:id="@+id/Indication_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textIndication"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PDeviceType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/device_type"
+                app:layout_constraintStart_toStartOf="@+id/textIndication"
+                app:layout_constraintTop_toTopOf="@id/Indication_View" />
+
+            <TextView
+                android:id="@+id/textDeviceType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="A reusable single patient use device(s)"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/PDeviceType"
+                app:layout_constraintTop_toBottomOf="@id/PDeviceType" />
+
+            <View
+                android:id="@+id/DeviceType_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textDeviceType"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PProductType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/electrical_product_type"
+                app:layout_constraintStart_toStartOf="@id/textDeviceType"
+                app:layout_constraintTop_toTopOf="@id/DeviceType_View" />
+
+            <TextView
+                android:id="@+id/textProductType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"
+                android:text="Battery, Wall Powered"
+                app:layout_constraintStart_toStartOf="@id/PProductType"
+                app:layout_constraintTop_toBottomOf="@id/PProductType" />
+
+            <View
+                android:id="@+id/ProductType_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textProductType"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PUsage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/usage_environment"
+                app:layout_constraintStart_toStartOf="@id/textProductType"
+                app:layout_constraintTop_toTopOf="@id/ProductType_View" />
+
+            <TextView
+                android:id="@+id/textUsage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PUsage"
+                app:layout_constraintTop_toBottomOf="@id/PUsage" />
+
+            <View
+                android:id="@+id/Usage_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textUsage"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PRadiation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/does_the_device_emit_radiation"
+                app:layout_constraintStart_toStartOf="@id/textUsage"
+                app:layout_constraintTop_toTopOf="@id/Usage_View" />
+
+            <TextView
+                android:id="@+id/textRadiation"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/text_orange"
+                android:text="Magnetic Resonance Environment, Other"
+                app:layout_constraintStart_toStartOf="@id/PRadiation"
+                app:layout_constraintTop_toBottomOf="@id/PRadiation" />
+
+            <View
+                android:id="@+id/Radiation_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textRadiation"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PElectrical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/is_the_product_electrical"
+                app:layout_constraintStart_toStartOf="@id/textRadiation"
+                app:layout_constraintTop_toTopOf="@id/Radiation_View" />
+
+            <TextView
+                android:id="@+id/textElectrical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PElectrical"
+                app:layout_constraintTop_toBottomOf="@id/PElectrical" />
+
+            <View
+                android:id="@+id/Electrical_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textElectrical"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PResale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/will_the_device_be_reprocessed_for_resale"
+                app:layout_constraintStart_toStartOf="@id/textElectrical"
+                app:layout_constraintTop_toTopOf="@id/Electrical_View" />
+
+            <TextView
+                android:id="@+id/textResale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PResale"
+                app:layout_constraintTop_toBottomOf="@id/PResale" />
+
+            <View
+                android:id="@+id/Resale_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textResale"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PPediatric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/is_the_device_for_pediatric_use"
+                app:layout_constraintStart_toStartOf="@id/textResale"
+                app:layout_constraintTop_toTopOf="@id/Resale_View" />
+
+            <TextView
+                android:id="@+id/textPediatric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PPediatric"
+                app:layout_constraintTop_toBottomOf="@id/PPediatric" />
+
+            <View
+                android:id="@+id/Pediatric_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textPediatric"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/PBO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/do_you_have_substance_of_biological_origin_in_your_device"
+                app:layout_constraintStart_toStartOf="@id/textPediatric"
+                app:layout_constraintTop_toTopOf="@id/Pediatric_View" />
+
+            <TextView
+                android:id="@+id/textBO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_orange"
+                android:text="Yes"
+                app:layout_constraintStart_toStartOf="@id/PBO"
+                app:layout_constraintTop_toBottomOf="@id/PBO" />
+
+            <View
+                android:id="@+id/BO_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textBO"
+                android:background="@color/dark_gray_color"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="150dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

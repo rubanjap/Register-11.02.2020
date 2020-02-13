@@ -1,0 +1,4 @@
+
+}squid:S1488 "_Immediately return this expression instead of assigning it to the temporary variable "inflate".(½å‘ª8ÌÍ«¤ƒ.
+`squid:UselessImportCheck"0Remove this unused import 'android.text.Layout'.(ÔŠ²±úÿÿÿÿ8›Üß£ƒ.
+hsquid:UselessImportCheck"8Remove this unused import 'android.widget.LinearLayout'.(çîšçúÿÿÿÿ8µæ±¤ƒ.

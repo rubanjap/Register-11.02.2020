@@ -1,0 +1,4 @@
+
+„squid:S1319"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(æ± ‹
+Rsquid:S1751$"6Remove this "return" statement or make it conditional.(£ÜùÂÿÿÿÿÿ
+\squid:HiddenFieldCheck-":Rename "errors" which hides the field declared at line 18.(“€º¬
