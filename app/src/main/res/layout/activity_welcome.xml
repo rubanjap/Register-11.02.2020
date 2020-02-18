@@ -80,7 +80,7 @@
                 android:layout_height="match_parent"
                 android:padding="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/new_proj"/>
+                android:src="@drawable/new_product"/>
 
             <ImageView
                 android:id="@+id/img_tab_two"

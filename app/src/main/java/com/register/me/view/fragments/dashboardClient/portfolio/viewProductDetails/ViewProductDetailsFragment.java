@@ -16,7 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.register.me.R;
 import com.register.me.model.data.Constants;
-import com.register.me.model.data.api.model.KeyValue;
+import com.register.me.model.data.model.KeyValue;
 import com.register.me.presenter.ViewProductPresenter;
 import com.register.me.view.BaseFragment;
 import com.register.me.view.HomeActivity;

@@ -4,7 +4,7 @@ import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.register.me.model.data.util.Util;
+import com.register.me.model.data.util.Utils;
 import com.register.me.model.di.activity.ActivityComponent;
 import com.register.me.model.di.activity.ActivityModule;
 import com.register.me.model.di.app.AndroidModule;
@@ -21,7 +21,6 @@ import timber.log.Timber;
 
 
 public class MyApplication extends Application {
-
 
     private ApplicationComponent component;
 
@@ -57,10 +56,8 @@ public class MyApplication extends Application {
         @Override
         protected void log(int priority, String tag, String message, Throwable t) {
             if (priority == Log.ERROR && t != null) {
-                String exceptionMessage = Util.getErrorMessage(t);
 
                 StringBuilder errorLogBuilder = new StringBuilder();
-                errorLogBuilder.append(exceptionMessage);
                 if (!TextUtils.isEmpty(message)) {
                     errorLogBuilder.append("\n");
                     errorLogBuilder.append(message.length() > 100 ? message.substring(0, 100) : message);

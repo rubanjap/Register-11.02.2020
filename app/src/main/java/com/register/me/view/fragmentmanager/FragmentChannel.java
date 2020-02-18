@@ -7,6 +7,8 @@ public interface FragmentChannel {
 
     void showHome();
 
+    void showChangePassword();
+
     void showPortFolio();
 
     void showAddProduct();
@@ -32,4 +34,8 @@ public interface FragmentChannel {
     void showCountryScreen();
 
     void showRREDashboard();
+
+    void showOnlineInterView();
+
+    void showPersonalInfo();
 }

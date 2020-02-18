@@ -1,19 +1,31 @@
 package com.register.me.presenter;
 
 
-import com.register.me.model.data.di.DataModule;
-import com.register.me.model.domain.repository.CacheRepository;
-
 import dagger.Module;
 import dagger.Provides;
 
 
-@Module(includes = {DataModule.class})
+@Module()
 public class PresenterModule {
 
     @Provides
-    public HomePresenter provideHomePresenter(CacheRepository cacheRepository) {
-        return new HomePresenter(cacheRepository);
+    public LoginPresenter provideLoginPresenter() {
+        return new LoginPresenter();
+    }
+
+    @Provides
+    public SignUpPresenter provideSignUpPresenter() {
+        return new SignUpPresenter();
+    }
+
+    @Provides
+    public ChangePasswordPresenter provideChangePasswordPresenter() {
+        return new ChangePasswordPresenter();
+    }
+
+    @Provides
+    public HomePresenter provideHomePresenter() {
+        return new HomePresenter();
     }
 
     @Provides
@@ -25,8 +37,6 @@ public class PresenterModule {
     public PortFolioPresenter providePortFolioPresenter() {
         return new PortFolioPresenter();
     }
-
-
 
 
     @Provides
@@ -47,5 +57,10 @@ public class PresenterModule {
     @Provides
     public InitiateRegistrationPresenter provideInitiateRegistrationPresenter() {
         return new InitiateRegistrationPresenter();
+    }
+
+    @Provides
+    public PersonalInfoPresenter providePersonalInfoPresenter() {
+        return new PersonalInfoPresenter();
     }
 }

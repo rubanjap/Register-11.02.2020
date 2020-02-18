@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.register.me.R;
-import com.register.me.model.data.util.Util;
+import com.register.me.model.data.util.Utils;
 import com.register.me.presenter.InitiateRegistrationPresenter;
 import com.register.me.view.BaseFragment;
 import com.register.me.view.HomeActivity;
@@ -27,7 +27,7 @@ import butterknife.OnClick;
 /**
  * Created by Jennifer - AIT on 11-02-2020.
  */
-public class CRREDirectFragment extends BaseFragment implements IFragment, Util.UtilInterface {
+public class CRREDirectFragment extends BaseFragment implements IFragment, Utils.UtilDateTimeInterface {
     private static final String FRAGMENT_NAME = "InitiateProductRegistration";
 
     @BindView(R.id.txtDate)
@@ -35,7 +35,7 @@ public class CRREDirectFragment extends BaseFragment implements IFragment, Util.
     @Inject
     InitiateRegistrationPresenter addProductPresenter;
     @Inject
-    Util util;
+    Utils util;
 
 
     @Override
@@ -76,7 +76,7 @@ public class CRREDirectFragment extends BaseFragment implements IFragment, Util.
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @OnClick(R.id.txtDate)
     public  void onDateClicked() {
-        util.showCalendar(getContext(),this);
+        util.showCalendar(getContext(),this,0);
         Toast.makeText(getContext(), "Date Clicked", Toast.LENGTH_SHORT).show();
     }
 
@@ -84,5 +84,10 @@ public class CRREDirectFragment extends BaseFragment implements IFragment, Util.
     public void onDateSet(long timeInMillis) {
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         txtDate.setText(formatter.format(timeInMillis));
+    }
+
+    @Override
+    public void onTimeSet(Integer currentHour, Integer currentMinute) {
+
     }
 }

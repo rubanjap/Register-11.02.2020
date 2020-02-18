@@ -2,24 +2,44 @@ package com.register.me.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.onurkaganaldemir.ktoastlib.KToast;
 import com.register.me.R;
 import com.register.me.model.data.Constants;
+import com.register.me.model.data.repository.CacheRepo;
+import com.register.me.presenter.LoginPresenter;
 import com.register.me.view.BaseActivity;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Interceptor;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements LoginPresenter.ILogin {
 
     @BindView(R.id.email)
     EditText email;
+    @BindView(R.id.editPassword)
+    EditText password;
+    @BindView(R.id.progressbar)
+    ConstraintLayout progressLayout;
+
     @Inject
     Constants constants;
+    @Inject
+    LoginPresenter presenter;
+    @Inject
+    CacheRepo repo;
+
 
     @Override
     protected int getLayoutId() {
@@ -30,6 +50,10 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector().inject(this);
+        presenter.init(this, this);
+       if(presenter.isLoggedIn()){
+           navigate();
+       }
 
     }
 
@@ -37,22 +61,51 @@ public class LoginActivity extends BaseActivity {
     public void signInClick() {
 
         String emailAddress = email.getText().toString();
-        if (emailAddress.equals("0")) {
-            startActivity(new Intent(this, WelcomeActivity.class));
-            constants.setUSER_ROLE(0);
-           finish();
-        } else if (emailAddress.equals("1")) {
-            startActivity(new Intent(this, WelcomeActivity.class));
-            constants.setUSER_ROLE(1);
-            finish();
-        } else if (emailAddress == null || emailAddress.isEmpty()) {
-            Toast.makeText(this, "Please enter valid data", Toast.LENGTH_SHORT).show();
-        }
-
+        String pass = password.getText().toString();
+//        presenter.validation("rajeshkannan.p@aitechindia.com", "Hello@123");//Client
+        presenter.validation(emailAddress, pass);//Client
+//        presenter.validation("rajesh13@20minutemail.iti","123456");//RRE
+//       presenter.validation("test@test.com","123456789");
     }
 
     @OnClick(R.id.txt_SignUp)
     public void signUpClick() {
         startActivity(new Intent(this, SignUpActivity.class));
+    }
+
+    @OnClick(R.id.txtForgotPassword)
+    public void onClickForgotPassword(){
+        presenter.forgotPassword();
+    }
+
+    @Override
+    public void showErroMessage(String message) {
+        KToast.customColorToast(this, message, Gravity.BOTTOM, KToast.LENGTH_SHORT, R.color.red);
+    }
+
+    @Override
+    public void showProgress() {
+        if (progressLayout.getVisibility() == View.GONE) {
+            progressLayout.setVisibility(View.VISIBLE);
+            progressLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
+    }
+
+    @Override
+    public void dismissProgress() {
+        if (progressLayout.getVisibility() == View.VISIBLE) {
+            progressLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void navigate() {
+        startActivity(new Intent(this, WelcomeActivity.class));
+        finish();
     }
 }

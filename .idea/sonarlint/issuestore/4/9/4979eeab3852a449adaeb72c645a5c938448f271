@@ -1,2 +1,4 @@
 
-csquid:UselessImportCheck"3Remove this unused import 'javax.inject.Singleton'.(Μ‹¤Θϊÿÿÿÿ8―Σ¬Αƒ.
+csquid:UselessImportCheck"3Remove this unused import 'javax.inject.Singleton'.(Μ‹¤Θϊÿÿÿÿ8―Σ¬Αƒ.
+psquid:UselessImportCheck"ERemove this unused import 'com.register.me.Adapter.ViewPagerAdapter'.(τΡ—ι8ƒ©υμƒ.
+nsquid:UselessImportCheck">Remove this unused import 'com.register.me.view.BaseFragment'.(υ¦€ϊÿÿÿÿ8ƒ©υμƒ.

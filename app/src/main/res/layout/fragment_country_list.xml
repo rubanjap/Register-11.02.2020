@@ -64,14 +64,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="@color/sub_header"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/black"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="Country"
@@ -81,9 +82,8 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/black"
                 android:gravity="center_vertical"
                 android:text="BID CREATION DATE"
                 android:textAllCaps="true"
@@ -92,9 +92,8 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/black"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="BID STATUS"

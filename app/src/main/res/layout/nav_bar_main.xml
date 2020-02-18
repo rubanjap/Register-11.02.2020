@@ -43,11 +43,12 @@
                 android:id="@+id/img_user_profile"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@+id/img_user_notification"
-                android:layout_toRightOf="@+id/img_logo"
+                android:layout_marginRight="50dp"
+                android:layout_toStartOf="@+id/img_user_notification"
                 android:src="@drawable/user_profile" />
 
             <ImageView
@@ -73,10 +74,10 @@
             android:src="@drawable/backpressed"/>
 
         <TextView
+            android:id="@+id/tv_header_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/linear_header_home"
-            android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/client_dashboard"
             android:textColor="#FFFFFF"
@@ -88,7 +89,7 @@
         android:id="@+id/activity_home_fl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/relative_header"
         android:orientation="vertical" />
 

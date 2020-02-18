@@ -1,9 +1,16 @@
 package com.register.me.model.di.activity;
 
+import com.register.me.presenter.ChangePasswordPresenter;
 import com.register.me.presenter.HomePresenter;
+import com.register.me.presenter.LoginPresenter;
+import com.register.me.presenter.PersonalInfoPresenter;
+import com.register.me.presenter.SignUpPresenter;
 import com.register.me.view.HomeActivity;
 import com.register.me.view.activity.LoginActivity;
+import com.register.me.view.activity.SignUpActivity;
 import com.register.me.view.activity.WelcomeActivity;
+import com.register.me.view.fragments.REA.applicationSubmission.PersonalInfoFragment;
+import com.register.me.view.fragments.REA.onlineInterview.OnlineInterviewFragment;
 import com.register.me.view.fragments.dashboardClient.DashBoardFragment;
 import com.register.me.view.fragments.dashboardClient.activeProjects.ActiveProjectSubFragment;
 import com.register.me.view.fragments.dashboardClient.activeProjects.ActiveProjectsFragment;
@@ -16,6 +23,7 @@ import com.register.me.view.fragments.dashboardClient.portfolio.directAssignment
 import com.register.me.view.fragments.dashboardClient.portfolio.initiateProductRegistration.InitiateRegistrationFragment;
 import com.register.me.view.fragments.dashboardClient.portfolio.viewProductDetails.ViewProductDetailsFragment;
 import com.register.me.view.fragments.REA.applicationSubmission.ApplicationSubmissionFragment;
+import com.register.me.view.fragments.navigation.ChangePasswordFragment;
 
 import dagger.Subcomponent;
 
@@ -26,6 +34,8 @@ public interface ActivityComponent {
     void inject(HomeActivity homeActivity);
 
     void inject(LoginActivity loginActivity);
+
+    void inject(SignUpActivity signUpActivity);
 
     void inject(DashBoardFragment dashBoardFragment);
 
@@ -53,8 +63,23 @@ public interface ActivityComponent {
 
     void inject(ApplicationSubmissionFragment dashBoard_rre_fragment);
 
+    void inject(OnlineInterviewFragment onlineInterviewFragment);
+
+    void inject(ChangePasswordFragment changePasswordFragment);
+
+    void inject(PersonalInfoFragment personalInfoFragment);
+
+
     /*Presenter*/
+    void inject(LoginPresenter loginPresenter);
+
+    void inject(SignUpPresenter signUpPresenter);
+
     void inject(HomePresenter homePresenter);
+
+    void inject(ChangePasswordPresenter changePasswordPresenter);
+
+    void inject(PersonalInfoPresenter personalInfoPresenter);
 
     @Subcomponent.Builder
     interface Builder {

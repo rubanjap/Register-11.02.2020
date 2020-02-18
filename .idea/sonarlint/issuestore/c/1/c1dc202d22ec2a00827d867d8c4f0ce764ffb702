@@ -1,6 +1,47 @@
 
-msquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨‚™×8Á­Ş¿ƒ.
+psquid:S00117~"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•™–ˆ8ÀúÙ¾„.
+usquid:S00116*"VRename this field "CACHE_TOKEN" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ô†ê÷8¯ŒÔ¾„.
+ˆ"squid:ClassVariableVisibilityCheck/"TMake BASE_URL a static final constant or non-public and provide accessors if needed.(Ğ”ÛZ8„Ê¹„.
+squid:S00116+"[Rename this field "CACHE_TOKEN_TYPE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¹ä´Ûøÿÿÿÿ8•·Õ¾„.
+"squid:ClassVariableVisibilityCheck)"VMake CACHE_ROLE a static final constant or non-public and provide accessors if needed.(¦‚±ßúÿÿÿÿ8¯ŒÔ¾„.
+Tsquid:S2696w"6Make the enclosing method "static" or remove this set.(Ùè…ó8ˆˆ¾„.
+vsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™»Ãüÿÿÿÿ8ÀúÙ¾„.
+msquid:S00100n"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´ÊŸà8¨ç„¾„.
+lsquid:S00100^"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ş¹ˆf8ã»Ê¹„.
+‰"squid:ClassVariableVisibilityCheck""OMake TAB a static final constant or non-public and provide accessors if needed.(Ø×…½ıÿÿÿÿ8Œ×š–„.
+rsquid:S00116""NRename this field "TAB" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ø×…½ıÿÿÿÿ8Œ×š–„.
+osquid:S00117^"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ş¹ˆf8ã»Ê¹„.
+"squid:ClassVariableVisibilityCheck'"[Make CACHE_IS_LOGGED a static final constant or non-public and provide accessors if needed.(«Úœˆ8âÍØ¾„.
+rsquid:S00100Z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£÷úƒıÿÿÿÿ8ã»Ê¹„.
+}squid:S00116("YRename this field "CACHE_USERNAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡éÑ¡şÿÿÿÿ8ƒ£Ó¾„.
 squid:S00116"[Rename this field "VIEW_SCREEN_FROM" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßä™Àùÿÿÿÿ8Á­Ş¿ƒ.
-rsquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤â–øùÿÿÿÿ8Á­Ş¿ƒ.
+msquid:S00100V"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨‚™×8ã»Ê¹„.
+ssquid:S00100–"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ¶Âûÿÿÿÿ8ÀúÙ¾„.
+ssquid:S00116"TRename this field "USER_ROLE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔóÅø8§“½ëƒ.
 –"squid:ClassVariableVisibilityCheck"\Make VIEW_SCREEN_FROM a static final constant or non-public and provide accessors if needed.(ßä™Àùÿÿÿÿ8Á­Ş¿ƒ.
-psquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨‚™×8Á­Ş¿ƒ.
+vsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Ï¹ûÿÿÿÿ8ÀúÙ¾„.
+vsquid:S00117–"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ¶Âûÿÿÿÿ8ÀúÙ¾„.
+msquid:S00100~"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•™–ˆ8ÀúÙ¾„.
+rsquid:S00100j"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º…‹¶şÿÿÿÿ8¨ç„¾„.
+ssquid:S00100‚"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€áÔáùÿÿÿÿ8ÀúÙ¾„.
+Ksquid:S1444/".Make this "public static BASE_URL" field final(Ğ”ÛZ8ˆˆ¾„.
+usquid:S00117f"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Îìõ€úÿÿÿÿ8ã»Ê¹„.
+vsquid:S00117†"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æ–­˜üÿÿÿÿ8ÀúÙ¾„.
+rsquid:S00100R"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤â–øùÿÿÿÿ8ã»Ê¹„.
+nsquid:S00100Š"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…Øç8ÀúÙ¾„.
+psquid:S3008/"SRename this field "BASE_URL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ”ÛZ8ˆˆ¾„.
+nsquid:S00100š"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âËÙ­8ÀúÙ¾„.
+”"squid:ClassVariableVisibilityCheck("ZMake CACHE_USERNAME a static final constant or non-public and provide accessors if needed.(‡éÑ¡şÿÿÿÿ8ƒ£Ó¾„.
+ssquid:S00100†"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æ–­˜üÿÿÿÿ8ÀúÙ¾„.
+ssquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Ï¹ûÿÿÿÿ8ÀúÙ¾„.
+ysquid:S00116'"ZRename this field "CACHE_IS_LOGGED" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«Úœˆ8âÍØ¾„.
+–"squid:ClassVariableVisibilityCheck+"\Make CACHE_TOKEN_TYPE a static final constant or non-public and provide accessors if needed.(¹ä´Ûøÿÿÿÿ8•·Õ¾„.
+psquid:S00117n"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´ÊŸà8¨ç„¾„.
+Œ"squid:ClassVariableVisibilityCheck*"WMake CACHE_TOKEN a static final constant or non-public and provide accessors if needed.(Ô†ê÷8¯ŒÔ¾„.
+ssquid:S00100’"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ç êæúÿÿÿÿ8ÀúÙ¾„.
+msquid:S00100z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯²‘ö8ÀúÙ¾„.
+ssquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™»Ãüÿÿÿÿ8ÀúÙ¾„.
+psquid:S00117V"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨‚™×8ã»Ê¹„.
+ysquid:S00116)"URename this field "CACHE_ROLE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦‚±ßúÿÿÿÿ8¯ŒÔ¾„.
+Š"squid:ClassVariableVisibilityCheck"UMake USER_ROLE a static final constant or non-public and provide accessors if needed.(ÔóÅø8§“½ëƒ.
+]squid:S3400£"9Remove this method and declare a constant for this value.(Ÿ¨ê¥úÿÿÿÿ8Öß¦Ä„.

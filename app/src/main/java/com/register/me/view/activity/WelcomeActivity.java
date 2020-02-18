@@ -3,7 +3,6 @@ package com.register.me.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.register.me.R;
 import com.register.me.model.data.Constants;
@@ -51,22 +50,25 @@ public class WelcomeActivity extends BaseActivity {
 
     @OnClick(R.id.img_tab_one)
     public void onTabOneClick() {
+        constants.setTAB(1);
+        startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
 
-        startActivity(new Intent(WelcomeActivity.this, HomeActivity.class).putExtra("from", "NEW_PROJECT"));
     }
 
     @OnClick(R.id.img_tab_two)
     public void onTabTwoClick() {
-//        Toast.makeText(this, "New Geography Clicked", Toast.LENGTH_SHORT).show();
+        constants.setTAB(2);
+        startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
     }
 
     @OnClick(R.id.img_tab_three)
     public void onTabThreeClick() {
-//        Toast.makeText(this, "Renewal Clicked", Toast.LENGTH_SHORT).show();L
+        constants.setTAB(3);
     }
 
     @OnClick(R.id.img_tab_four)
     public void onTabFourClick() {
+        constants.setTAB(4);
         if (constants.getUSER_ROLE() == 0) {
             startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
         }

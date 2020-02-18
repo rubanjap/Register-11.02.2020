@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+    android:id="@+id/layout_registration_success"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/shape_rounded_corner"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:text="Thank you for signing up with  RegisterME."
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_orange"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="To activate your account click the activation link in your email inbox."
+        android:textColor="@color/text_orange" />
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_oval"
+        android:text="OK" />
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_forgot_password"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/shape_rounded_corner"
+        android:visibility="gone"
+        android:layout_margin="10dp">
+
+
+            <EditText
+                android:id="@+id/edt_emailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/shape_editbox_bg"
+                android:hint="Email Address "
+                android:paddingStart="15dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="50dp"
+                android:paddingBottom="5dp"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Enter your Email Address \n to receive the reset password link"
+                android:textColor="@color/text_orange" />
+
+            <Button
+                android:id="@+id/btn_email"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/shape_oval"
+                android:text="Email Me" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_password_link_success"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_rounded_corner"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:textColor="@color/text_orange"
+            android:text="Passwork link sent successfully."
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Please check your inbox for instructions."
+            android:textColor="@color/text_orange" />
+
+        <Button
+            android:id="@+id/btn_password_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_oval"
+            android:text="OK" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_pass_update_success"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/shape_rounded_corner"
+        android:visibility="gone"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:text="Password Updated Successfully"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_orange"/>
+
+
+        <Button
+            android:id="@+id/btn_pass_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_oval"
+            android:text="OK" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_logout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/shape_rounded_corner"
+        android:visibility="gone"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:text="Do you want to Logout ?"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_orange"/>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="50dp">
+        <Button
+            android:id="@+id/btn_pass_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:autoSizeMaxTextSize="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_oval"
+            android:text="OK"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="30dp"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btn_pass_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_oval"
+            android:text="CANCEL"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="50dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.register.me.R;
-import com.register.me.model.data.util.Util;
+import com.register.me.model.data.util.Utils;
 import com.register.me.presenter.InitiateRegistrationPresenter;
 import com.register.me.view.BaseFragment;
 import com.register.me.view.HomeActivity;
@@ -27,7 +27,7 @@ import butterknife.BindView;
 /**
  * Created by Jennifer - AIT on 11-02-2020.
  */
-public class InitiateRegistrationFragment extends BaseFragment implements IFragment, InitiateRegistrationPresenter.View, Util.UtilInterface {
+public class InitiateRegistrationFragment extends BaseFragment implements IFragment, InitiateRegistrationPresenter.View, Utils.UtilDateTimeInterface {
     private static final String FRAGMENT_NAME = "InitiateProductRegistration";
 
     @BindView(R.id.radio_date)
@@ -39,7 +39,7 @@ public class InitiateRegistrationFragment extends BaseFragment implements IFragm
     @Inject
     InitiateRegistrationPresenter initiateRegistrationPresenter;
     @Inject
-    Util util;
+    Utils util;
 
 
     @Override
@@ -57,7 +57,7 @@ public class InitiateRegistrationFragment extends BaseFragment implements IFragm
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    util.showCalendar(getContext(),InitiateRegistrationFragment.this::onDateSet);
+                    util.showCalendar(getContext(),InitiateRegistrationFragment.this,0);
                 }else {
                     if (txtDate.getVisibility()== View.VISIBLE) {
                         txtDate.setVisibility(View.GONE);
@@ -110,5 +110,10 @@ public class InitiateRegistrationFragment extends BaseFragment implements IFragm
         txtDate.setVisibility(View.VISIBLE);
         DateFormat formatter = new SimpleDateFormat("MMMM dd,yyyy");
         txtDate.setText(formatter.format(timeInMillis));
+    }
+
+    @Override
+    public void onTimeSet(Integer currentHour, Integer currentMinute) {
+        //Nil
     }
 }

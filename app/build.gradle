@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.register.me"
-        minSdkVersion 19
+        minSdkVersion 22
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -115,9 +115,9 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.0.6'
     implementation 'joda-time:joda-time:2.9.7'
     implementation 'com.google.dagger:dagger:2.9'
-    provided 'javax.annotation:jsr250-api:1.0'
+    compileOnly 'javax.annotation:jsr250-api:1.0'
     testImplementation "org.robolectric:robolectric:3.3.2"
-    provided 'javax.annotation:jsr250-api:1.0'
+    compileOnly 'javax.annotation:jsr250-api:1.0'
     api 'com.google.code.gson:gson:2.8.0'
     api 'com.squareup.retrofit2:retrofit:2.2.0'
     api 'com.squareup.retrofit2:converter-gson:2.2.0'
@@ -130,4 +130,17 @@ dependencies {
     api 'org.mockito:mockito-core:2.7.22'
     api 'org.mockito:mockito-android:2.7.22'
     api 'org.parceler:parceler-api:1.1.8'
+
+    /*ktoast*/
+    implementation 'com.github.onurkagan:ktoast:1.0.2'
+
+    /*Progress Bar*/
+    implementation 'com.github.ibrahimsn98:CirclesLoadingView:1.0'
+
+    /*Circle Image View*/
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    /*Glide*/
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 }
