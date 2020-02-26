@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.register.me.view.fragments.dashboardClient.auctions.ActiveAuctionFragment;
-import com.register.me.view.fragments.dashboardClient.auctions.BidsToEvaluateFragment;
+import com.register.me.view.fragments.Client.auctions.ActiveAuctionFragment;
+import com.register.me.view.fragments.Client.auctions.BidsToEvaluateFragment;
 import com.register.me.view.fragments.REA.applicationSubmission.ActivityFragment;
 import com.register.me.view.fragments.REA.applicationSubmission.ApplicationFormFragment;
 import com.register.me.view.fragments.REA.applicationSubmission.PersonalInfoFragment;

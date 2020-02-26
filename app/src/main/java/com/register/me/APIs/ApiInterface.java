@@ -12,12 +12,15 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 import com.google.gson.JsonObject;
+import com.register.me.model.data.model.AddProductModel;
 import com.register.me.model.data.model.AvatarModel;
 import com.register.me.model.data.model.ChangePasswordModel;
+import com.register.me.model.data.model.GetProductModel;
 import com.register.me.model.data.model.GetUserInfoModel;
 import com.register.me.model.data.model.LoginModel;
 import com.register.me.model.data.model.LogoutModel;
 import com.register.me.model.data.model.RegisterModel;
+import com.register.me.model.data.model.UpdateProfileModel;
 import com.register.me.model.data.repository.CacheRepo;
 
 /**
@@ -47,4 +50,17 @@ public interface ApiInterface {
 
     @GET("user")
     Call<GetUserInfoModel> getUserDetails(@Header("Authorization") String token);
+
+    @POST("userprofile")
+    Call<UpdateProfileModel> updateUserProfile(@Header("Authorization") String token,@Body JsonObject data);
+
+    @GET("product")
+    Call<GetProductModel> getProductList(@Header("Authorization") String token);
+
+    @POST("product")
+    Call<AddProductModel> addProduct(@Header("Authorization") String token,@Body JsonObject data);
+
+
+    @POST("product")
+    Call<AddProductModel> editProduct(@Header("Authorization") String token,@Query("productid") int id,@Body JsonObject data);
 }

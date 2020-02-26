@@ -63,4 +63,15 @@ public class PresenterModule {
     public PersonalInfoPresenter providePersonalInfoPresenter() {
         return new PersonalInfoPresenter();
     }
+
+    @Provides
+    public CountryPresenter provideCountryPresenter() {
+        return new CountryPresenter();
+    }
+
+
+    @Provides
+    public WelcomePresenter provideWelcomePresenter() {
+        return new WelcomePresenter();
+    }
 }

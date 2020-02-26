@@ -45,7 +45,7 @@ public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.
     }
 
     public boolean isLoggedIn() {
-        String status = repo.getData(constants.CACHE_IS_LOGGED);
+        String status = repo.getData(constants.getIS_LOGGED());
         if (status != null && status.equals("true")) {
             return true;
         }
@@ -94,11 +94,11 @@ public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.
         String token = body.getToken();
         String tokenType = body.getTokenType();
         HashMap<String, String> map = new HashMap<>();
-        map.put(constants.CACHE_IS_LOGGED, "true");
-        map.put(constants.CACHE_USERNAME, userName);
-        map.put(constants.CACHE_ROLE, userRole);
-        map.put(constants.CACHE_TOKEN, token);
-        map.put(constants.CACHE_TOKEN_TYPE, tokenType);
+        map.put(constants.getIS_LOGGED(), "true");
+        map.put(constants.getCACHE_USERNAME(), userName);
+        map.put(constants.getCACHE_ROLE(), userRole);
+        map.put(constants.getCACHE_TOKEN(), token);
+        map.put(constants.getCACHE_TOKEN_TYPE(), tokenType);
         repo.storeBulkData(map);
         if (userRole.equals("Client")) {
             constants.setUSER_ROLE(0);

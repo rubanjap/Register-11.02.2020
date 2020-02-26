@@ -24,7 +24,7 @@ public class ApplicationSubmissionFragment extends BaseFragment implements IFrag
     TabLayout tabLayout;
     @BindView(R.id.viewPagerRRE)
     ViewPager viewPager;
-    private static final String FRAGMENT_NAME = "RREDashBoard";
+    private final String FRAGMENT_NAME = "RREDashBoard";
 
 
     @Override

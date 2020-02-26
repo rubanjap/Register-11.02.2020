@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/base"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
@@ -13,7 +13,9 @@
     android:background="@color/content_bg"
     android:visibility="gone"
     >
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,20 +38,6 @@
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/img_save"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginEnd="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/img_Edit"
-                app:srcCompat="@drawable/ic_assignment_turned_in_black_24dp"
-                android:tint="@color/pale_dark_green"
-                tools:layout_editor_absoluteX="268dp" />
 
             <ImageView
                 android:id="@+id/img_Edit"
@@ -82,19 +70,20 @@
         android:layout_marginTop="20dp"
         app:layout_goneMarginBottom="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/profile_container">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_save"
+            android:id="@+id/card_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:elevation="10dp"
             app:cardBackgroundColor="@color/button_bg"
             app:cardCornerRadius="5dp"
-            app:layout_constraintEnd_toStartOf="@+id/cardView"
+            app:layout_constraintEnd_toStartOf="@+id/card_cancel"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintStart_toEndOf="@+id/card_cancel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -103,13 +92,13 @@
                 android:layout_height="35dp"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="SAVE"
+                android:text="UPDATE"
                 android:gravity="center"
                 android:textColor="@color/white" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/card_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -118,7 +107,7 @@
             app:cardCornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/card_save"
+            app:layout_constraintStart_toEndOf="@+id/card_update"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -133,7 +122,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
         <View
             android:id="@+id/disableClick"
             android:layout_width="match_parent"
@@ -141,7 +129,6 @@
             app:layout_constraintTop_toBottomOf="@id/sub_header"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>
+</LinearLayout>

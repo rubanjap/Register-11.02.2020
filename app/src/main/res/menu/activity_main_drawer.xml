@@ -4,18 +4,11 @@
         android:id="@+id/menu_top"
         android:checkableBehavior="single"
         >
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_profile_user_24dp"
-            android:title="@string/profile" />
+
         <item
             android:id="@+id/nav_change_password"
             android:icon="@drawable/ic_key_24dp"
             android:title="@string/change_password" />
-        <item
-            android:id="@+id/nav_notification"
-            android:icon="@drawable/ic_notifications_24dp"
-            android:title="@string/notification" />
 
         <item
             android:id="@+id/nav_logout"

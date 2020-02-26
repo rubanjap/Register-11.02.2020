@@ -60,8 +60,10 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.ILogin
     @OnClick(R.id.card_signIn)
     public void signInClick() {
 
-        String emailAddress = email.getText().toString();
-        String pass = password.getText().toString();
+//        String emailAddress = email.getText().toString();
+//        String pass = password.getText().toString();
+        String emailAddress = "ajsashiapp@gmail.com";
+        String pass = "Test@123";
 //        presenter.validation("rajeshkannan.p@aitechindia.com", "Hello@123");//Client
         presenter.validation(emailAddress, pass);//Client
 //        presenter.validation("rajesh13@20minutemail.iti","123456");//RRE

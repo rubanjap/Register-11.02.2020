@@ -1,4 +1,4 @@
-package com.register.me.view.fragments.dashboardClient.portfolio.initiateProductRegistration;
+package com.register.me.view.fragments.Client.portfolio.initiateProductRegistration;
 
 import android.os.Build;
 import android.os.Bundle;

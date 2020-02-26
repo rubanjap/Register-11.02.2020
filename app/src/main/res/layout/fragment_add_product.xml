@@ -1,826 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:background="@color/content_bg"
     android:orientation="vertical"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:paddingBottom="15dp">
+    android:paddingBottom="15dp"
+    android:descendantFocusability="beforeDescendants">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
 
         <TextView
             android:id="@+id/sub_header"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/black"
-            android:paddingLeft="20dp"
             android:gravity="center_vertical"
+            android:paddingLeft="20dp"
             android:text="ADD PRODUCT TO PORTFOLIO"
             android:textColor="@color/white"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/content"
+        <LinearLayout
+            android:id="@+id/product_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/content_bg"
-            app:layout_constraintTop_toBottomOf="@id/sub_header">
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
 
-            <TextView
-                android:id="@+id/textName"
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Product Number"
+                android:layout_weight="1"
+                android:elevation="10dp"
+                app:cardBackgroundColor="@color/button_bg"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/card_cancel"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/card_cancel"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/edtName"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/shape_editbox_bg"
+                <TextView
+                    android:id="@+id/txtBtn"
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="Edit Product"
+                    android:textColor="@color/white" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="10dp"
+                app:cardBackgroundColor="@color/button_bg"
+                app:cardCornerRadius="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textName"
-                app:layout_constraintTop_toBottomOf="@+id/textName" />
-
-            <TextView
-                android:id="@+id/textPName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Product Name"
-                app:layout_constraintStart_toStartOf="@id/edtName"
-                app:layout_constraintTop_toBottomOf="@id/edtName" />
-
-            <EditText
-                android:id="@+id/edtPName"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/shape_editbox_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textPName"
-                app:layout_constraintTop_toBottomOf="@+id/textPName" />
-
-            <TextView
-                android:id="@+id/textPDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Product Description"
-                app:layout_constraintStart_toStartOf="@id/edtPName"
-                app:layout_constraintTop_toBottomOf="@id/edtPName" />
-
-            <EditText
-                android:id="@+id/edtPDesc"
-                android:layout_width="0dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/shape_editbox_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textPDesc"
-                app:layout_constraintTop_toBottomOf="@+id/textPDesc" />
-
-            <TextView
-                android:id="@+id/textPClassify"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Product Classification"
-                app:layout_constraintStart_toStartOf="@id/edtPDesc"
-                app:layout_constraintTop_toBottomOf="@id/edtPDesc" />
-
-            <LinearLayout
-                android:id="@+id/layout_classify"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/shape_editbox_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textPClassify"
-                app:layout_constraintTop_toBottomOf="@+id/textPClassify">
-
-                <Spinner
-                    android:id="@+id/edtPClassify"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/textPIVD"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/is_it_idv"
-                app:layout_constraintStart_toStartOf="@id/layout_classify"
-                app:layout_constraintTop_toBottomOf="@id/layout_classify" />
-
-            <RadioGroup
-                android:id="@+id/rdPIVD"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textPIVD">
-
-                <RadioButton
-                    android:id="@+id/rdPIVD_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdPIVD_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textCombProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/is_this_a_combination_product"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdPIVD" />
-
-            <RadioGroup
-                android:id="@+id/rdCombProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textCombProduct">
-
-                <RadioButton
-                    android:id="@+id/rdCP_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdCP_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textLifeSupport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/is_it_life_supporting_life_sustaining"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdCombProduct" />
-
-            <RadioGroup
-                android:id="@+id/rdLifeSupport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textLifeSupport">
-
-                <RadioButton
-                    android:id="@+id/rdLS_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdLS_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textComponent"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:text="@string/any_direct_or_indirect_patients_contacting_components"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdLifeSupport" />
-
-            <RadioGroup
-                android:id="@+id/rdComponent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textComponent">
-
-                <RadioButton
-                    android:id="@+id/rdPCC_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdPCC_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textSoftware"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/does_the_product_use_software_firmware"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdComponent" />
-
-            <RadioGroup
-                android:id="@+id/rdSoftware"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textSoftware">
-
-                <RadioButton
-                    android:id="@+id/rdPSF_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdPSF_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textTechnology"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:text="@string/if_yes_does_it_contains_digital_health_technology"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdSoftware" />
-
-            <RadioGroup
-                android:id="@+id/rdTechnology"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textTechnology">
-
-                <RadioButton
-                    android:id="@+id/rdPT_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdPT_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textPConnectType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/connection_type"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdTechnology" />
-
-            <LinearLayout
-                android:id="@+id/layout_connect"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/shape_editbox_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textPConnectType"
-                app:layout_constraintTop_toBottomOf="@+id/textPConnectType">
-
-                <Spinner
-                    android:id="@+id/edtPConnectType"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textPSterilize"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:text="Does the device or a component need sterilizaiton (by the manufacturer or user)?"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/layout_connect"
-                app:layout_constraintTop_toBottomOf="@id/layout_connect" />
-
-            <RadioGroup
-                android:id="@+id/rdPSterilize"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textPSterilize">
-
-                <RadioButton
-                    android:id="@+id/rdPS_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdPS_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textPIndication"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Indications for Use"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdPSterilize" />
-
-            <LinearLayout
-                android:id="@+id/layout_indication"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/shape_editbox_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textPIndication"
-                app:layout_constraintTop_toBottomOf="@+id/textPIndication">
-
-                <Spinner
-                    android:id="@+id/edtPIndication"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textPPopulation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Intended Population"
-                app:layout_constraintStart_toStartOf="@id/layout_indication"
-                app:layout_constraintTop_toBottomOf="@id/layout_indication" />
-
-            <LinearLayout
-                android:id="@+id/layout_population"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/shape_editbox_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textPPopulation"
-                app:layout_constraintTop_toBottomOf="@+id/textPPopulation">
-
-                <Spinner
-                    android:id="@+id/spinPopulation"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textPDeviceType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Device Type"
-                app:layout_constraintStart_toStartOf="@id/layout_population"
-                app:layout_constraintTop_toBottomOf="@id/layout_population" />
-
-            <LinearLayout
-                android:id="@+id/layout_devicetype"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/shape_editbox_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textPDeviceType"
-                app:layout_constraintTop_toBottomOf="@+id/textPDeviceType">
-
-                <Spinner
-                    android:id="@+id/spinDeviceType"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textPEnv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Usage Environment"
-                app:layout_constraintStart_toStartOf="@id/layout_devicetype"
-                app:layout_constraintTop_toBottomOf="@id/layout_devicetype" />
-
-            <LinearLayout
-                android:id="@+id/layout_environment"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/shape_editbox_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textPEnv"
-                app:layout_constraintTop_toBottomOf="@+id/textPEnv">
-
-                <Spinner
-                    android:id="@+id/spinEnvironment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textIsElectrical"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:text="Is the procduct electrical?"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/layout_environment"
-                app:layout_constraintTop_toBottomOf="@id/layout_environment" />
-
-            <RadioGroup
-                android:id="@+id/rdIsElectrical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textIsElectrical">
-
-                <RadioButton
-                    android:id="@+id/rdIE_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdIE_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <LinearLayout
-                android:id="@+id/layout_deviceType"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/shape_editbox_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rdIsElectrical">
-
-                <Spinner
-                    android:id="@+id/spinDevice"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textPediatric"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:text="Is the device for pediatric use?"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/layout_deviceType"
-                app:layout_constraintTop_toBottomOf="@id/layout_deviceType" />
-
-            <RadioGroup
-                android:id="@+id/rdPediatric"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textPediatric">
-
-                <RadioButton
-                    android:id="@+id/rdPPedia_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdPPedia_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textRadiation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:text="Does the device emit radiation?"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdPediatric" />
-
-            <RadioGroup
-                android:id="@+id/rdRadiation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textRadiation">
-
-                <RadioButton
-                    android:id="@+id/rdPRadiate_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdPRadiate_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textBioOrigin"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:text="Do you have substance of biological origin in your device?"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdRadiation" />
-
-            <RadioGroup
-                android:id="@+id/rdBioOrigin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textBioOrigin">
-
-                <RadioButton
-                    android:id="@+id/rdPBO_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdPBO_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textResale"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:text="Will the device be reprocessed for resale?"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdBioOrigin" />
-
-            <RadioGroup
-                android:id="@+id/rdResale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textResale">
-
-                <RadioButton
-                    android:id="@+id/rdPResale_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="Yes"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rdPResale_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:scaleX=".80"
-                    android:scaleY=".80"
-                    android:text="No"
-                    android:textSize="15sp"
-                    app:layout_constraintTop_toBottomOf="parent" />
-            </RadioGroup>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="50dp"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rdResale">
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent=".5" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/add_product"
-                    android:layout_width="120dp"
-                    android:layout_height="30dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/button_bg"
-                    app:layout_constraintEnd_toEndOf="@id/guideline"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="ADD PRODUCT"
-                        android:textColor="@color/white" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/button_bg"
-                    app:layout_constraintStart_toStartOf="@id/guideline"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="CANCEL"
-                        android:textColor="@color/white" />
-                </androidx.cardview.widget.CardView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/card_add"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="Cancel"
+                    android:textColor="@color/white" />
+            </androidx.cardview.widget.CardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </ScrollView>

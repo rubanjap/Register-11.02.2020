@@ -13,15 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.register.me.R;
+import com.register.me.model.data.model.GetProductModel;
+
+import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
-    int clickedPosition = -1;
-    Context context;
+    private Context context;
     private OnItemClickListener listener;
+    private List<GetProductModel.Product> datalist;
 
-    public void init(Context context, OnItemClickListener listener) {
+    public void init(Context context, List<GetProductModel.Product> datalist, OnItemClickListener listener) {
         this.context = context;
         this.listener = listener;
+        this.datalist = datalist;
     }
 
     @NonNull
@@ -33,55 +37,47 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        holder.bindData(datalist.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return datalist.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         LinearLayout base;
         TextView productNumber;
-        ImageView view_icon;
-        ImageView auction_icon;
-        ImageView send_icon;
-        ImageView edit_icon;
-        ImageView expand_icon;
-        ImageView error_icon;
-        ImageView country_icon;
+        TextView productName;
+        ImageView viewIcon;
+        ImageView auctionIcon;
+        ImageView sendIcon;
+        ImageView editIcon;
+        ImageView expandIcon;
+        ImageView errorIcon;
+        ImageView countryIcon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             base = itemView.findViewById(R.id.productHeader);
-//            countrylist = itemView.findViewById(R.id.country_layout);
             productNumber = itemView.findViewById(R.id.pNumber);
+            productName = itemView.findViewById(R.id.pName);
+            viewIcon = itemView.findViewById(R.id.view_icon);
+            auctionIcon = itemView.findViewById(R.id.auction_icon);
+            sendIcon = itemView.findViewById(R.id.send_icon);
+            editIcon = itemView.findViewById(R.id.edit_icon);
+            expandIcon = itemView.findViewById(R.id.expand_icon);
+            errorIcon = itemView.findViewById(R.id.error_icon);
+            countryIcon = itemView.findViewById(R.id.country_icon);
 
-            view_icon = itemView.findViewById(R.id.view_icon);
-            auction_icon = itemView.findViewById(R.id.auction_icon);
-            send_icon = itemView.findViewById(R.id.send_icon);
-            edit_icon = itemView.findViewById(R.id.edit_icon);
-            expand_icon = itemView.findViewById(R.id.expand_icon);
-            error_icon = itemView.findViewById(R.id.error_icon);
-            country_icon = itemView.findViewById(R.id.country_icon);
-
-            view_icon.setOnClickListener(this);
-            auction_icon.setOnClickListener(this);
-            send_icon.setOnClickListener(this);
-            edit_icon.setOnClickListener(this);
-            expand_icon.setOnClickListener(this);
-            error_icon.setOnClickListener(this);
-            country_icon.setOnClickListener(this);
-
-
-        /*    base.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickedPosition = getAdapterPosition();
-                    notifyDataSetChanged();
-
-                }
-            });*/
+            viewIcon.setOnClickListener(this);
+            auctionIcon.setOnClickListener(this);
+            sendIcon.setOnClickListener(this);
+            editIcon.setOnClickListener(this);
+            expandIcon.setOnClickListener(this);
+            errorIcon.setOnClickListener(this);
+            countryIcon.setOnClickListener(this);
 
         }
 
@@ -99,6 +95,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     listener.onSendIconClick(getAdapterPosition());
                     break;
                 case R.id.edit_icon:
+                    listener.onEditIconClick(getAdapterPosition());
                     Toast.makeText(context, "Edit Clicked", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.expand_icon:
@@ -110,7 +107,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 case R.id.country_icon:
                     listener.onCountryIconClick(getAdapterPosition());
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + id);
             }
+        }
+
+        public void bindData(GetProductModel.Product product) {
+            productName.setText(product.getProduct().getProductName());
+            productNumber.setText(product.getProduct().getProductNumber());
+
+            viewIcon.setVisibility(product.getIsView()? View.VISIBLE : View.GONE);
+            auctionIcon.setVisibility(product.getIsinitiatebid()? View.VISIBLE : View.GONE);
+            sendIcon.setVisibility(product.getIsdirectassign()? View.VISIBLE : View.GONE);
+            editIcon.setVisibility(product.getIsEdit()? View.VISIBLE : View.GONE);
+            expandIcon.setVisibility(product.getIsdirectassignment()? View.VISIBLE : View.GONE);
+            errorIcon.setVisibility(product.getIsCancel()? View.VISIBLE : View.GONE);
+
+            List<GetProductModel.Project> project = product.getProject();
+
+           countryIcon.setVisibility(project.size()!=0 ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -123,5 +138,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         void onSendIconClick(int adapterPosition);
 
         void onCountryIconClick(int adapterPosition);
+
+        void onEditIconClick(int adapterPosition);
     }
 }

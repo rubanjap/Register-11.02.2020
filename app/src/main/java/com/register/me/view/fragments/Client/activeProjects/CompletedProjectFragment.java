@@ -1,4 +1,4 @@
-package com.register.me.view.fragments.dashboardClient.activeProjects;
+package com.register.me.view.fragments.Client.activeProjects;
 
 import android.os.Bundle;
 import android.view.View;
@@ -21,17 +21,18 @@ import butterknife.BindView;
 /**
  * Created by Jennifer - AIT on 12-02-2020PM 12:44.
  */
-public class ActiveProjectSubFragment extends BaseFragment implements IFragment {
+public class CompletedProjectFragment extends BaseFragment implements IFragment {
 
     @Inject
     ProjectAdapter adapter;
     @BindView(R.id.active_recycleview)
-    RecyclerView active_recycleview;
+    RecyclerView complete_recycleview;
     @BindView(R.id.sub_header)
     TextView sub_header;
-
+    @BindView(R.id.txtBid_country)
+    TextView txtBid_country;
     public static IFragment newInstance() {
-        return new ActiveProjectSubFragment();
+        return new CompletedProjectFragment();
     }
 
     @Override
@@ -48,13 +49,13 @@ public class ActiveProjectSubFragment extends BaseFragment implements IFragment 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         injector().inject(this);
-
-        sub_header.setText("Active Projects");
+        sub_header.setText("Completed Projects");
+        txtBid_country.setText("Country");
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
-        active_recycleview.setLayoutManager(layoutManager);
-        adapter.init(getContext(),0);
-        active_recycleview.setAdapter(adapter);
+        complete_recycleview.setLayoutManager(layoutManager);
+        adapter.init(getContext(),1);
+        complete_recycleview.setAdapter(adapter);
 
     }
 }

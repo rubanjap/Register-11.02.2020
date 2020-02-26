@@ -1,27 +1,32 @@
 package com.register.me.model.di.activity;
 
+import com.register.me.presenter.AddProductPresenter;
 import com.register.me.presenter.ChangePasswordPresenter;
+import com.register.me.presenter.CountryPresenter;
 import com.register.me.presenter.HomePresenter;
 import com.register.me.presenter.LoginPresenter;
 import com.register.me.presenter.PersonalInfoPresenter;
+import com.register.me.presenter.PortFolioPresenter;
 import com.register.me.presenter.SignUpPresenter;
+import com.register.me.presenter.ViewProductPresenter;
+import com.register.me.presenter.WelcomePresenter;
 import com.register.me.view.HomeActivity;
 import com.register.me.view.activity.LoginActivity;
 import com.register.me.view.activity.SignUpActivity;
 import com.register.me.view.activity.WelcomeActivity;
 import com.register.me.view.fragments.REA.applicationSubmission.PersonalInfoFragment;
 import com.register.me.view.fragments.REA.onlineInterview.OnlineInterviewFragment;
-import com.register.me.view.fragments.dashboardClient.DashBoardFragment;
-import com.register.me.view.fragments.dashboardClient.activeProjects.ActiveProjectSubFragment;
-import com.register.me.view.fragments.dashboardClient.activeProjects.ActiveProjectsFragment;
-import com.register.me.view.fragments.dashboardClient.activeProjects.CompletedProjectFragment;
-import com.register.me.view.fragments.dashboardClient.auctions.AuctionFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.PortFolioFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.addProducts.AddProductFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.country.CountryFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.directAssignment.CRREDirectFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.initiateProductRegistration.InitiateRegistrationFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.viewProductDetails.ViewProductDetailsFragment;
+import com.register.me.view.fragments.Client.DashBoardFragment;
+import com.register.me.view.fragments.Client.activeProjects.ActiveProjectSubFragment;
+import com.register.me.view.fragments.Client.activeProjects.ActiveProjectsFragment;
+import com.register.me.view.fragments.Client.activeProjects.CompletedProjectFragment;
+import com.register.me.view.fragments.Client.auctions.AuctionFragment;
+import com.register.me.view.fragments.Client.portfolio.PortFolioFragment;
+import com.register.me.view.fragments.Client.portfolio.addProducts.AddProductFragment;
+import com.register.me.view.fragments.Client.portfolio.country.CountryFragment;
+import com.register.me.view.fragments.Client.portfolio.directAssignment.CRREDirectFragment;
+import com.register.me.view.fragments.Client.portfolio.initiateProductRegistration.InitiateRegistrationFragment;
+import com.register.me.view.fragments.Client.portfolio.viewProductDetails.ViewProductDetailsFragment;
 import com.register.me.view.fragments.REA.applicationSubmission.ApplicationSubmissionFragment;
 import com.register.me.view.fragments.navigation.ChangePasswordFragment;
 
@@ -80,6 +85,16 @@ public interface ActivityComponent {
     void inject(ChangePasswordPresenter changePasswordPresenter);
 
     void inject(PersonalInfoPresenter personalInfoPresenter);
+
+    void inject(PortFolioPresenter portFolioPresenter);
+
+    void inject(AddProductPresenter addProductPresenter);
+
+    void inject(ViewProductPresenter viewProductPresenter);
+
+    void inject(CountryPresenter countryPresenter);
+
+    void inject(WelcomePresenter welcomePresenter);
 
     @Subcomponent.Builder
     interface Builder {

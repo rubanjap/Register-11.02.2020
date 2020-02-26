@@ -81,7 +81,8 @@
             android:gravity="center"
             android:text="@string/client_dashboard"
             android:textColor="#FFFFFF"
-            android:textSize="14sp" />
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
     </RelativeLayout>
 

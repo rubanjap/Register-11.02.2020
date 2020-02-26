@@ -3,13 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp">
 
     <TextView
         android:id="@+id/itemTextTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:textSize="15sp"
         android:text="@string/is_it_idv"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +30,8 @@
             android:id="@+id/rdValue_yes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleX=".80"
-            android:scaleY=".80"
+            android:scaleX=".90"
+            android:scaleY=".90"
             android:text="Yes"
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="parent" />
@@ -38,8 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:scaleX=".80"
-            android:scaleY=".80"
+            android:scaleX=".90"
+            android:scaleY=".90"
             android:text="No"
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="parent" />

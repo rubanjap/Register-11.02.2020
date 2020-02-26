@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class AndroidModule {
     private final Context context;
-
+    private String BASE_URL = "http://3.81.189.43/api/";
     public AndroidModule(Context context) {
         this.context = context;
     }
@@ -78,7 +78,7 @@ public class AndroidModule {
                 .build();
 
         return new Retrofit.Builder()
-                .baseUrl(Constants.getBaseUrl())
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();

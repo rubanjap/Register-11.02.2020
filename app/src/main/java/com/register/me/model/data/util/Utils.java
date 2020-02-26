@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.text.InputType;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -24,8 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.register.me.R;
+
 import java.util.Calendar;
-import java.util.regex.Pattern;
 
 
 public class Utils {
@@ -72,14 +73,14 @@ public class Utils {
         } else {
             calendarView.setVisibility(View.GONE);
             hour[0] = picker.getCurrentHour();
-            min[0] =picker.getCurrentMinute();
+            min[0] = picker.getCurrentMinute();
             picker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 
 
                 @Override
                 public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
                     hour[0] = hourOfDay;
-                    min[0] =minute;
+                    min[0] = minute;
                 }
             });
             ok.setOnClickListener(new View.OnClickListener() {
@@ -96,15 +97,14 @@ public class Utils {
         dialog.show();
     }
 
-
     /*
-    *   case 1 - Registration Success Alert
-    *   case 2 - Forgot Password Alert
-    *   case 3 - Password Link Alert
-    * */
-    public void showAlert(Context context, int viewCase,UtilAlertInterface listener){
+     *   case 1 - Registration Success Alert
+     *   case 2 - Forgot Password Alert
+     *   case 3 - Password Link Alert
+     * */
+    public void showAlert(Context context, int viewCase, UtilAlertInterface listener) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.alert_view, null);
         dialog.setView(dialogView);
         dialog.setCancelable(false);
@@ -114,9 +114,10 @@ public class Utils {
         LinearLayout layout_password_link_success = dialogView.findViewById(R.id.layout_password_link_success);
         LinearLayout layout_password_update_success = dialogView.findViewById(R.id.layout_pass_update_success);
         LinearLayout layout_logout = dialogView.findViewById(R.id.layout_logout);
+        LinearLayout layout_update = dialogView.findViewById(R.id.layout_user_update);
         AlertDialog alertDialog = dialog.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        switch(viewCase){
+        switch (viewCase) {
             case 1:
                 layout_registration_success.setVisibility(View.VISIBLE);
                 Button ok = dialogView.findViewById(R.id.btn_ok);
@@ -124,7 +125,7 @@ public class Utils {
                     @Override
                     public void onClick(View v) {
                         alertDialog.dismiss();
-                        ((Activity)context).finish();
+                        ((Activity) context).finish();
                     }
                 });
                 break;
@@ -136,10 +137,10 @@ public class Utils {
                     @Override
                     public void onClick(View v) {
                         String val = edtEmailAddress.getText().toString();
-                        if(val.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(val).matches()){
+                        if (val.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(val).matches()) {
                             listener.alertResponse("$ERROR$ Please enter a valid email");
-                        }else {
-                            listener.alertResponse("$EMAIL$"+val);
+                        } else {
+                            listener.alertResponse("$EMAIL$" + val);
                         }
                         alertDialog.dismiss();
                     }
@@ -185,11 +186,37 @@ public class Utils {
                     }
                 });
                 break;
+            case 6:
+                layout_update.setVisibility(View.VISIBLE);
+                Button btn_user_ok = dialogView.findViewById(R.id.btn_user_ok);
+                btn_user_ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.alertResponse("$SUCCESS$");
+                        alertDialog.dismiss();
+                    }
+                });
+                break;
 
         }
 
 
         alertDialog.show();
+    }
+
+    public int getInputType(int inputType) {
+        switch (inputType) {
+            case 1:
+                return InputType.TYPE_CLASS_TEXT;
+            case 2:
+                return InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
+            case 3:
+                return InputType.TYPE_TEXT_VARIATION_PASSWORD;
+            case 4:
+                return InputType.TYPE_CLASS_NUMBER;
+            default:
+                return inputType;
+        }
     }
 
     public interface UtilDateTimeInterface {

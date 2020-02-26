@@ -28,14 +28,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_weight="1.25"
+                android:layout_weight="1.15"
                 android:textStyle="bold"
                 android:text="PS210D2" />
 
             <TextView
+                android:id="@+id/pName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".75"
+                android:layout_weight=".85"
+                android:paddingStart="15dp"
                 android:text="Patient Station" />
 
         </LinearLayout>
@@ -57,6 +59,7 @@
                 android:layout_marginEnd="10dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="3dp"
+                android:visibility="gone"
                 app:srcCompat="@drawable/view_icon" />
 
             <ImageView
@@ -67,6 +70,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="3dp"
                 android:tint="#09A2C5"
+                android:visibility="gone"
                 app:srcCompat="@drawable/active_auction_icon" />
 
             <ImageView
@@ -77,6 +81,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="3dp"
                 android:tint="#09A2C5"
+                android:visibility="gone"
                 app:srcCompat="@drawable/send_icon" />
 
 
@@ -88,6 +93,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="3dp"
                 android:tint="#09A2C5"
+                android:visibility="gone"
                 app:srcCompat="@drawable/edit_icon" />
 
             <ImageView
@@ -98,6 +104,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="3dp"
                 android:tint="#09A2C5"
+                android:visibility="gone"
                 app:srcCompat="@drawable/expand_icon" />
 
             <ImageView
@@ -108,6 +115,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="3dp"
                 android:tint="#09A2C5"
+                android:visibility="gone"
                 app:srcCompat="@drawable/error_icon" />
 
             <ImageView
@@ -118,6 +126,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="3dp"
                 android:tint="#09A2C5"
+                android:visibility="gone"
                 app:srcCompat="@drawable/more_country" />
 
         </LinearLayout>

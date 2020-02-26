@@ -1,12 +1,12 @@
 package com.register.me.view;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,24 +29,23 @@ import com.register.me.presenter.HomePresenter;
 import com.register.me.view.activity.LoginActivity;
 import com.register.me.view.fragmentmanager.FragmentChannel;
 import com.register.me.view.fragmentmanager.manager.FragmentManagerHandler;
+import com.register.me.view.fragments.Client.DashBoardFragment;
+import com.register.me.view.fragments.Client.activeProjects.ActiveProjectSubFragment;
+import com.register.me.view.fragments.Client.activeProjects.ActiveProjectsFragment;
+import com.register.me.view.fragments.Client.activeProjects.CompletedProjectFragment;
+import com.register.me.view.fragments.Client.auctions.AuctionFragment;
+import com.register.me.view.fragments.Client.portfolio.PortFolioFragment;
+import com.register.me.view.fragments.Client.portfolio.addProducts.AddProductFragment;
+import com.register.me.view.fragments.Client.portfolio.country.CountryFragment;
+import com.register.me.view.fragments.Client.portfolio.directAssignment.CRREDirectFragment;
+import com.register.me.view.fragments.Client.portfolio.initiateProductRegistration.InitiateRegistrationFragment;
+import com.register.me.view.fragments.Client.portfolio.viewProductDetails.ViewProductDetailsFragment;
 import com.register.me.view.fragments.REA.applicationSubmission.ApplicationSubmissionFragment;
 import com.register.me.view.fragments.REA.applicationSubmission.PersonalInfoFragment;
 import com.register.me.view.fragments.REA.onlineInterview.OnlineInterviewFragment;
-import com.register.me.view.fragments.dashboardClient.DashBoardFragment;
-import com.register.me.view.fragments.dashboardClient.activeProjects.ActiveProjectSubFragment;
-import com.register.me.view.fragments.dashboardClient.activeProjects.ActiveProjectsFragment;
-import com.register.me.view.fragments.dashboardClient.activeProjects.CompletedProjectFragment;
-import com.register.me.view.fragments.dashboardClient.auctions.AuctionFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.PortFolioFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.addProducts.AddProductFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.country.CountryFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.directAssignment.CRREDirectFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.initiateProductRegistration.InitiateRegistrationFragment;
-import com.register.me.view.fragments.dashboardClient.portfolio.viewProductDetails.ViewProductDetailsFragment;
 import com.register.me.view.fragments.navigation.ChangePasswordFragment;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -78,6 +77,8 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
     @BindView(R.id.img_user_notification)
     ImageView notification;
     private CircleImageView profileImage;
+    private Uri imageUri;
+    private boolean isProfileClicked = false;
 
     @Override
     protected int getLayoutId() {
@@ -108,12 +109,13 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
         View hView = navigationView.getHeaderView(0);
         profileImage = (CircleImageView) hView.findViewById(R.id.profile_image);
         TextView profileName = (TextView) hView.findViewById(R.id.txt_profile_name);
-        profileImage.setImageResource(R.drawable.checked);
-        profileName.setText("Jennifer Sashi");
+        Glide.with(this).load(homePresenter.getProfileImage()).into(profileImage);
+        profileName.setText(homePresenter.getUserName());
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-homePresenter.pickImage();
+                profileImage.setClickable(false);
+                homePresenter.pickImage();
             }
         });
     }
@@ -122,12 +124,8 @@ homePresenter.pickImage();
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.nav_profile:
-                break;
             case R.id.nav_change_password:
                 showChangePassword();
-                break;
-            case R.id.nav_notification:
                 break;
             case R.id.nav_logout:
                 homePresenter.logout();
@@ -138,26 +136,40 @@ homePresenter.pickImage();
 
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            homePresenter.pickImage();
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK &&
-                data != null && data.getData() != null) {
-            Uri imageUri = data.getData();
-//            profileImage.setImageURI(imageUri);
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
-                byte[] byteArray = outputStream.toByteArray();
-                String encoded = Base64.encodeToString(byteArray,Base64.DEFAULT);
-                Log.d("Encoded",encoded);
+        try {
+            if (resultCode == RESULT_OK &&
+                    data != null && data.getData() != null) {
 
-                homePresenter.apiUpdateAvatar(encoded);
+                imageUri = data.getData();
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                Bitmap converetdImage = homePresenter.getResizedBitmap(bitmap, 400);
+                try {
+
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    converetdImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                    byte[] byteArray = outputStream.toByteArray();
+                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+//                Log.d("Encoded", encoded);
+
+                    homePresenter.apiUpdateAvatar(bitmap);
 
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -177,8 +189,10 @@ homePresenter.pickImage();
 
     @OnClick(R.id.img_user_profile)
     public void onClickUserProfile() {
-        fragmentManagerHandler.popUpAll();
-        showPersonalInfo();
+        if (!isProfileClicked) {
+            isProfileClicked = true;
+            showPersonalInfo();
+        }
     }
 
     @OnClick(R.id.img_user_notification)
@@ -194,7 +208,8 @@ homePresenter.pickImage();
 
     @OnClick(R.id.img_back_pressed)
     public void onBackpressed() {
-        fragmentManagerHandler.onBackPressed();
+       onBackPressed();
+//        fragmentManagerHandler.onBackPressed();
     }
 
     @Override
@@ -208,6 +223,21 @@ homePresenter.pickImage();
         /*if (tlMain.getAlpha() < 1f) {
             Utils.fadeIn(tlMain);
         }*/
+    }
+
+    @Override
+    public void popUp() {
+        fragmentManagerHandler.popUp();
+    }
+
+    @Override
+    public void popUpAll() {
+        fragmentManagerHandler.popUpAll();
+    }
+
+    @Override
+    public void updateNavigation() {
+        setNavigationHeader();
     }
 
     @Override
@@ -288,8 +318,10 @@ homePresenter.pickImage();
     @Override
     public void updateProfileImage(String url) {
 
-        if(url == null){
-           url= homePresenter.getProfileImage();
+        if (url == null) {
+            url = homePresenter.getProfileImage();
+        } else {
+            profileImage.setClickable(true);
         }
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -352,22 +384,10 @@ homePresenter.pickImage();
     }
 
     @Override
-    public void setTitle() {
-
-    }
-
-    @Override
-    public void dispose() {
-        homePresenter.dispose();
-    }
-
-    @Override
-    public void restore() {
-
-    }
-
-    @Override
     public void onBackPressed() {
+        if (isProfileClicked) {
+            isProfileClicked = false;
+        }
         fragmentManagerHandler.onBackPressed();
 
     }

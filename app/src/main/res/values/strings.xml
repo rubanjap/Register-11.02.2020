@@ -17,12 +17,13 @@
     <string name="product_number">Product Number</string>
     <string name="product_name">Product Name</string>
     <string name="view_product">VIEW PRODUCT</string>
+    <string name="product_description">Product Description</string>
     <string name="crre_direct">CRRE Direct Assignment</string>
     <string name="country">COUNTRY DASHBOARD</string>
     <string name="product_details">PRODUCT DETAILS</string>
     <string name="add_new_product">Add New Product</string>
     <string name="product_classification">Product Classification</string>
-    <string name="is_it_idv">Is it IDV?</string>
+    <string name="is_it_idv">Is it IVD?</string>
     <string name="is_it_life_supporting_life_sustaining">Is it life supporting / life sustaining?</string>
     <string name="any_direct_or_indirect_patients_contacting_components">Any direct or indirect patients contacting components?</string>
     <string name="if_yes_is_it_implant">If yes, is it implant?</string>
@@ -59,8 +60,71 @@
         <item>RRE</item>
     </string-array>
 
+    <string-array name="classification_type">
+        <item>Class I</item>
+        <item>Class II</item>
+        <item>Class III</item>
+        <item>Combination</item>
+    </string-array>
 
-    <!--RRE PROJECT-->
+    <string-array name="connection_type">
+        <item>Cloud Communication</item>
+        <item>Network connection (active or not)</item>
+        <item>Wireless communication in any form</item>
+        <item>USB/ serial ports/ removable media</item>
+        <item>Software upgrades (this includes patches)</item>
+        <item>None of the above (no Cybersecurity needed)</item>
+    </string-array>
+
+    <string-array name="indication">
+        <item>Prescription (Rx)</item>
+        <item>Over-the-Counter (OTC) or</item>
+        <item>Both Rx and OTC</item>
+    </string-array>
+
+
+
+    <string-array name="intended_population">
+        <item>Adults (greater than 21 years of age)</item>
+        <item>Neonate/Newborn (Birth through 28 days)</item>
+        <item>Infant (29 days to 2 years of age)</item>
+        <item>Child (from 2 years to 12 years of age)</item>
+        <item>Adolescent (from 12 years to 18 years of age)</item>
+        <item>Transitional Adolescent A (18 through 21 years of age, special considerations given, different from adults)</item>
+        <item>Transitional Adolescent B (18 through 21 years of age, no special considerations given when compared to adults)</item>
+    </string-array>
+
+
+    <string-array name="device_type">
+        <item>A single use device(s), non-sterile or packaged as sterilize before use</item>
+        <item>A single use device(s), terminal/ end user sterilized</item>
+        <item>A reusable single patient use device(s)</item>
+        <item>A reusable multi-patient use device(s) Please identify the device(s), and/or accessory(ies), and/or components(s) that are reusable</item>
+    </string-array>
+
+  <string-array name="usage_env">
+        <item>Professional Health Care</item>
+        <item>Home Environment</item>
+        <item>Magnetic Resonance Environment</item>
+        <item>Transport or Ambulatory</item>
+        <item>Other</item>
+    </string-array>
+
+
+    <string-array name="sterile">
+        <item>ETO</item>
+        <item>Gamma</item>
+        <item>E-beam</item>
+        <item>Heat – dry</item>
+        <item>Heat – moist</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="battery">
+        <item>Battery</item>
+        <item>Wall Powered</item>
+    </string-array>
+
     <string name="rre_dashboard">REGULATORY EXPERT APPLICATION</string>
     <string name="network_alert">Please check your network connection</string>
     <string name="empty_email_alert">Please enter your email address</string>
@@ -69,5 +133,15 @@
     <string name="password_alert"><![CDATA[Password must contain upper,lower case letters, digits and one special character(>6)]]></string>
     <string name="profile_details">PROFILE DETAILS</string>
     <string name="user_info">User Profile Information</string>
+    <string name="Is_the_device_life_supporting">Is the device life supporting or life sustaining?</string>
+    <string name="Is_the_device_or_component_an_implant">Is the device life supporting or life sustaining?</string>
+    <string name="are_there_any_direct_or_indirect_patient_contacting_components">Are there any direct or indirect patient contacting components?</string>
+    <string name="is_the_device_digital_health_technology_or_does_it_contain_digital_health_technology">Is the device digital health technology, or does it contain digital health technology?</string>
+    <string name="does_the_device_use_software_firmware">Does the device use software/firmware?</string>
+    <string name="select_the_type_of_sterile_processing">Select the type of sterile processing</string>
+    <string name="does_the_device_or_a_component_need_sterilization_by_the_manufacturer_or_user">Does the device or a component need sterilization (by the manufacturer or user) ?</string>
+    <string name="select_electrical_device_type">Select Electrical Device Type</string>
+    <string name="avatar_update_failed">Profile Image update Failed</string>
+
 
 </resources>

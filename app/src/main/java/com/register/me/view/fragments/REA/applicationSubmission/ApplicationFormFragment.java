@@ -36,20 +36,31 @@ public class ApplicationFormFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         questionList = new ArrayList<>();
-        questionList.add(new QandA("How many product registrations have you completed", "", 1));
-        questionList.add(new QandA("Product Description", "", 1));
-        questionList.add(new QandA("Product Classification", "", 1));
-        questionList.add(new QandA("Have any been IVD?", "", 2));
-        questionList.add(new QandA("Have any been life supporting / life sustaining?", "", 2));
-        questionList.add(new QandA("Have any had direct or indirect patients contacting components?", "", 2));
-        questionList.add(new QandA("How many registered products used software and / or firmware?", "", 3));
-        questionList.add(new QandA("Select Connection Type", "", 1));
-        questionList.add(new QandA("How many registered products were sterilized products?", "", 3));
-        questionList.add(new QandA("Select Product Type", "", 3));
-        questionList.add(new QandA("Select Usage Environment", "", 3));
-        questionList.add(new QandA("Have any been combination devices?", "", 2));
-        questionList.add(new QandA("Have any been electrical?", "", 2));
-        questionList.add(new QandA("Have any been adult (pediatric)?", "", 2));
+        /*
+         * 1 - text
+         * 2 - email
+         * 3- password
+         * */
+        /*
+         * 1 - action_next;
+         * 2 - action_done
+         * 2 - password
+         * */
+
+       /* questionList.add(new QandA("How many product registrations have you completed", "", 1,1,1));
+        questionList.add(new QandA("Product Description", "", 1,1,1));
+        questionList.add(new QandA("Product Classification", "", 1,1,2));
+        questionList.add(new QandA("Have any been IVD?", "", 2,0,0));
+        questionList.add(new QandA("Have any been life supporting / life sustaining?", "", 2,0,0));
+        questionList.add(new QandA("Have any had direct or indirect patients contacting components?", "", 2,0,0));
+        questionList.add(new QandA("How many registered products used software and / or firmware?", "", 3,0,0));
+        questionList.add(new QandA("Select Connection Type", "", 1,1,2));
+        questionList.add(new QandA("How many registered products were sterilized products?", "", 3,0,0));
+        questionList.add(new QandA("Select Product Type", "", 3,0,0));
+        questionList.add(new QandA("Select Usage Environment", "", 3,0,0));
+        questionList.add(new QandA("Have any been combination devices?", "", 2,0,0));
+        questionList.add(new QandA("Have any been electrical?", "", 2,0,0));
+        questionList.add(new QandA("Have any been adult (pediatric)?", "", 2,0,0));*/
 
     }
 

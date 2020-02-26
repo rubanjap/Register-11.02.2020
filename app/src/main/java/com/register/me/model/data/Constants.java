@@ -1,6 +1,10 @@
 package com.register.me.model.data;
 
 
+import com.register.me.model.data.model.GetProductModel;
+
+import java.util.List;
+
 public class Constants {
 
     public static final String ERROR = "error";
@@ -16,13 +20,13 @@ public class Constants {
      * 1 - Screen from Active Auction
      * 2 - Screen from Active Projects
      * */
-    public int VIEW_SCREEN_FROM;
+    private int VIEW_SCREEN_FROM;
 
     /*
      * 0 - Role client
      * 1 - Role RRE
      * */
-    public int USER_ROLE;
+    private int USER_ROLE;
 
     /*
      * 1 - tab 1
@@ -31,20 +35,24 @@ public class Constants {
      * 4 - tab -4
      * */
 
-    public int TAB;
+    private int TAB;
 
     /*
      * CACHE REPO CONSTANTS*/
 
-    public String CACHE_IS_LOGGED = "isLogged";
-    public String CACHE_USERNAME = "username";
-    public String CACHE_ROLE = "role";
-    public String CACHE_TOKEN = "token";
-    public String CACHE_TOKEN_TYPE = "token_type";
-    public String CACHE_USER_PROFILE_URL = "profile_url";
+    private String CACHE_IS_LOGGED = "isLogged";
+    private String CACHE_USERNAME = "username";
+    private String CACHE_ROLE = "role";
+    private String CACHE_TOKEN = "token";
+    private String CACHE_TOKEN_TYPE = "token_type";
+    private String CACHE_USER_PROFILE_URL = "profile_url";
+    private String CACHE_USER_INFO = "user_profile";
 
 
-    public static String BASE_URL = "http://3.81.189.43/api/";
+//    public static String BASE_URL = "http://192.168.88.62:8092/api/";
+
+    private GetProductModel.Product selectedList;
+    private List<GetProductModel.Product> BASE_PRODUCT_LIST;
 
 
     /******************************* Getter Setter ******************************************/
@@ -110,14 +118,6 @@ public class Constants {
         this.CACHE_IS_LOGGED = CACHE_IS_LOGGED;
     }
 
-    public static String getBaseUrl() {
-        return BASE_URL;
-    }
-
-    public void setBaseUrl(String baseUrl) {
-        BASE_URL = baseUrl;
-    }
-
     public String getCACHE_IS_LOGGED() {
         return CACHE_IS_LOGGED;
     }
@@ -168,5 +168,29 @@ public class Constants {
 
     public String getPasswordPattern() {
         return "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+    }
+
+    public GetProductModel.Product getSelectedList() {
+        return selectedList;
+    }
+
+    public void setSelectedList(GetProductModel.Product selectedList) {
+        this.selectedList = selectedList;
+    }
+
+    public List<GetProductModel.Product> getBASE_PRODUCT_LIST() {
+        return BASE_PRODUCT_LIST;
+    }
+
+    public void setBASE_PRODUCT_LIST(List<GetProductModel.Product> BASE_PRODUCT_LIST) {
+        this.BASE_PRODUCT_LIST = BASE_PRODUCT_LIST;
+    }
+
+    public String getCACHE_USER_INFO() {
+        return CACHE_USER_INFO;
+    }
+
+    public void setCACHE_USER_INFO(String CACHE_USER_INFO) {
+        this.CACHE_USER_INFO = CACHE_USER_INFO;
     }
 }

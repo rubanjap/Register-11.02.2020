@@ -1,4 +1,4 @@
-package com.register.me.view.fragments.dashboardClient;
+package com.register.me.view.fragments.Client;
 
 import android.os.Bundle;
 import android.view.View;

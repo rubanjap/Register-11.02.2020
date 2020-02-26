@@ -1,4 +1,4 @@
-package com.register.me.view.fragments.dashboardClient.portfolio.directAssignment;
+package com.register.me.view.fragments.Client.portfolio.directAssignment;
 
 import android.os.Build;
 import android.os.Bundle;

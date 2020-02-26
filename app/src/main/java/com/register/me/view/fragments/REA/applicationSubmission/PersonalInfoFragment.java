@@ -1,16 +1,22 @@
 package com.register.me.view.fragments.REA.applicationSubmission;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,19 +45,18 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
     @BindView(R.id.profile_container)
     LinearLayout container;
     @BindView(R.id.base)
-    ScrollView base;
+    LinearLayout base;
     @BindView(R.id.btn_layout)
     ConstraintLayout layoutBTN;
     @BindView(R.id.disableClick)
     View disableView;
-    @BindView(R.id.img_save)
-    View saveImg;
     @BindView(R.id.img_Edit)
-    ImageView editSaveImg;
+    ImageView editImg;
     private ArrayList<QandA> info;
 
     @Inject
     PersonalInfoPresenter presenter;
+    private boolean isExit =false;
 
     public static IFragment newInstance() {
         return new PersonalInfoFragment();
@@ -75,9 +80,8 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector().inject(this);
-//        getQandA();
         presenter.init(getContext(), this);
-        presenter.getUserDetails();
+
 
     }
 
@@ -85,33 +89,93 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        updateUI();
+        presenter.getUserDetails();
     }
 
     private void updateUI() {
 
         View inflateView;
         container.removeAllViews();
+        int i = 0;
         for (QandA item : info) {
+            String question = item.getQuestion();
+            String answer = item.getAnswer();
             switch (item.getType()) {
+                /*
+                 * case 1 : Edit Text
+                 * case 2 : Radio Button
+                 * case 3 : Spinner */
+
                 case 1:
                     inflateView = LayoutInflater.from(getContext()).inflate(R.layout.item_edittext, null, false);
-                    TextView txtView = inflateView.findViewById(R.id.itemTxtTitle);
-                    TextView txtValue = inflateView.findViewById(R.id.itemEditValue);
-                    txtView.setText(item.getQuestion());
-                    txtValue.setText(item.getAnswer());
+                    TextView txtQuest = inflateView.findViewById(R.id.itemTxtTitle);
+                    EditText txtAns = inflateView.findViewById(R.id.itemEditValue);
+                    txtQuest.setText(question);
+                    txtAns.setText(answer);
+                    txtAns.setImeOptions(item.getAction() == 1 ? EditorInfo.IME_ACTION_NEXT : EditorInfo.IME_ACTION_DONE);
+
+                    int inputType = item.getInputType();
+                   txtAns.setInputType(presenter.getInputType(inputType));
+
+
+                    int finalI = i;
+                    if (question.equals("Email")) {
+                        txtAns.setFocusable(false);
+                    } else {
+                        txtAns.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                            Log.d("onTextChanged", s.toString());
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        info.get(finalI).setAnswer(s.toString());
+                                        Log.d("afterTextChanged", s.toString());
+                                    }
+                                }).start();
+
+                            }
+                        });
+                    }
                     break;
                 case 2:
                     inflateView = LayoutInflater.from(getContext()).inflate(R.layout.item_radio_group, null, false);
                     TextView txtRadioView = inflateView.findViewById(R.id.itemTextTitle);
-                    txtRadioView.setText(item.getQuestion());
+                    txtRadioView.setText(question);
+                    RadioGroup group = inflateView.findViewById(R.id.rdValue);
+                    RadioButton email = inflateView.findViewById(R.id.rdValue_yes);
+                    RadioButton sms = inflateView.findViewById(R.id.rdValue_no);
+                    email.setText("Email");
+                    sms.setVisibility(View.GONE);
+                    int finalI1 = i;
+                    if (answer.equals("true")) {
+                        email.setChecked(true);
+                    } else {
+                        email.setChecked(false);
+                    }
+                    group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                            if (checkedId == R.id.rdValue_yes) {
+                                info.get(finalI1).setAnswer("true");
+                            }
+                        }
+                    });
 
                     break;
                 case 3:
                     inflateView = LayoutInflater.from(getContext()).inflate(R.layout.item_spinner, null, false);
                     TextView txtSpinnerView = inflateView.findViewById(R.id.textSpinnerTitle);
-                    txtSpinnerView.setText(item.getQuestion());
+                    txtSpinnerView.setText(question);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + item.getType());
@@ -119,25 +183,8 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
             container.addView(inflateView);
             base.setVisibility(View.VISIBLE);
             layoutBTN.setVisibility(View.GONE);
-
+            i = i + 1;
         }
-    }
-
-    private void getQandA() {
-        info = new ArrayList<QandA>();
-        info.add(new QandA("First Name", "", 1));
-        info.add(new QandA("Last Name", "", 1));
-        info.add(new QandA("Email", "", 1));
-        info.add(new QandA("Telephone", "", 1));
-        info.add(new QandA("Cell Phone", "", 1));
-       /* info.add(new QandA("Company Name","",1));
-        info.add(new QandA("Address 1","",1));
-        info.add(new QandA("Address 2","",1));
-        info.add(new QandA("City","",1));
-        info.add(new QandA("State","",1));
-        info.add(new QandA("Postal Code","",1));
-        info.add(new QandA("Country","",1));*/
-        info.add(new QandA("Notification", "", 2));
     }
 
     @Override
@@ -147,12 +194,16 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
 
     @Override
     public void showErrorMessage(String message) {
-        KToast.customColorToast((Activity) getContext(), message, Gravity.BOTTOM, KToast.LENGTH_SHORT, R.color.red);
+        KToast.customColorToast((Activity) getContext(), message, Gravity.BOTTOM, KToast.LENGTH_AUTO, R.color.red);
 
     }
 
     @Override
     public void updateUI(ArrayList<QandA> body) {
+        if(isExit) {
+            fragmentChannel.updateNavigation();
+            return;
+        }
         info = new ArrayList<QandA>();
         info = (ArrayList<QandA>) body.clone();
         updateUI();
@@ -164,29 +215,36 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
         showErrorMessage(s);
     }
 
+    @Override
+    public void exitScreen() {
+        isExit =true;
+        presenter.getUserDetails();
+        fragmentChannel.popUp();
+    }
+
     @OnClick(R.id.disableClick)
     public void disableClick() {
+        KToast.normalToast(getActivity(), "Please click edit icon to update profile info", Gravity.BOTTOM, KToast.LENGTH_AUTO);
 
     }
 
     @OnClick(R.id.img_Edit)
-    public void onClickEdit(){
-        Drawable.ConstantState constantState = editSaveImg.getDrawable().getConstantState();
-        Drawable.ConstantState constantState1 = getContext().getResources().getDrawable(R.drawable.edit_icon,null).getConstantState();
-        Drawable.ConstantState constantState2 = getContext().getResources().getDrawable(R.drawable.ic_highlight_off_black_24dp,null).getConstantState();
-        if(constantState == constantState1){
+    public void onClickEdit() {
         disableView.setVisibility(View.GONE);
-        editSaveImg.setImageResource(R.drawable.ic_highlight_off_black_24dp);
-        saveImg.setVisibility(View.VISIBLE);}
-        else if(constantState == constantState2) {
-                disableView.setVisibility(View.VISIBLE);
-                editSaveImg.setImageResource(R.drawable.edit_icon);
-                saveImg.setVisibility(View.GONE);
-            }
+        editImg.setVisibility(View.GONE);
+        layoutBTN.setVisibility(View.VISIBLE);
     }
 
-    @OnClick(R.id.img_save)
-    public void updateProfile(){
-        Toast.makeText(getContext(), "Update Profile", Toast.LENGTH_SHORT).show();
+    @OnClick(R.id.card_cancel)
+    public void onClickCancel() {
+        fragmentChannel.popUp();
+    }
+
+
+    @OnClick(R.id.card_update)
+    public void onClickUpdate() {
+        presenter.validate(info);
+//        presenter.updateUser(info);
+
     }
 }

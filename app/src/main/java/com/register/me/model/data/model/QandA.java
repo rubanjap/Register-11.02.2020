@@ -1,22 +1,49 @@
 package com.register.me.model.data.model;
 
+import java.util.List;
+
 /**
  * Created by Jennifer - AIT on 14-02-2020AM 11:06.
  */
 public class QandA {
+
+    private final String apiKey;
     String question;
     String answer;
     /*
-    1-EditText
-    * 2-RadioButton
-    *
-    */
+     * 1 - EditText
+     * 2 - RadioButton
+     * 3 - Spinner
+     * 4 - RadioRadio
+     * 5 - RadioSpinner
+     */
     int type;
+    /*
+     * 1 - text
+     * 2 - email
+     * 3- password
+     * */
+    private final int inputType;
+    /*
+     * 1 - action_next;
+     * 2 - action_done
+     * 2 - password
+     * */
+    private final int action;
 
-    public QandA(String question, String answer, int type) {
+    private QandA subQA;
+
+    private List<String> subList = null;
+
+    public QandA(String question, String answer, int type, int inputType, int action,String apiKey,QandA subQA,List<String> subList) {
         this.question = question;
         this.answer = answer;
         this.type = type;
+        this.inputType = inputType;
+        this.action = action;
+        this.apiKey = apiKey;
+        this.subQA = subQA;
+        this.subList = subList;
     }
 
     public String getQuestion() {
@@ -41,5 +68,33 @@ public class QandA {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getInputType() {
+        return inputType;
+    }
+
+    public int getAction() {
+        return action;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public QandA getSubQA() {
+        return subQA;
+    }
+
+    public void setSubQA(QandA subQA) {
+        this.subQA = subQA;
+    }
+
+    public List<String> getSubList() {
+        return subList;
+    }
+
+    public void setSubList(List<String> subList) {
+        this.subList = subList;
     }
 }

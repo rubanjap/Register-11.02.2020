@@ -3,7 +3,13 @@ package com.register.me.view.fragmentmanager;
 
 public interface FragmentChannel {
 
+    void popUp();
+
+    void popUpAll();
+
     void fadeOutToolbar();
+
+    void updateNavigation();
 
     void showHome();
 

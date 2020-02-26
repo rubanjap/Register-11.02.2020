@@ -89,7 +89,7 @@ public class SignUpPresenter implements NetworkCall.NetworkSignUpInterface {
     }
 
     @Override
-    public void onRegisterFailure() {
+    public void onRegisterFailure(String message) {
         listener.dismissProgress();
     }
 

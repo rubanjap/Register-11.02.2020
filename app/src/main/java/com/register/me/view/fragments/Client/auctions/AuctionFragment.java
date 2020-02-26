@@ -1,4 +1,4 @@
-package com.register.me.view.fragments.dashboardClient.auctions;
+package com.register.me.view.fragments.Client.auctions;
 
 import android.os.Bundle;
 import android.view.View;

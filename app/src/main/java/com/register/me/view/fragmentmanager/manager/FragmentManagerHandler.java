@@ -17,7 +17,7 @@ import org.parceler.Parcels;
  */
 public class FragmentManagerHandler {
 
-    private static final String KEY_TAGS = "key_tags";
+    private final String KEY_TAGS = "key_tags";
     private FragmentManager fragmentManager;
     private int fragmentContainerId;
     private FragmentTagStack fragmentTagStack;

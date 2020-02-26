@@ -6,6 +6,8 @@ import android.widget.ImageView;
 
 import com.register.me.R;
 import com.register.me.model.data.Constants;
+import com.register.me.presenter.PersonalInfoPresenter;
+import com.register.me.presenter.WelcomePresenter;
 import com.register.me.view.BaseActivity;
 import com.register.me.view.HomeActivity;
 
@@ -24,6 +26,9 @@ public class WelcomeActivity extends BaseActivity {
     ImageView tabThree;
     @BindView(R.id.img_tab_four)
     ImageView tabFour;
+
+    @Inject
+    WelcomePresenter welcomePresenter;
 
     @Inject
     Constants constants;
@@ -45,6 +50,8 @@ public class WelcomeActivity extends BaseActivity {
             tabThree.setImageResource(R.drawable.application);
             tabFour.setImageResource(R.drawable.certificate);
         }
+        welcomePresenter.init(this);
+        welcomePresenter.getUserProfile();
     }
 
 
