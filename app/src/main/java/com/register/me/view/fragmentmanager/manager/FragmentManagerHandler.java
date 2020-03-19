@@ -2,9 +2,10 @@ package com.register.me.view.fragmentmanager.manager;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.FrameLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import android.widget.FrameLayout;
 
 import com.register.me.R;
 import com.register.me.presenter.FragmentPresenter;
@@ -65,11 +66,22 @@ public class FragmentManagerHandler {
             if (currentFragmentView != null) {
                 currentFragmentView.setTitle();
             }
-        }else{
-                activity.finish();
+        } else {
+            activity.finish();
         }
+
     }
 
+    public int getStack(){
+        return fragmentManager.getBackStackEntryCount();
+    }
+
+    public String getFragmentName(){
+        int index =fragmentManager.getBackStackEntryCount() - 1;
+        FragmentManager.BackStackEntry backEntry = fragmentManager.getBackStackEntryAt(index);
+        String tag = backEntry.getName();
+        return tag;
+    }
     public void popUp() {
         fragmentManager.popBackStackImmediate();
         fragmentTagStack.pop();
@@ -98,6 +110,8 @@ public class FragmentManagerHandler {
     public Fragment getCurrentFragment() {
         return fragmentManager.findFragmentByTag(fragmentTagStack.getActiveTag());
     }
+
+
 
     public void disposeEverything() {
         FragmentPresenter.View currentFragmentView = getCurrentFragmentView();

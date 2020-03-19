@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.onurkaganaldemir.ktoastlib.KToast;
@@ -22,7 +19,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.Interceptor;
 
 public class LoginActivity extends BaseActivity implements LoginPresenter.ILogin {
 
@@ -51,23 +47,27 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.ILogin
         super.onCreate(savedInstanceState);
         injector().inject(this);
         presenter.init(this, this);
-       if(presenter.isLoggedIn()){
-           navigate();
-       }
+        if (presenter.isLoggedIn()) {
+            navigate();
+        }
 
     }
 
     @OnClick(R.id.card_signIn)
     public void signInClick() {
 
-//        String emailAddress = email.getText().toString();
-//        String pass = password.getText().toString();
-        String emailAddress = "ajsashiapp@gmail.com";
-        String pass = "Test@123";
-//        presenter.validation("rajeshkannan.p@aitechindia.com", "Hello@123");//Client
+        String emailAddress = email.getText().toString();
+        String pass = password.getText().toString();
+//        String emailAddress = "ajsashiapp@gmail.com";
+//        String pass = "Test@123";
+//        email.setText(emailAddress);
+//        password.setText(pass);
+//        presenter.validation("satheeshkumarait@gmail.com", "123456");//Client
+
         presenter.validation(emailAddress, pass);//Client
 //        presenter.validation("rajesh13@20minutemail.iti","123456");//RRE
 //       presenter.validation("test@test.com","123456789");
+
     }
 
     @OnClick(R.id.txt_SignUp)
@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.ILogin
     }
 
     @OnClick(R.id.txtForgotPassword)
-    public void onClickForgotPassword(){
+    public void onClickForgotPassword() {
         presenter.forgotPassword();
     }
 
@@ -107,7 +107,18 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.ILogin
 
     @Override
     public void navigate() {
-        startActivity(new Intent(this, WelcomeActivity.class));
-        finish();
+    /*    String role = presenter.getRole();
+        if (role.equals("Client")) {*/
+            startActivity(new Intent(this, WelcomeActivity.class));
+            finish();/*
+        } else if (role.equals("RRE")) {
+            startActivity(new Intent(this, WelcomeRREActivity.class));
+            finish();
+        }*/
+    }
+
+    @Override
+    public void clearFields() {
+        password.setText("");
     }
 }

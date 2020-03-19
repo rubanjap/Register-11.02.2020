@@ -4,7 +4,9 @@ package com.register.me.view.fragments.Client.portfolio.country;
  * Created by Jennifer - AIT on 11-02-2020.
  */
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,34 +15,32 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.onurkaganaldemir.ktoastlib.KToast;
 import com.register.me.R;
-import com.register.me.model.data.model.GetProductModel;
+import com.register.me.model.data.model.ProjectModel;
 import com.register.me.presenter.CountryPresenter;
 import com.register.me.view.BaseFragment;
-import com.register.me.view.HomeActivity;
 import com.register.me.view.fragmentmanager.manager.IFragment;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
-import java.util.TimeZone;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
 
-public class CountryFragment extends BaseFragment implements IFragment {
+public class CountryFragment extends BaseFragment implements IFragment, CountryPresenter.ICountryListener {
 
     private static final String FRAGMENT_NAME = "Country";
 
     @BindView(R.id.country_container)
     LinearLayout container;
-
+    @BindView(R.id.progressbar)
+    ConstraintLayout progressLayout;
     @BindView(R.id.pNumber)
     TextView number;
     @BindView(R.id.pName)
@@ -53,7 +53,9 @@ public class CountryFragment extends BaseFragment implements IFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector().inject(this);
-        presenter.init(getContext());
+        presenter.init(getContext(), this);
+        fragmentChannel.setTitle(getResources().getString(R.string.country));
+
     }
 
     @Nullable
@@ -65,45 +67,57 @@ public class CountryFragment extends BaseFragment implements IFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        presenter.triggerApi();
         number.setText(presenter.getNumber());
         name.setText(presenter.getName());
         container.removeAllViews();
-        List<GetProductModel.Project> cList = presenter.getCountryList();
-        for (int i = 0; i < cList.size(); i++) {
-            View inflatedView = LayoutInflater.from(getContext()).inflate(R.layout.country_item, null, false);
-            TextView country = inflatedView.findViewById(R.id.txt_country);
-            TextView startDate = inflatedView.findViewById(R.id.txt_startDate);
-            TextView status = inflatedView.findViewById(R.id.txt_status);
-            ImageView viewIcon = inflatedView.findViewById(R.id.view);
-            ImageView directAssignIcon = inflatedView.findViewById(R.id.direct_assign);
-            ImageView closeIcon = inflatedView.findViewById(R.id.close);
-            GetProductModel.Project project = cList.get(i);
-            country.setText(project.getProjectLocation().getRegion());
-            String bidStartDate = project.getProductOppurtunity().getBidStartDate();
-            startDate.setText(bidStartDate);
-            status.setText(project.getBidstatus());
-            viewIcon.setVisibility(project.getIsView() ? View.VISIBLE : View.GONE);
-            directAssignIcon.setVisibility(project.getIsdirectassignment() ? View.VISIBLE : View.GONE);
-            closeIcon.setVisibility(project.getIsCancel() ? View.VISIBLE : View.GONE);
-            viewIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    fragmentChannel.showViewProductDetails();
-                }
-            });
-            container.addView(inflatedView);
-
-        }
     }
 
+    @NotNull
+    private View getView(ProjectModel.Project cList) {
+        View inflatedView = LayoutInflater.from(getContext()).inflate(R.layout.country_item, null, false);
+        TextView country = inflatedView.findViewById(R.id.txt_pCountry);
+        TextView startDate = inflatedView.findViewById(R.id.txt_startDate);
+        TextView status = inflatedView.findViewById(R.id.txt_status);
+        ImageView viewIcon = inflatedView.findViewById(R.id.view);
+        ImageView directAssignIcon = inflatedView.findViewById(R.id.direct_assign);
+        ImageView cancelIcon = inflatedView.findViewById(R.id.close);
+//        GetProductModel.Project project = cList.get(i);
+        String region = cList.getProjectlocations().getRegion();
+        country.setText(region);
+        String bidStartDate = cList.getProductOppurtunity().getBidStartDate();
+        startDate.setText(bidStartDate);
+        String bidstatus = cList.getBidstatus();
+        status.setText(bidstatus);
+        if(bidstatus.equals("Waiting for Assignment")){
+            status.setOnClickListener(view -> {
+                fragmentChannel.showProjectAssign(presenter.getName(),cList.getProjectlocations().getLocationid(),cList.getProjectlocations().getRegion());
+            });
+        }
+        viewIcon.setVisibility(cList.getIsView() ? View.VISIBLE : View.GONE);
+        directAssignIcon.setVisibility(cList.getIsdirectassignment() ? View.VISIBLE : View.GONE);
+        cancelIcon.setVisibility(cList.getIsCancel() ? View.VISIBLE : View.GONE);
+        viewIcon.setOnClickListener(view -> {
+            setId(cList);
+            fragmentChannel.showViewProductDetails();
+            presenter.setViewScreen();
+        });
 
+        directAssignIcon.setOnClickListener(view -> {
+            setId(cList);
+            presenter.directAssign();
+        });
 
+        cancelIcon.setOnClickListener(view -> {
+            setId(cList);
+            presenter.cancelProject();
+        });
+        return inflatedView;
+    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) getActivity()).setHeaderText(getResources().getString(R.string.country));
+    private void setId(ProjectModel.Project cList) {
+        String id = String.valueOf(cList.getProductOppurtunity().getProjectid());
+        presenter.setProject(id);
     }
 
 
@@ -121,4 +135,33 @@ public class CountryFragment extends BaseFragment implements IFragment {
         return new CountryFragment();
     }
 
+    @Override
+    public void showMessage(String message) {
+        KToast.customColorToast((Activity) getContext(), message, Gravity.BOTTOM, KToast.LENGTH_SHORT, R.color.red);
+
+    }
+
+    @Override
+    public void navigate() {
+        fragmentChannel.popUp();
+    }
+
+    @Override
+    public void updateUI(List<ProjectModel.Project> projects) {
+        container.removeAllViews();
+        for (int i = 0; i < projects.size(); i++) {
+            View inflatedView = getView(projects.get(i));
+            container.addView(inflatedView);
+        }
+    }
+
+    @Override
+    public void showProgress() {
+        progressLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void dismissProgress() {
+        progressLayout.setVisibility(View.GONE);
+    }
 }

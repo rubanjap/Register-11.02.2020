@@ -1,8 +1,0 @@
-
-nsquid:CommentedOutCodeLineD"<This block of commented-out lines of code should be removed.(™ã˜™úÿÿÿÿ8—¯º….
-nsquid:UselessImportCheck">Remove this unused import 'androidx.cardview.widget.CardView'.(ğÒ³ãıÿÿÿÿ8§ıÉ….
-Fsquid:S1604Z"(Make this anonymous inner class a lambda(°ı×8üıâ….
-Ÿsquid:S1186\"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¡é††8üıâ….
-hsquid:UselessImportCheck	"8Remove this unused import 'android.widget.LinearLayout'.(çîšçúÿÿÿÿ8ãµ¬….
-[squid:UselessImportCheck"0Remove this unused import 'okhttp3.Interceptor'.(ËÖ‹ã8Î´à….
-bsquid:UselessImportCheck"2Remove this unused import 'android.widget.Button'.(²òıÿÿÿÿ8ãµ¬….

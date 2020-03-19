@@ -4,31 +4,38 @@ package com.register.me.view.fragments.Client.portfolio.viewProductDetails;
  * Created by Jennifer - AIT on 11-02-2020.
  */
 
+import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.onurkaganaldemir.ktoastlib.KToast;
 import com.register.me.R;
 import com.register.me.model.data.Constants;
-import com.register.me.model.data.model.GetProductModel;
 import com.register.me.model.data.model.KeyValue;
+import com.register.me.model.data.model.ViewActCompProject;
+import com.register.me.model.data.model.ViewDetails;
 import com.register.me.presenter.ViewProductPresenter;
 import com.register.me.view.BaseFragment;
-import com.register.me.view.HomeActivity;
 import com.register.me.view.fragmentmanager.manager.IFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -36,7 +43,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class ViewProductDetailsFragment extends BaseFragment implements IFragment {
+public class ViewProductDetailsFragment extends BaseFragment implements IFragment, ViewProductPresenter.IViewProduct {
 
     private static final String FRAGMENT_NAME = "ViewProducts";
 
@@ -48,131 +55,102 @@ public class ViewProductDetailsFragment extends BaseFragment implements IFragmen
     LinearLayout contentLayout;
     @BindView(R.id.container)
     LinearLayout container;
+    @BindView(R.id.bid_container)
+    LinearLayout bidContainer;
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
+    @BindView(R.id.layout_PSubmittedBids)
+    ConstraintLayout bidLayout;
+    @BindView(R.id.progressbar)
+    ConstraintLayout progressLayout;
+    @BindView(R.id.bid_header)
+    TextView bidHeader;
+    @BindView(R.id.txt_check)
+    TextView projectStatus;
     private int screen;
     private ArrayList<KeyValue> map;
+    private Resources resources;
+    private boolean showBid;
+    private List<ViewActCompProject.Comment> comments;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector().inject(this);
-        viewProductPresenter.init(getContext());
-        screen = constants.getVIEW_SCREEN_FROM();
+        viewProductPresenter.init(getContext(), this);
+        screen = constants.getviewScreenFrom();
         map = new ArrayList<>();
+        fragmentChannel.setTitle(getResources().getString(R.string.view_product));
+
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        resources = Objects.requireNonNull(getContext()).getResources();
         return super.onCreateView(inflater, container, savedInstanceState);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        ArrayList<KeyValue> kv = viewProductPresenter.extractData();
-        container.removeAllViews();
-        for (KeyValue val : kv) {
-            View inflater = LayoutInflater.from(getContext()).inflate(R.layout.item_view_details, null, false);
-            TextView title = inflater.findViewById(R.id.txtTitle);
-            TextView content = inflater.findViewById(R.id.txtContent);
-            title.setText(val.getKey());
-            if (val.getValue() != null) {
-                String boolVal = "";
-                boolVal = getBoolValue(val);
-                content.setText(boolVal);
-            } else {
-                StringBuilder builder = getStringFromList(val);
-                if(builder.toString().isEmpty()){
-                    content.setText("-");
-                }else {
-                content.setText(builder.toString());}
+        showProgress();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (screen != 3) {
+                    viewProductPresenter.triggerApi("");
+                } else {
+                    viewProductPresenter.triggerApi("ACP");
+                }
             }
+        },250);
 
+    }
+
+    private void getHeaderList(ArrayList<KeyValue> keyValues) {
+        map.clear();
+        map.addAll(keyValues);
+        setHeaderContainerData(map);
+        showBid = viewProductPresenter.hasBids();
+        if (showBid) {
+            bidLayout.setVisibility(View.VISIBLE);
+            setBidContainerData();
+        }
+    }
+
+    private void setBidContainerData() {
+        List<ViewDetails.Crrebiddingdetail> crre = viewProductPresenter.getBidContainerData();
+        bidContainer.removeAllViews();
+        for (ViewDetails.Crrebiddingdetail crreItem : crre) {
+            View inflater = viewProductPresenter.getBidView(crreItem);
+            bidContainer.addView(inflater);
+        }
+    }
+
+
+    private void setContentContainerData(ArrayList<KeyValue> data) {
+        contentLayout.removeAllViews();
+        for (KeyValue val : data) {
+            View inflater = viewProductPresenter.getContentView(val);
             contentLayout.addView(inflater);
         }
 
-
-        GetProductModel.Product list = constants.getSelectedList();
-        switch (screen) {
-            case 0:
-                map.clear();
-                map.add(new KeyValue(getContext().getResources().getString(R.string.product_number), list.getProduct().getProductNumber(),null));
-                map.add(new KeyValue(getContext().getResources().getString(R.string.product_name), list.getProduct().getProductName(),null));
-                break;
-            case 1:
-                map.clear();
-                map.add(new KeyValue("Product Number", "HHS412SN",null));
-                map.add(new KeyValue("Country", "Brazil",null));
-                map.add(new KeyValue("Available to Bid", "4",null));
-                map.add(new KeyValue("Have Submitted Bid", "1",null));
-                map.add(new KeyValue("Bid Status", "Project Assigned",null));
-                break;
-            case 2:
-                map.clear();
-                map.add(new KeyValue("Product Number", "HHS412SN",null));
-                map.add(new KeyValue("Country", "Brazil",null));
-                map.add(new KeyValue("Available to Bid", "4",null));
-                map.add(new KeyValue("Have Submitted Bid", "1",null));
-                map.add(new KeyValue("Bid Status", "Project Assigned",null));
-                break;
-        }
-
-        setContainerData();
     }
 
-    @NotNull
-    private StringBuilder getStringFromList(KeyValue val) {
-        List<String> subList = val.getSubList();
-        StringBuilder builder = new StringBuilder();
-        if ((subList != null) && (subList.size() > 0)) {
-            Iterator iterator = subList.iterator();
-            while (iterator.hasNext()) {
-                if (builder.toString().equals("")) {
-                    builder.append(iterator.next());
-                } else {
-                    builder.append("\n").append(iterator.next().toString().trim());
-                }
-            }
 
-        }
-        return builder;
-    }
-
-    private String getBoolValue(KeyValue val) {
-        String mYES = "YES";
-        String mNO = "NO";
-        switch (val.getValue()) {
-            case "null":
-                return "-";
-            case "true":
-                return mYES;
-            case "false":
-                return mNO;
-            default:
-                return val.getValue();
-        }
-    }
-
-    private void setContainerData() {
+    private void setHeaderContainerData(ArrayList<KeyValue> map) {
         container.removeAllViews();
         for (KeyValue val : map) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.key_value_item, null, false);
-            TextView key = view.findViewById(R.id.txtKey);
-            TextView value = view.findViewById(R.id.txtValue);
-            key.setText(val.getKey());
-            value.setText(val.getValue());
+            View view = viewProductPresenter.getHeaderView(val);
             container.addView(view);
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) getActivity()).setHeaderText(getResources().getString(R.string.view_product));
-    }
 
     @Override
     public String getFragmentName() {
@@ -189,11 +167,67 @@ public class ViewProductDetailsFragment extends BaseFragment implements IFragmen
     }
 
     @OnClick(R.id.viewProduct)
-    public void ClickViewProduct() {
+    public void clickViewProduct() {
         if (contentLayout.getVisibility() == View.VISIBLE) {
             contentLayout.setVisibility(View.GONE);
         } else {
             contentLayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    @OnClick(R.id.txt_check)
+    public void onClickProjectStatus() {
+
+            fragmentChannel.showCommentScreen(comments, viewProductPresenter.getProjectAssignId());
+    }
+
+    @Override
+    public void buildContent(ArrayList<KeyValue> kv) {
+        setContentContainerData(kv);
+    }
+
+
+    @Override
+    public void buildHeader(ArrayList<KeyValue> keyValue) {
+        scrollView.setVisibility(View.VISIBLE);
+        getHeaderList(keyValue);
+    }
+
+
+    @Override
+    public void showErroMessage(String message) {
+        KToast.customColorToast((Activity) getContext(), message, Gravity.BOTTOM, KToast.LENGTH_SHORT, R.color.red);
+    }
+
+    @Override
+    public void buildTransactionUI(List<ViewActCompProject.Paymentdetail> paymentdetails) {
+        if(paymentdetails.size()!=0) {
+            bidLayout.setVisibility(View.VISIBLE);
+            bidHeader.setText("Payment Details");
+            bidContainer.removeAllViews();
+            int i = 1;
+            for (ViewActCompProject.Paymentdetail payItem : paymentdetails) {
+                View inflater = viewProductPresenter.getBidContainerView(i, payItem);
+                bidContainer.addView(inflater);
+                i++;
+            }
+        }
+    }
+
+
+    @Override
+    public void displayComments(List<ViewActCompProject.Comment> comments) {
+        projectStatus.setVisibility(View.VISIBLE);
+            this.comments = comments;
+    }
+
+    @Override
+    public void showProgress() {
+        progressLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void dismissProgress() {
+        progressLayout.setVisibility(View.GONE);
     }
 }

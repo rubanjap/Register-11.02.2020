@@ -17,4 +17,6 @@
     <color name="content_bg">#E6FFFFFF</color>
     <color name="button_bg">#355c7d</color>
     <color name="text_orange">#f1592a</color>
+    <color name="item_background">#198B8989</color>
+    <color name="line_color">#2AA34A</color>
 </resources>

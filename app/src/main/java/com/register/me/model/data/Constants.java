@@ -1,6 +1,7 @@
 package com.register.me.model.data;
 
 
+import com.register.me.model.data.model.ActiveAuction;
 import com.register.me.model.data.model.GetProductModel;
 
 import java.util.List;
@@ -16,15 +17,16 @@ public class Constants {
     public static final String ANDROID_TAG = "android";
 
     /*
-     * 0 - Screen from Project Portfolio
-     * 1 - Screen from Active Auction
-     * 2 - Screen from Active Projects
+     * 1 - Screen from Project Portfolio
+     * 2 - Screen from Country
      * */
     private int VIEW_SCREEN_FROM;
 
     /*
      * 0 - Role client
      * 1 - Role RRE
+     * 2 - Role CRRE
+     * 3-
      * */
     private int USER_ROLE;
 
@@ -36,6 +38,10 @@ public class Constants {
      * */
 
     private int TAB;
+
+    private String productID;
+
+    private String projectID;
 
     /*
      * CACHE REPO CONSTANTS*/
@@ -53,6 +59,9 @@ public class Constants {
 
     private GetProductModel.Product selectedList;
     private List<GetProductModel.Product> BASE_PRODUCT_LIST;
+    List<ActiveAuction.Bidsreadytoevaluate_> BidList;
+
+    private boolean isAcitiveProject;
 
 
     /******************************* Getter Setter ******************************************/
@@ -86,19 +95,19 @@ public class Constants {
         return ANDROID_TAG;
     }
 
-    public int getVIEW_SCREEN_FROM() {
+    public int getviewScreenFrom() {
         return VIEW_SCREEN_FROM;
     }
 
-    public void setVIEW_SCREEN_FROM(int VIEW_SCREEN_FROM) {
+    public void setviewScreenFrom(int VIEW_SCREEN_FROM) {
         this.VIEW_SCREEN_FROM = VIEW_SCREEN_FROM;
     }
 
-    public int getUSER_ROLE() {
+    public int getuserRole() {
         return USER_ROLE;
     }
 
-    public void setUSER_ROLE(int USER_ROLE) {
+    public void setuserRole(int USER_ROLE) {
         this.USER_ROLE = USER_ROLE;
     }
 
@@ -110,61 +119,36 @@ public class Constants {
         this.TAB = TAB;
     }
 
-    public String getIS_LOGGED() {
+
+    public String getcacheIsLoggedKey() {
         return CACHE_IS_LOGGED;
     }
 
-    public void setIS_LOGGED(String CACHE_IS_LOGGED) {
-        this.CACHE_IS_LOGGED = CACHE_IS_LOGGED;
-    }
 
-    public String getCACHE_IS_LOGGED() {
-        return CACHE_IS_LOGGED;
-    }
-
-    public void setCACHE_IS_LOGGED(String CACHE_IS_LOGGED) {
-        this.CACHE_IS_LOGGED = CACHE_IS_LOGGED;
-    }
-
-    public String getCACHE_USERNAME() {
+    public String getcacheUsernameKey() {
         return CACHE_USERNAME;
     }
 
-    public void setCACHE_USERNAME(String CACHE_USERNAME) {
-        this.CACHE_USERNAME = CACHE_USERNAME;
-    }
 
-    public String getCACHE_ROLE() {
+    public String getcacheRoleKey() {
         return CACHE_ROLE;
     }
 
-    public void setCACHE_ROLE(String CACHE_ROLE) {
-        this.CACHE_ROLE = CACHE_ROLE;
-    }
 
-    public String getCACHE_TOKEN() {
+    public String getcacheTokenKey() {
         return CACHE_TOKEN;
     }
 
-    public void setCACHE_TOKEN(String CACHE_TOKEN) {
-        this.CACHE_TOKEN = CACHE_TOKEN;
-    }
 
-    public String getCACHE_TOKEN_TYPE() {
+    public String getcacheTokenTypeKey() {
         return CACHE_TOKEN_TYPE;
     }
 
-    public void setCACHE_TOKEN_TYPE(String CACHE_TOKEN_TYPE) {
-        this.CACHE_TOKEN_TYPE = CACHE_TOKEN_TYPE;
-    }
 
-    public String getCACHE_USER_PROFILE_URL() {
+    public String getcacheUserProfileUrlKey() {
         return CACHE_USER_PROFILE_URL;
     }
 
-    public void setCACHE_USER_PROFILE_URL(String CACHE_USER_PROFILE_URL) {
-        this.CACHE_USER_PROFILE_URL = CACHE_USER_PROFILE_URL;
-    }
 
     public String getPasswordPattern() {
         return "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
@@ -190,7 +174,35 @@ public class Constants {
         return CACHE_USER_INFO;
     }
 
-    public void setCACHE_USER_INFO(String CACHE_USER_INFO) {
-        this.CACHE_USER_INFO = CACHE_USER_INFO;
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
+    public String getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
+    }
+
+    public List<ActiveAuction.Bidsreadytoevaluate_> getBidList() {
+        return BidList;
+    }
+
+    public void setBidList(List<ActiveAuction.Bidsreadytoevaluate_> bidList) {
+        BidList = bidList;
+    }
+
+    public boolean isAcitiveProject() {
+        return isAcitiveProject;
+    }
+
+    public void setAcitiveProject(boolean acitiveProject) {
+        isAcitiveProject = acitiveProject;
     }
 }

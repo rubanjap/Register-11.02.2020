@@ -3,7 +3,6 @@ package com.register.me.model.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,62 +10,71 @@ import java.util.List;
  */
 public class GetProductModel {
 
-        @SerializedName("count")
-        @Expose
-        private Integer count;
-        @SerializedName("data")
-        @Expose
-        private Data data;
-        @SerializedName("errors")
-        @Expose
-        private List<Object> errors = null;
-        @SerializedName("status")
-        @Expose
-        private String status;
-        @SerializedName("statusCode")
-        @Expose
-        private Integer statusCode;
+    @SerializedName("count")
+    @Expose
+    private Integer count;
+    @SerializedName("data")
+    @Expose
+    private Data data;
+    @SerializedName("errors")
+    @Expose
+    private List<String> errors = null;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("statusCode")
+    @Expose
+    private Integer statusCode;
 
-        public Integer getCount() {
-            return count;
-        }
+    private Error error;
 
-        public void setCount(Integer count) {
-            this.count = count;
-        }
+    public Integer getCount() {
+        return count;
+    }
 
-        public Data getData() {
-            return data;
-        }
+    public void setCount(Integer count) {
+        this.count = count;
+    }
 
-        public void setData(Data data) {
-            this.data = data;
-        }
+    public Data getData() {
+        return data;
+    }
 
-        public List<Object> getErrors() {
-            return errors;
-        }
+    public void setData(Data data) {
+        this.data = data;
+    }
 
-        public void setErrors(List<Object> errors) {
-            this.errors = errors;
-        }
+    public List<String> getErrors() {
+        return errors;
+    }
 
-        public String getStatus() {
-            return status;
-        }
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
 
-        public void setStatus(String status) {
-            this.status = status;
-        }
+    public String getStatus() {
+        return status;
+    }
 
-        public Integer getStatusCode() {
-            return statusCode;
-        }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-        public void setStatusCode(Integer statusCode) {
-            this.statusCode = statusCode;
-        }
+    public Integer getStatusCode() {
+        return statusCode;
+    }
 
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public Error getError() {
+        return error;
+    }
+
+    public void setError(Error error) {
+        this.error = error;
+    }
 
     public class Data {
 
@@ -89,9 +97,9 @@ public class GetProductModel {
         @SerializedName("product")
         @Expose
         private Product_ product;
-        @SerializedName("project")
+        @SerializedName("isprojectavailable")
         @Expose
-        private List<Project> project = null;
+        private Boolean isprojectavailable;
         @SerializedName("productId")
         @Expose
         private Integer productId;
@@ -125,12 +133,12 @@ public class GetProductModel {
             this.product = product;
         }
 
-        public List<Project> getProject() {
-            return project;
+        public Boolean getIsprojectavailable() {
+            return isprojectavailable;
         }
 
-        public void setProject(List<Project> project) {
-            this.project = project;
+        public void setIsprojectavailable(Boolean isprojectavailable) {
+            this.isprojectavailable = isprojectavailable;
         }
 
         public Integer getProductId() {
@@ -198,7 +206,6 @@ public class GetProductModel {
         }
 
     }
-
 
     public class Product_ {
 
@@ -525,278 +532,5 @@ public class GetProductModel {
     }
 
 
-    public class Project {
-
-        @SerializedName("product_oppurtunity")
-        @Expose
-        private ProductOppurtunity productOppurtunity;
-        @SerializedName("project_location")
-        @Expose
-        private ProjectLocation projectLocation;
-        @SerializedName("project_assigned")
-        @Expose
-        private ProjectAssigned projectAssigned;
-        @SerializedName("isView")
-        @Expose
-        private Boolean isView;
-        @SerializedName("isCancel")
-        @Expose
-        private Boolean isCancel;
-        @SerializedName("isdirectassignment")
-        @Expose
-        private Boolean isdirectassignment;
-        @SerializedName("bidstatus")
-        @Expose
-        private String bidstatus;
-
-        public ProductOppurtunity getProductOppurtunity() {
-            return productOppurtunity;
-        }
-
-        public void setProductOppurtunity(ProductOppurtunity productOppurtunity) {
-            this.productOppurtunity = productOppurtunity;
-        }
-
-        public ProjectLocation getProjectLocation() {
-            return projectLocation;
-        }
-
-        public void setProjectLocation(ProjectLocation projectLocation) {
-            this.projectLocation = projectLocation;
-        }
-
-        public ProjectAssigned getProjectAssigned() {
-            return projectAssigned;
-        }
-
-        public void setProjectAssigned(ProjectAssigned projectAssigned) {
-            this.projectAssigned = projectAssigned;
-        }
-
-        public Boolean getIsView() {
-            return isView;
-        }
-
-        public void setIsView(Boolean isView) {
-            this.isView = isView;
-        }
-
-        public Boolean getIsCancel() {
-            return isCancel;
-        }
-
-        public void setIsCancel(Boolean isCancel) {
-            this.isCancel = isCancel;
-        }
-
-        public Boolean getIsdirectassignment() {
-            return isdirectassignment;
-        }
-
-        public void setIsdirectassignment(Boolean isdirectassignment) {
-            this.isdirectassignment = isdirectassignment;
-        }
-
-        public String getBidstatus() {
-            return bidstatus;
-        }
-
-        public void setBidstatus(String bidstatus) {
-            this.bidstatus = bidstatus;
-        }
-
-    }
-
-    public class ProductOppurtunity {
-
-        @SerializedName("projectid")
-        @Expose
-        private Integer projectid;
-        @SerializedName("productid")
-        @Expose
-        private Integer productid;
-        @SerializedName("projectDeadline")
-        @Expose
-        private String projectDeadline;
-        @SerializedName("budget")
-        @Expose
-        private Float budget;
-        @SerializedName("bidStartDate")
-        @Expose
-        private String bidStartDate;
-        @SerializedName("bidEndDate")
-        @Expose
-        private String bidEndDate;
-        @SerializedName("isCancel")
-        @Expose
-        private Object isCancel;
-        @SerializedName("cancelReason")
-        @Expose
-        private Object cancelReason;
-
-        public Integer getProjectid() {
-            return projectid;
-        }
-
-        public void setProjectid(Integer projectid) {
-            this.projectid = projectid;
-        }
-
-        public Integer getProductid() {
-            return productid;
-        }
-
-        public void setProductid(Integer productid) {
-            this.productid = productid;
-        }
-
-        public String getProjectDeadline() {
-            return projectDeadline;
-        }
-
-        public void setProjectDeadline(String projectDeadline) {
-            this.projectDeadline = projectDeadline;
-        }
-
-        public Float getBudget() {
-            return budget;
-        }
-
-        public void setBudget(Float budget) {
-            this.budget = budget;
-        }
-
-        public String getBidStartDate() {
-            return bidStartDate;
-        }
-
-        public void setBidStartDate(String bidStartDate) {
-            this.bidStartDate = bidStartDate;
-        }
-
-        public String getBidEndDate() {
-            return bidEndDate;
-        }
-
-        public void setBidEndDate(String bidEndDate) {
-            this.bidEndDate = bidEndDate;
-        }
-
-        public Object getIsCancel() {
-            return isCancel;
-        }
-
-        public void setIsCancel(Object isCancel) {
-            this.isCancel = isCancel;
-        }
-
-        public Object getCancelReason() {
-            return cancelReason;
-        }
-
-        public void setCancelReason(Object cancelReason) {
-            this.cancelReason = cancelReason;
-        }
-
-    }
-
-    public class ProjectLocation {
-
-        @SerializedName("region")
-        @Expose
-        private String region;
-
-        public String getRegion() {
-            return region;
-        }
-
-        public void setRegion(String region) {
-            this.region = region;
-        }
-
-    }
-
-
-    public class ProjectAssigned {
-
-        @SerializedName("id")
-        @Expose
-        private Integer id;
-        @SerializedName("assignedDate")
-        @Expose
-        private String assignedDate;
-        @SerializedName("active")
-        @Expose
-        private Integer active;
-        @SerializedName("clientStatus")
-        @Expose
-        private Object clientStatus;
-        @SerializedName("completedStatus")
-        @Expose
-        private Object completedStatus;
-        @SerializedName("crreStatus")
-        @Expose
-        private Object crreStatus;
-        @SerializedName("ratings")
-        @Expose
-        private Object ratings;
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public String getAssignedDate() {
-            return assignedDate;
-        }
-
-        public void setAssignedDate(String assignedDate) {
-            this.assignedDate = assignedDate;
-        }
-
-        public Integer getActive() {
-            return active;
-        }
-
-        public void setActive(Integer active) {
-            this.active = active;
-        }
-
-        public Object getClientStatus() {
-            return clientStatus;
-        }
-
-        public void setClientStatus(Object clientStatus) {
-            this.clientStatus = clientStatus;
-        }
-
-        public Object getCompletedStatus() {
-            return completedStatus;
-        }
-
-        public void setCompletedStatus(Object completedStatus) {
-            this.completedStatus = completedStatus;
-        }
-
-        public Object getCrreStatus() {
-            return crreStatus;
-        }
-
-        public void setCrreStatus(Object crreStatus) {
-            this.crreStatus = crreStatus;
-        }
-
-        public Object getRatings() {
-            return ratings;
-        }
-
-        public void setRatings(Object ratings) {
-            this.ratings = ratings;
-        }
-
-    }
 
 }

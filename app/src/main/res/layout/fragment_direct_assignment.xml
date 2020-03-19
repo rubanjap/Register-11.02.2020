@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sub_header" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/txt_pName"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_marginTop="10dp"
@@ -52,8 +52,8 @@
         android:layout_marginTop="15dp"
         android:text="Select Country"
         android:textColor="@color/text_orange"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintStart_toStartOf="@+id/txt_pName"
+        app:layout_constraintTop_toBottomOf="@+id/txt_pName" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

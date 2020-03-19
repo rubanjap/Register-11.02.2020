@@ -1,4 +1,0 @@
-
-žsquid:UselessImportCheck"sRemove this unused import 'com.register.me.view.fragments.dashboardClient.activeProjects.CompletedProjectFragment'.(åÌ©…8Õ¹ïòƒ.
-usquid:S001162"VRename this field "bid_country" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìºøÑ8¥Šßòƒ.
-wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¬ÜÆãþÿÿÿÿ

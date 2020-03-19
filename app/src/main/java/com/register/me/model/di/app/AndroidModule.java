@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 
-import com.google.gson.Gson;
-import com.register.me.APIs.NetworkCall;
+import com.register.me.APIs.ClientNetworkCall;
 import com.register.me.model.JsonBuilder;
 import com.register.me.model.data.Constants;
 import com.register.me.model.data.repository.CacheRepo;
@@ -21,6 +20,7 @@ import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
@@ -28,7 +28,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class AndroidModule {
     private final Context context;
-    private String BASE_URL = "http://3.81.189.43/api/";
+//    private String BASE_URL = "http://3.81.189.43/api/";
+    private String BASE_URL = "http://my.registermeapp.com/api/";
+
+    //    private String BASE_URL = "http://192.168.88.68:8090/api/";
+//    private String BASE_URL = "http://192.168.2.132:8090/api/";
     public AndroidModule(Context context) {
         this.context = context;
     }
@@ -72,7 +76,7 @@ public class AndroidModule {
     @Provides
     Retrofit provideRetrofit(){
         OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(120, TimeUnit.SECONDS)
+                .readTimeout(180, TimeUnit.SECONDS)
                 .connectTimeout(180,TimeUnit.SECONDS)
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
@@ -80,14 +84,15 @@ public class AndroidModule {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
     }
 
     @Singleton
     @Provides
-    NetworkCall provideNetworkCall(){
-        return new NetworkCall();
+    ClientNetworkCall provideNetworkCall(){
+        return new ClientNetworkCall();
     }
 
     @Singleton

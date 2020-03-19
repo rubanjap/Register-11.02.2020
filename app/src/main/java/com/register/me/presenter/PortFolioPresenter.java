@@ -1,10 +1,9 @@
 package com.register.me.presenter;
 
 import android.content.Context;
-import android.os.Bundle;
 
 import com.register.me.APIs.ApiInterface;
-import com.register.me.APIs.NetworkCall;
+import com.register.me.APIs.ClientNetworkCall;
 import com.register.me.R;
 import com.register.me.model.data.Constants;
 import com.register.me.model.data.model.GetProductModel;
@@ -19,20 +18,19 @@ import javax.inject.Inject;
 import retrofit2.Retrofit;
 
 
-public class PortFolioPresenter implements NetworkCall.NetworkProductInterface {
+public class PortFolioPresenter implements ClientNetworkCall.NetworkCallInterface {
     private View view;
     private Context context;
     @Inject
     Retrofit retrofit;
     @Inject
-    NetworkCall networkCall;
+    ClientNetworkCall networkCall;
     @Inject
     Constants constants;
     @Inject
     Utils utils;
     @Inject
     CacheRepo repo;
-
 
 
     public void init(View view, Context context) {
@@ -42,11 +40,10 @@ public class PortFolioPresenter implements NetworkCall.NetworkProductInterface {
     }
 
 
-
     public void getList() {
         if (utils.isOnline(context)) {
             view.showProgress();
-            String token = repo.getData(constants.getCACHE_TOKEN());
+            String token = repo.getData(constants.getcacheTokenKey());
             ApiInterface apiInterface = retrofit.create(ApiInterface.class);
             networkCall.getProductList(apiInterface, token, this);
         } else {
@@ -56,22 +53,37 @@ public class PortFolioPresenter implements NetworkCall.NetworkProductInterface {
 
     }
 
-    @Override
-    public void onProductListSuccess(GetProductModel body) {
-        List<GetProductModel.Product> list = body.getData().getProducts();
-        constants.setBASE_PRODUCT_LIST(list);
-        view.hideProgress();
-        view.updateList(list);
-    }
-
-    @Override
-    public void onProductListFailed(String s) {
-        view.hideProgress();
-        view.showErroMessage(s);
-    }
-
     public List<GetProductModel.Product> checkData() {
-       return constants.getBASE_PRODUCT_LIST()!= null ? constants.getBASE_PRODUCT_LIST() : null;
+        return constants.getBASE_PRODUCT_LIST();
+    }
+
+    @Override
+    public void onCallSuccess(Object response) {
+        if (response instanceof GetProductModel) {
+            view.hideProgress();
+            GetProductModel body = ((GetProductModel) response);
+            if (body != null) {
+                List<GetProductModel.Product> list = body.getData().getProducts();
+                constants.setBASE_PRODUCT_LIST(list);
+                view.updateList(list);
+            } else {
+                view.switchView();
+            }
+        }
+    }
+
+    @Override
+    public void onCallFail(String message) {
+        view.hideProgress();
+        view.showErroMessage(message);
+    }
+
+    @Override
+    public void sessionExpired() {
+        view.showErroMessage("Session Expired");
+        repo.storeData(constants.getcacheIsLoggedKey(), "false");
+        repo.storeData(constants.getCACHE_USER_INFO(), null);
+        utils.sessionExpired(context);
     }
 
     public interface View {
@@ -83,5 +95,7 @@ public class PortFolioPresenter implements NetworkCall.NetworkProductInterface {
         void showProgress();
 
         void hideProgress();
+
+        void switchView();
     }
 }

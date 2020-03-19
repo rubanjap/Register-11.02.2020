@@ -50,7 +50,7 @@ public class PresenterModule {
     }
 
     @Provides
-    public ActiveProjectPresenter provideActiveProjectPresenter() {
+    public ActiveProjectPresenter provideProjectPresenter() {
         return new ActiveProjectPresenter();
     }
 
@@ -69,9 +69,29 @@ public class PresenterModule {
         return new CountryPresenter();
     }
 
-
     @Provides
     public WelcomePresenter provideWelcomePresenter() {
         return new WelcomePresenter();
     }
+
+    @Provides
+    public ActiveAuctionPresenter provideActiveAuctionPresenter() {
+        return new ActiveAuctionPresenter();
+    }
+
+    @Provides
+    public ActiveCompProjectPresenter provideAuctionPresenter() {
+        return new ActiveCompProjectPresenter();
+    }
+
+    @Provides
+    public ProjectAssignPresenter provideProjectAssignPresenter() {
+        return new ProjectAssignPresenter();
+    }
+
+    @Provides
+    public CommentPresenter provideCommentPresenter() {
+        return new CommentPresenter();
+    }
+
 }

@@ -8,8 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.register.me.Adapter.AuctionAdapter;
-import com.register.me.Adapter.ViewPagerAdapter;
+import com.register.me.view.Adapter.ViewPagerAdapter;
 import com.register.me.R;
 import com.register.me.model.data.Constants;
 import com.register.me.view.BaseFragment;
@@ -22,7 +21,7 @@ import butterknife.BindView;
 /**
  * Created by Jennifer - AIT on 11-02-2020PM 06:35.
  */
-public class AuctionFragment extends BaseFragment implements IFragment, AuctionAdapter.OnIconClickListener {
+public class AuctionFragment extends BaseFragment implements IFragment{
 
     @BindView(R.id.tablayout)
     TabLayout tabLayout;
@@ -59,7 +58,7 @@ public class AuctionFragment extends BaseFragment implements IFragment, AuctionA
         tabLayout.addTab(tabLayout.newTab().setText("AUCTIONS IN PROGRESS"));
         tabLayout.addTab(tabLayout.newTab().setText("BIDS READY TO EVALUATE"));
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount(),this,0);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount(),0);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -83,8 +82,8 @@ public class AuctionFragment extends BaseFragment implements IFragment, AuctionA
     }
 
     @Override
-    public void onViewClick(int adapterPosition) {
-        constants.setVIEW_SCREEN_FROM(1);
-        fragmentChannel.showViewProductDetails();
+    public void onResume() {
+        super.onResume();
+        fragmentChannel.setTitle("AUCTION DETAILS");
     }
 }

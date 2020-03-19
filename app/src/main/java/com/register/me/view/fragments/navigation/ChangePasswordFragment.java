@@ -1,5 +1,6 @@
 package com.register.me.view.fragments.navigation;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,8 @@ import com.register.me.presenter.ChangePasswordPresenter;
 import com.register.me.view.BaseFragment;
 import com.register.me.view.HomeActivity;
 import com.register.me.view.fragmentmanager.manager.IFragment;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -42,6 +45,7 @@ public class ChangePasswordFragment extends BaseFragment implements IFragment, C
     @BindView(R.id.checkIcon)
     ImageView checkIcon;
 
+
     @Inject
     ChangePasswordPresenter presenter;
 
@@ -60,16 +64,12 @@ public class ChangePasswordFragment extends BaseFragment implements IFragment, C
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) getActivity()).setHeaderText(getResources().getString(R.string.change_password).toUpperCase());
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector().inject(this);
-        presenter.init(getContext(), this);
+        presenter.init(Objects.requireNonNull(getContext()), this);
+        fragmentChannel.setTitle(getResources().getString(R.string.change_password));
+
     }
 
     @Override
@@ -80,12 +80,12 @@ public class ChangePasswordFragment extends BaseFragment implements IFragment, C
         edtConPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                // Do nothing
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                // Do nothing
             }
 
             @Override
@@ -93,33 +93,36 @@ public class ChangePasswordFragment extends BaseFragment implements IFragment, C
                 checkIcon.setVisibility(View.VISIBLE);
                 if (!edtNewPassword.getText().toString().isEmpty() && edtNewPassword.getText().toString().contentEquals(s)) {
                     checkIcon.setImageResource(R.drawable.checked);
-                } else {
-                    checkIcon.setImageResource(R.drawable.unchecked);
+                } else if(edtConPassword.getText().toString().isEmpty()) {
+                    checkIcon.setVisibility(View.GONE);
+                }
+                else {
+                        checkIcon.setImageResource(R.drawable.unchecked);
+                    }
                 }
 
-            }
         });
 
     }
 
     @OnClick(R.id.btn_changePassword)
     public void onClickChangePass() {
-        if (checkIcon.getVisibility() == View.VISIBLE && checkIcon.getDrawable().getConstantState()
-                == (getContext().getResources().getDrawable(R.drawable.checked, null).getConstantState())) {
+
+        if (presenter.validate(checkIcon)) {
             presenter.validate(edtCtcPassword.getText().toString(), edtNewPassword.getText().toString(), edtConPassword.getText().toString());
         } else {
             showErrorMessage("All fields are mandatory");
         }
-
     }
 
     @Override
     public void showErrorMessage(String message) {
-        KToast.customColorToast(getActivity(), message, Gravity.BOTTOM, KToast.LENGTH_SHORT, R.color.red);
+
+        KToast.customColorToast((Activity) getContext(), message, Gravity.BOTTOM, KToast.LENGTH_SHORT, R.color.red);
     }
 
     @Override
     public void popUp() {
-        fragmentChannel.showHome();
+        fragmentChannel.popUp();
     }
 }

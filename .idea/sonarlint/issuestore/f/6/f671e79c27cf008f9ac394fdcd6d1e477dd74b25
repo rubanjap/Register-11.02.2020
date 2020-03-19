@@ -1,8 +1,0 @@
-
-?squid:S1068"(Remove this unused "view" private field.(ØÊ»¶
-squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ëÙÃ…øÿÿÿÿ
-squid:S1186
-"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ïƒıÿÿÿÿ
-˜squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(úˆ¾Ú
-squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ú÷†àúÿÿÿÿ
-jsquid:S1450"SRemove the "view" field and declare it as a local variable in the relevant methods.(ØÊ»¶

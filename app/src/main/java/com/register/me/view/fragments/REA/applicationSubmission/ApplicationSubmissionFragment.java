@@ -1,17 +1,20 @@
 package com.register.me.view.fragments.REA.applicationSubmission;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.register.me.Adapter.ViewPagerAdapter;
+import com.register.me.view.Adapter.ViewPagerAdapter;
 import com.register.me.R;
 import com.register.me.view.BaseFragment;
-import com.register.me.view.HomeActivity;
 import com.register.me.view.fragmentmanager.manager.IFragment;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 
@@ -31,15 +34,18 @@ public class ApplicationSubmissionFragment extends BaseFragment implements IFrag
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector().inject(this);
+        fragmentChannel.setTitle(getResources().getString(R.string.rre_dashboard));
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tabLayout.addTab(tabLayout.newTab().setText("PERSONAL INFO"));
-        tabLayout.addTab(tabLayout.newTab().setText("APPLICATION FORM"));
-        tabLayout.addTab(tabLayout.newTab().setText("ACTIVITY"));
+
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.profile_icon));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.application_icon));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.upload));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.activity));
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount(), 1);
         viewPager.setAdapter(viewPagerAdapter);
@@ -79,9 +85,4 @@ public class ApplicationSubmissionFragment extends BaseFragment implements IFrag
         return FRAGMENT_NAME;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) getActivity()).setHeaderText(getResources().getString(R.string.rre_dashboard));
-    }
 }

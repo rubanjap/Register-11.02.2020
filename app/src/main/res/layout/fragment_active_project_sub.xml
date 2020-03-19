@@ -27,8 +27,8 @@
         android:paddingBottom="5dp"
         android:orientation="horizontal"
         android:background="@drawable/shape_orange_bg"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginTop="10dp"
         >
 
@@ -58,13 +58,41 @@
             android:layout_weight="1"
             />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/pLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp">
+    <include
+        layout="@layout/layout_progress_bar"/>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/active_recycleview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="10dp"
-        tools:listitem="@layout/project_item"/>
+        tools:listitem="@layout/project_item"
+        android:visibility="visible"/>
+
+    <LinearLayout
+        android:id="@+id/no_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/noContentText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="No Auctions in Progress!"
+            android:gravity="center"
+            android:textSize="25sp"/>
+    </LinearLayout>
 
 </LinearLayout>

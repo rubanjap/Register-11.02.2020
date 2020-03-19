@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/shape_three_sides">
+    android:layout_marginBottom="5dp"
+    android:background="@color/item_background">
 
     <LinearLayout
         android:id="@+id/header"
@@ -16,24 +17,18 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:id="@+id/pNumber"
+            android:id="@+id/pName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="PS210D2"
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/pCountry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Patient Station"
             android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="YES"
-            android:layout_weight="1.25"/>
     </LinearLayout>
 
     <LinearLayout

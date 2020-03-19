@@ -1,9 +1,11 @@
 package com.register.me.model;
 
 import com.google.gson.JsonObject;
+import com.register.me.model.data.model.KeyValue;
 import com.register.me.model.data.model.QandA;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jennifer - AIT on 15-02-2020AM 11:19.
@@ -37,7 +39,7 @@ public class JsonBuilder {
         return object;
     }
 
-    public JsonObject addProductJson(ArrayList<QandA> questList) {
+    public JsonObject addProductJson(List<QandA> questList) {
         JsonObject object = new JsonObject();
         for (QandA item : questList) {
             if (item.getSubQA() == null) {
@@ -58,5 +60,13 @@ public class JsonBuilder {
         } else {
             object.addProperty(item.getApiKey(), answer);
         }
+    }
+
+    public JsonObject initiateBidding(ArrayList<KeyValue> map){
+        JsonObject object = new JsonObject();
+        for (KeyValue item : map){
+            object.addProperty(item.getKey(),item.getValue());
+        }
+        return object;
     }
 }

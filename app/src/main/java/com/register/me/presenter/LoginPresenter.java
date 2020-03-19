@@ -1,10 +1,11 @@
 package com.register.me.presenter;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Patterns;
 
 import com.register.me.APIs.ApiInterface;
-import com.register.me.APIs.NetworkCall;
+import com.register.me.APIs.ClientNetworkCall;
 import com.register.me.R;
 import com.register.me.model.data.Constants;
 import com.register.me.model.data.model.LoginModel;
@@ -16,19 +17,20 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
 /**
  * Created by Jennifer - AIT on 15-02-2020AM 11:01.
  */
-public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.UtilAlertInterface {
+public class LoginPresenter implements ClientNetworkCall.NetworkCallInterface, Utils.UtilAlertInterface {
 
     private Context context;
     private ILogin loginListener;
     @Inject
     Retrofit retrofit;
     @Inject
-    NetworkCall networkCall;
+    ClientNetworkCall networkCall;
     @Inject
     CacheRepo repo;
     @Inject
@@ -45,12 +47,19 @@ public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.
     }
 
     public boolean isLoggedIn() {
-        String status = repo.getData(constants.getIS_LOGGED());
+        String status = repo.getData(constants.getcacheIsLoggedKey());
+        String userRole = repo.getData(constants.getcacheRoleKey());
+        if (userRole !=null && userRole.equals("Client")) {
+            constants.setuserRole(0);
+        } else if(userRole !=null) {
+            constants.setuserRole(1);
+        }
         if (status != null && status.equals("true")) {
             return true;
         }
         return false;
     }
+
 
     public void validation(String email, String password) {
         boolean valid = Patterns.EMAIL_ADDRESS.matcher(email).matches();
@@ -60,7 +69,7 @@ public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.
         } else if (password.isEmpty()) {
             loginListener.showErroMessage(context.getResources().getString(R.string.empty_password_alert));
         } else if (valid) {
-            loginListener.showProgress();
+
             apiCall(email, password);
         } else {
             loginListener.showErroMessage(context.getResources().getString(R.string.valid_email_alert));
@@ -71,6 +80,7 @@ public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.
     private void apiCall(String email, String password) {
 
         if (utils.isOnline(context)) {
+            loginListener.showProgress();
             networkCall.login(apiInterface, email, password, "password", this);
         } else {
             loginListener.showErroMessage(context.getResources().getString(R.string.network_alert));
@@ -82,11 +92,6 @@ public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.
         utils.showAlert(context, 2, this);
     }
 
-    @Override
-    public void onLoginSuccess(LoginModel body) {
-        extractSuccessResponse(body);
-        loginListener.dismissProgress();
-    }
 
     private void extractSuccessResponse(LoginModel body) {
         String userName = body.getUserName();
@@ -94,37 +99,18 @@ public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.
         String token = body.getToken();
         String tokenType = body.getTokenType();
         HashMap<String, String> map = new HashMap<>();
-        map.put(constants.getIS_LOGGED(), "true");
-        map.put(constants.getCACHE_USERNAME(), userName);
-        map.put(constants.getCACHE_ROLE(), userRole);
-        map.put(constants.getCACHE_TOKEN(), token);
-        map.put(constants.getCACHE_TOKEN_TYPE(), tokenType);
+        map.put(constants.getcacheIsLoggedKey(), "true");
+        map.put(constants.getcacheUsernameKey(), userName);
+        map.put(constants.getcacheRoleKey(), userRole);
+        map.put(constants.getcacheTokenKey(), token);
+        map.put(constants.getcacheTokenTypeKey(), tokenType);
         repo.storeBulkData(map);
         if (userRole.equals("Client")) {
-            constants.setUSER_ROLE(0);
+            constants.setuserRole(0);
         } else {
-            constants.setUSER_ROLE(1);
+            constants.setuserRole(1);
         }
         loginListener.navigate();
-    }
-
-
-    @Override
-    public void onLoginFailure(String message) {
-        loginListener.dismissProgress();
-        loginListener.showErroMessage(message);
-    }
-
-    @Override
-    public void onForgotSuccess() {
-        loginListener.dismissProgress();
-        utils.showAlert(context, 3, this);
-    }
-
-    @Override
-    public void onForgotFailure(String s) {
-        loginListener.dismissProgress();
-        loginListener.showErroMessage(s);
     }
 
     @Override
@@ -141,6 +127,7 @@ public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.
             case "$EMAIL$":
                 if (utils.isOnline(context)) {
                     loginListener.showProgress();
+                    loginListener.clearFields();
                     networkCall.forgotPassword(apiInterface, value, this);
                 } else {
                     loginListener.showErroMessage(context.getResources().getString(R.string.network_alert));
@@ -153,6 +140,36 @@ public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.
         }
     }
 
+    @Override
+    public void onCallSuccess(Object response) {
+        loginListener.dismissProgress();
+        if(response instanceof LoginModel){
+            LoginModel body = (LoginModel) response;
+            extractSuccessResponse(body);
+        }else if( response instanceof ResponseBody){
+            utils.showAlert(context, 3, this);
+        }
+    }
+
+    @Override
+    public void onCallFail(String message) {
+        loginListener.dismissProgress();
+        loginListener.showErroMessage(message);
+    }
+
+    @Override
+    public void sessionExpired() {
+        loginListener.dismissProgress();
+        loginListener.showErroMessage("Session Expired");
+        repo.storeData(constants.getcacheIsLoggedKey(), "false");
+        repo.storeData(constants.getCACHE_USER_INFO(),null);
+        utils.sessionExpired(context);
+    }
+
+    public String getRole() {
+        return repo.getData(constants.getcacheRoleKey());
+    }
+
 
     public interface ILogin {
         void showErroMessage(String message);
@@ -163,5 +180,6 @@ public class LoginPresenter implements NetworkCall.NetworkLoginInterface, Utils.
 
         void navigate();
 
+        void clearFields();
     }
 }

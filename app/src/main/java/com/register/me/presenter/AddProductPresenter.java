@@ -1,10 +1,11 @@
 package com.register.me.presenter;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.google.gson.JsonObject;
 import com.register.me.APIs.ApiInterface;
-import com.register.me.APIs.NetworkCall;
+import com.register.me.APIs.ClientNetworkCall;
 import com.register.me.R;
 import com.register.me.model.JsonBuilder;
 import com.register.me.model.data.Constants;
@@ -15,6 +16,7 @@ import com.register.me.model.data.repository.CacheRepo;
 import com.register.me.model.data.util.Utils;
 import com.register.me.view.BaseActivity;
 
+import java.net.CookieStore;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ import javax.inject.Inject;
 import retrofit2.Retrofit;
 
 
-public class AddProductPresenter implements NetworkCall.NetworkAddProductInterface {
+public class AddProductPresenter implements ClientNetworkCall.NetworkCallInterface {
     private Context context;
     private IAddProduct listener;
     @Inject
@@ -35,21 +37,23 @@ public class AddProductPresenter implements NetworkCall.NetworkAddProductInterfa
     @Inject
     Retrofit retrofit;
     @Inject
-    NetworkCall networkCall;
+    ClientNetworkCall networkCall;
     @Inject
     JsonBuilder builder;
-    private ArrayList<QandA> questList;
+    private List<QandA> questList;
 
-    boolean isEdit = false;
+    private boolean isEdit = false;
     private Integer productId;
+    private Resources resource;
 
     public void init(Context context, IAddProduct listener) {
         this.context = context;
         this.listener = listener;
         ((BaseActivity) context).injector().inject(this);
+        resource = context.getResources();
     }
 
-    public ArrayList<QandA> getQuestions() {
+    public List<QandA> getQuestions() {
         ArrayList<QandA> quest = new ArrayList<>();
 
         /* TYPE
@@ -67,7 +71,6 @@ public class AddProductPresenter implements NetworkCall.NetworkAddProductInterfa
          * 2 - action_done
          *
          * */
-        /*context.getString(R.string.is_this_a_combination_product)*/
         quest.add(new QandA(context.getString(R.string.product_number), null, 1, 1, 1, "productnumber", null, null));
         quest.add(new QandA(context.getString(R.string.product_name), null, 1, 1, 1, "productname", null, null));
         quest.add(new QandA(context.getString(R.string.product_description), null, 1, 1, 2, "productdesc", null, null));
@@ -77,21 +80,17 @@ public class AddProductPresenter implements NetworkCall.NetworkAddProductInterfa
         quest.add(new QandA(context.getResources().getString(R.string.Is_the_device_life_supporting), null, 2, 0, 0, "lifesupportorsustain", null, null));
         QandA implant = new QandA(context.getResources().getString(R.string.Is_the_device_or_component_an_implant), null, 2, 0, 0, "isimplant", null, null);
         quest.add(new QandA(context.getResources().getString(R.string.are_there_any_direct_or_indirect_patient_contacting_components), null, 4, 0, 0, "patientcomponent", implant, null));
-        /*******isImplant****************/
         QandA isDigital = new QandA(context.getResources().getString(R.string.is_the_device_digital_health_technology_or_does_it_contain_digital_health_technology), null, 2, 0, 0, "isdigitalhealth", null, null);
         quest.add(new QandA(context.getResources().getString(R.string.does_the_device_use_software_firmware), null, 4, 0, 0, "softorfirmware", isDigital, null));
-        /*******isdigitalhealth****************/
         quest.add(new QandA(context.getString(R.string.connection_type), null, 3, 0, 0, "conntype", null, null));
         QandA sterile = new QandA(context.getResources().getString(R.string.select_the_type_of_sterile_processing), null, 3, 0, 0, "sterileprocess", null, null);
         quest.add(new QandA(context.getResources().getString(R.string.does_the_device_or_a_component_need_sterilization_by_the_manufacturer_or_user), null, 5, 0, 0, "sterilization", sterile, null));
-        /*******sterileprocess****************/
         quest.add(new QandA(context.getString(R.string.indications_for_use), null, 3, 0, 0, "indications", null, null));
         quest.add(new QandA(context.getString(R.string.intended_population), null, 3, 0, 0, "indentpopulation", null, null));
         quest.add(new QandA(context.getString(R.string.device_type), null, 3, 0, 0, "devicetype", null, null));
         quest.add(new QandA(context.getString(R.string.usage_environment), null, 3, 0, 0, "useenvironment", null, null));
         QandA deviceType = new QandA(context.getResources().getString(R.string.select_electrical_device_type), null, 3, 0, 0, "eledevicetype", null, null);
         quest.add(new QandA(context.getString(R.string.is_the_product_electrical), null, 5, 0, 0, "iselectrical", deviceType, null));
-        /**********eledevicetype***************/
         quest.add(new QandA(context.getString(R.string.is_the_device_for_pediatric_use), null, 2, 0, 0, "ispediatric", null, null));
         quest.add(new QandA(context.getString(R.string.does_the_device_emit_radiation), null, 2, 0, 0, "isemitrad", null, null));
         quest.add(new QandA(context.getString(R.string.do_you_have_substance_of_biological_origin_in_your_device), null, 2, 0, 0, "biolorigin", null, null));
@@ -104,11 +103,15 @@ public class AddProductPresenter implements NetworkCall.NetworkAddProductInterfa
         return constants.getSelectedList() == null;
     }
 
+    public String getLable() {
+        return constants.getSelectedList() == null ? resource.getString(R.string.add_product) : resource.getString(R.string.update_product);
+    }
+
     public void setIsEdit() {
         isEdit = true;
     }
 
-    public ArrayList<QandA> getEditData() {
+    public List<QandA> getEditData() {
         ArrayList<QandA> quest = new ArrayList<>();
         GetProductModel.Product_ data = constants.getSelectedList().getProduct();
         productId = constants.getSelectedList().getProductId();
@@ -130,7 +133,7 @@ public class AddProductPresenter implements NetworkCall.NetworkAddProductInterfa
         quest.add(new QandA(context.getResources().getString(R.string.does_the_device_or_a_component_need_sterilization_by_the_manufacturer_or_user), String.valueOf(data.getRequiredSterilization()), 5, 0, 0, "sterilization", sterile, null));
 
         quest.add(new QandA(context.getString(R.string.indications_for_use), getStringList((ArrayList<String>) data.getIndications()), 3, 0, 0, "indications", null, data.getIndications()));
-        quest.add(new QandA(context.getString(R.string.intended_population), getStringList((ArrayList<String>)data.getIntendedPopulation()), 3, 0, 0, "indentpopulation", null, data.getIntendedPopulation()));
+        quest.add(new QandA(context.getString(R.string.intended_population), getStringList((ArrayList<String>) data.getIntendedPopulation()), 3, 0, 0, "indentpopulation", null, data.getIntendedPopulation()));
         quest.add(new QandA(context.getString(R.string.device_type), getStringList((ArrayList<String>) data.getDeviceType()), 3, 0, 0, "devicetype", null, data.getDeviceType()));
         quest.add(new QandA(context.getString(R.string.usage_environment), getStringList((ArrayList<String>) data.getUseEnvironment()), 3, 0, 0, "useenvironment", null, data.getUseEnvironment()));
 
@@ -144,11 +147,8 @@ public class AddProductPresenter implements NetworkCall.NetworkAddProductInterfa
         return quest;
     }
 
-    private String replaceText(String data){
-        return  data.replaceAll("\\[", "").replaceAll("\\]", "");
-    }
 
-    public String getStringList(ArrayList<String> list) {
+    public String getStringList(List<String> list) {
         StringBuilder builder = new StringBuilder();
         int x = 0;
         for (String data : list) {
@@ -181,11 +181,14 @@ public class AddProductPresenter implements NetworkCall.NetworkAddProductInterfa
     }
 
 
-    public void validateAnswers(ArrayList<QandA> questList) {
+    public void validateAnswers(List<QandA> questList) {
         for (QandA item : questList) {
             String ans = item.getAnswer();
             if (ans == null) {
-                listener.showErrorMessage("All fields are mandatory");
+                listener.showErrorMessage(item.getApiKey().toUpperCase() + " is missing");
+                return;
+            } else if (ans.equals("true") && item.getSubQA() != null && item.getSubQA().getAnswer() == null) {
+                listener.showErrorMessage(item.getSubQA().getApiKey().toUpperCase() + " is missing");
                 return;
             }
         }
@@ -196,10 +199,10 @@ public class AddProductPresenter implements NetworkCall.NetworkAddProductInterfa
     private void apicall() {
         if (utils.isOnline(context)) {
             ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-            String token = repo.getData(constants.getCACHE_TOKEN());
+            String token = repo.getData(constants.getcacheTokenKey());
             JsonObject data = builder.addProductJson(questList);
             if (isEdit) {
-                networkCall.editProduct(apiInterface, token, data,productId, this);
+                networkCall.editProduct(apiInterface, token, data, productId, this);
             } else {
                 networkCall.addProduct(apiInterface, token, data, this);
             }
@@ -213,27 +216,54 @@ public class AddProductPresenter implements NetworkCall.NetworkAddProductInterfa
     }
 
     @Override
-    public void onProductAddedSuccess(AddProductModel body) {
-        if (body.getData().getStatus()) {
-            listener.showErrorMessage("Product Added Successfully");
+    public void onCallSuccess(Object response) {
+        if (response instanceof AddProductModel) {
+            AddProductModel body = ((AddProductModel) response);
+            Boolean status = body.getData().getStatus();
+            if (Boolean.TRUE.equals(status) && !isEdit) {
+                listener.showErrorMessage("Product Added Successfully");
+            } else {
+                listener.showErrorMessage("Product Updated Successfully");
+            }
         }
     }
 
     @Override
-    public void onProductAddedFailed(String s) {
-        listener.showErrorMessage(s);
+    public void onCallFail(String message) {
+        listener.showErrorMessage(message);
     }
 
     @Override
-    public void onProductUpdatedSuccess(AddProductModel body) {
-        if (body.getData().getStatus()) {
-            listener.showErrorMessage("Product Updated Successfully");
-        }
+    public void sessionExpired() {
+        listener.showErrorMessage("Session Expired");
+        repo.storeData(constants.getcacheIsLoggedKey(), "false");
+        repo.storeData(constants.getCACHE_USER_INFO(), null);
+        utils.sessionExpired(context);
     }
 
-    @Override
-    public void onProductUpdatedFailed(String s) {
-        listener.showErrorMessage(s);
+    public int getRole() {
+        return constants.getuserRole();
+    }
+
+    public List<QandA> getRREApplication() {
+        ArrayList<QandA> quest = new ArrayList<>();
+        quest.add(new QandA("How many product registrations have you completed?", "", 1,1,1,"",null,null));
+        quest.add(new QandA("Characterize your successful product registrations", "", 1,1,1,"",null,null));
+        quest.add(new QandA("Product Classification", "", 3,1,2,"",null,null));
+        quest.add(new QandA("Have any been IVD?", "", 2,0,0,"",null,null));
+        quest.add(new QandA("Have any been life supporting / life sustaining?", "", 2,0,0,"",null,null));
+        QandA implant = new QandA("If yes, is it an implant?", "", 2, 0, 0, "", null, null);
+        quest.add(new QandA("Have any had direct or indirect patients contacting components?", "", 4,0,0,"",implant,null));
+        quest.add(new QandA("How many registered products used software and / or firmware?", "", 1,1,0,"",null,null));
+        quest.add(new QandA("Connection Type", "", 3,3,1,"",null,null));
+        quest.add(new QandA("How many registered products were sterilized products?", "", 1,1,1,"",null,null));
+        quest.add(new QandA("Product Type", "", 3,0,0,"",null,null));
+        quest.add(new QandA("Usage Environment", "", 3,0,0,"",null,null));
+        quest.add(new QandA("Have any been combination devices?", "", 2,0,0,"",null,null));
+        QandA deviceType = new QandA(context.getResources().getString(R.string.select_electrical_device_type), null, 3, 0, 0, "eledevicetype", null, null);
+        quest.add(new QandA("Have any been electrical?", "", 5,0,0,"",deviceType,null));
+        quest.add(new QandA("Have any been adult (pediatric)?", "", 2,0,0,"",null,null));
+        return quest;
     }
 
 

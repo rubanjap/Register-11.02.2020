@@ -31,6 +31,7 @@ import com.register.me.view.HomeActivity;
 import com.register.me.view.fragmentmanager.manager.IFragment;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -48,15 +49,23 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
     LinearLayout base;
     @BindView(R.id.btn_layout)
     ConstraintLayout layoutBTN;
+    @BindView(R.id.sub_header)
+    ConstraintLayout subHeader;
     @BindView(R.id.disableClick)
     View disableView;
     @BindView(R.id.img_Edit)
     ImageView editImg;
     private ArrayList<QandA> info;
+    @BindView(R.id.progressbar)
+    ConstraintLayout progressLayout;
+    @BindView(R.id.layPbar)
+    ConstraintLayout layoutPbar;
+    @BindView(R.id.scroll)
+    ScrollView scrollView;
 
     @Inject
     PersonalInfoPresenter presenter;
-    private boolean isExit =false;
+    private boolean isExit;
 
     public static IFragment newInstance() {
         return new PersonalInfoFragment();
@@ -70,18 +79,11 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) getActivity()).setHeaderText(getResources().getString(R.string.profile_details));
-
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector().inject(this);
         presenter.init(getContext(), this);
-
+        fragmentChannel.setTitle(getResources().getString(R.string.profile_details));
 
     }
 
@@ -89,6 +91,13 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(presenter.getRole() == 1){
+            subHeader.setVisibility(View.GONE);
+            disableView.setVisibility(View.GONE);
+            layoutBTN.setVisibility(View.VISIBLE);
+        }else {
+            layoutBTN.setVisibility(View.GONE);
+        }
         presenter.getUserDetails();
     }
 
@@ -139,7 +148,7 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
                                     @Override
                                     public void run() {
                                         info.get(finalI).setAnswer(s.toString());
-                                        Log.d("afterTextChanged", s.toString());
+//                                        Log.d("afterTextChanged", s.toString());
                                     }
                                 }).start();
 
@@ -155,7 +164,10 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
                     RadioButton email = inflateView.findViewById(R.id.rdValue_yes);
                     RadioButton sms = inflateView.findViewById(R.id.rdValue_no);
                     email.setText("Email");
-                    sms.setVisibility(View.GONE);
+                    if(presenter.getRole()==0){
+                    sms.setVisibility(View.GONE);}
+                    else {
+                        sms.setVisibility(View.VISIBLE);}
                     int finalI1 = i;
                     if (answer.equals("true")) {
                         email.setChecked(true);
@@ -182,7 +194,7 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
             }
             container.addView(inflateView);
             base.setVisibility(View.VISIBLE);
-            layoutBTN.setVisibility(View.GONE);
+
             i = i + 1;
         }
     }
@@ -194,7 +206,7 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
 
     @Override
     public void showErrorMessage(String message) {
-        KToast.customColorToast((Activity) getContext(), message, Gravity.BOTTOM, KToast.LENGTH_AUTO, R.color.red);
+        KToast.customColorToast((Activity) Objects.requireNonNull(getContext()), message, Gravity.BOTTOM, KToast.LENGTH_AUTO, R.color.red);
 
     }
 
@@ -222,9 +234,21 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
         fragmentChannel.popUp();
     }
 
+    @Override
+    public void dismissProgress() {
+        progressLayout.setVisibility(View.GONE);
+        layoutPbar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showProgress() {
+        progressLayout.setVisibility(View.VISIBLE);
+        layoutPbar.setVisibility(View.VISIBLE);
+    }
+
     @OnClick(R.id.disableClick)
     public void disableClick() {
-        KToast.normalToast(getActivity(), "Please click edit icon to update profile info", Gravity.BOTTOM, KToast.LENGTH_AUTO);
+        KToast.normalToast(getActivity(), getContext().getResources().getString(R.string.edit_icon_alert), Gravity.BOTTOM, KToast.LENGTH_AUTO);
 
     }
 

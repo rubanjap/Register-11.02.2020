@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/shape_three_sides">
+    android:layout_marginBottom="5dp"
+    android:background="@color/item_background">
 
 
     <LinearLayout
@@ -26,6 +27,7 @@
             android:paddingStart="5dp"/>
 
         <TextView
+            android:id="@+id/pName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Patient Station"

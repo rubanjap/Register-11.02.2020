@@ -11,8 +11,8 @@
         android:paddingBottom="5dp"
         android:orientation="horizontal"
         android:background="@drawable/shape_orange_bg"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
 
         android:layout_marginTop="10dp"
         >
@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product Number"
+            android:text="Product Name"
             android:paddingStart="5dp"
             android:textColor="@color/text_orange"
             android:layout_weight="1"
@@ -29,25 +29,32 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product Name"
+            android:text="Country"
             android:layout_weight="1"
             android:textColor="@color/text_orange"
             />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="IVD"
-            android:textColor="@color/text_orange"
-            android:layout_weight="1.25"
-            />
+
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bid_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         tools:listitem="@layout/auction_item"/>
+    <LinearLayout
+        android:id="@+id/no_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="No Bids Available!"
+            android:gravity="center"
+            android:textSize="25sp"/>
+    </LinearLayout>
 </LinearLayout>

@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import com.register.me.R;
 import com.register.me.presenter.DashBoardPresenter;
 import com.register.me.view.BaseFragment;
-import com.register.me.view.HomeActivity;
 import com.register.me.view.fragmentmanager.manager.IFragment;
 
 import javax.inject.Inject;
@@ -20,7 +19,8 @@ public class DashBoardFragment extends BaseFragment implements IFragment, DashBo
 
     private static final String FRAGMENT_NAME = "DashBoard";
 
-    @Inject DashBoardPresenter dashBoardPresenter;
+    @Inject
+    DashBoardPresenter dashBoardPresenter;
 
 
     @Override
@@ -28,6 +28,7 @@ public class DashBoardFragment extends BaseFragment implements IFragment, DashBo
         super.onCreate(savedInstanceState);
         injector().inject(this);
         dashBoardPresenter.setView(this);
+        fragmentChannel.setTitle(getResources().getString(R.string.client_dashboard));
     }
 
     @Override
@@ -37,11 +38,6 @@ public class DashBoardFragment extends BaseFragment implements IFragment, DashBo
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity)getActivity()).setHeaderText(getResources().getString(R.string.client_dashboard));
-    }
 
     @Override
     public void dispose() {
@@ -59,21 +55,21 @@ public class DashBoardFragment extends BaseFragment implements IFragment, DashBo
     }
 
     @OnClick(R.id.img_proj_portfolio)
-    public void onPortFolioClick(){
+    public void onPortFolioClick() {
         if (fragmentChannel != null) {
             fragmentChannel.showPortFolio();
         }
     }
 
     @OnClick(R.id.img_act_auction)
-    public void onActiveAuctionClick(){
-if(fragmentChannel!=null){
-    fragmentChannel.showAuctions();
-}
+    public void onActiveAuctionClick() {
+        if (fragmentChannel != null) {
+            fragmentChannel.showAuctions();
+        }
     }
 
     @OnClick(R.id.img_act_projects)
-    public void onActiveProjectsClick(){
+    public void onActiveProjectsClick() {
         if (fragmentChannel != null) {
             fragmentChannel.showActiveProjects();
         }

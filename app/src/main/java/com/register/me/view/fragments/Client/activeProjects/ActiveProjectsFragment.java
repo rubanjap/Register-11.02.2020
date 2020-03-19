@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.register.me.R;
+import com.register.me.model.data.Constants;
 import com.register.me.presenter.ActiveProjectPresenter;
 import com.register.me.view.BaseFragment;
 import com.register.me.view.HomeActivity;
@@ -22,6 +23,8 @@ public class ActiveProjectsFragment extends BaseFragment implements IFragment, A
 
     @Inject
     ActiveProjectPresenter activeProjectPresenter;
+    @Inject
+    Constants constants;
 
 
     @Override
@@ -29,6 +32,8 @@ public class ActiveProjectsFragment extends BaseFragment implements IFragment, A
         super.onCreate(savedInstanceState);
         injector().inject(this);
         activeProjectPresenter.setView(this);
+        fragmentChannel.setTitle(getResources().getString(R.string.client_dashboard));
+
     }
 
     @Override
@@ -38,11 +43,6 @@ public class ActiveProjectsFragment extends BaseFragment implements IFragment, A
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) getActivity()).setHeaderText(getResources().getString(R.string.client_dashboard));
-    }
 
     @Override
     public void dispose() {
@@ -76,11 +76,19 @@ public class ActiveProjectsFragment extends BaseFragment implements IFragment, A
 
     @OnClick(R.id.img_active_project)
     public void activeProject() {
+        constants.setAcitiveProject(true);
         fragmentChannel.showActiveProjectsSub();
     }
 
     @OnClick(R.id.img_completed_project)
     public void completedProject() {
-        fragmentChannel.showCompleteProject();
+        constants.setAcitiveProject(false);
+        fragmentChannel.showActiveProjectsSub();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fragmentChannel.setTitle("Project Details");
     }
 }

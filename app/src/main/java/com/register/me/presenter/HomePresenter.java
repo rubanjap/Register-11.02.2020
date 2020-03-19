@@ -13,7 +13,7 @@ import androidx.core.app.ActivityCompat;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.register.me.APIs.ApiInterface;
-import com.register.me.APIs.NetworkCall;
+import com.register.me.APIs.ClientNetworkCall;
 import com.register.me.R;
 import com.register.me.model.JsonBuilder;
 import com.register.me.model.data.Constants;
@@ -32,7 +32,7 @@ import retrofit2.Retrofit;
 
 import static androidx.core.app.ActivityCompat.requestPermissions;
 
-public class HomePresenter implements Utils.UtilAlertInterface, NetworkCall.NetworkLogoutInterface, NetworkCall.NetworkAvatarInterface {
+public class HomePresenter implements Utils.UtilAlertInterface, ClientNetworkCall.NetworkCallInterface {
 
     private final int PICK_FROM_GALLERY = 100;
     private View view;
@@ -44,7 +44,7 @@ public class HomePresenter implements Utils.UtilAlertInterface, NetworkCall.Netw
     @Inject
     Retrofit retrofit;
     @Inject
-    NetworkCall networkCall;
+    ClientNetworkCall networkCall;
     @Inject
     CacheRepo repo;
     @Inject
@@ -55,29 +55,49 @@ public class HomePresenter implements Utils.UtilAlertInterface, NetworkCall.Netw
 
     }
 
-    public void init(Context context, String from) {
+    public void init(Context context) {
         this.context = context;
         ((BaseActivity) context).injector().inject(this);
         apiInterface = retrofit.create(ApiInterface.class);
-        int role = constants.getUSER_ROLE();
+        int role = constants.getuserRole();
         int tab = constants.getTAB();
         switch (role) {
             case 0:
-                if (tab == 1) {
-                    constants.setSelectedList(null);
-                    view.showNewProject();
-                } else if (tab == 4) {
-                    view.showClientDashBoard();
+                switch (tab) {
+                    case 1:
+                        constants.setSelectedList(null);
+                        view.showNewProject();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        view.showClientDashBoard();
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + tab);
                 }
                 break;
             case 1:
-                if (tab == 1) {
-                    view.showRRE_DashBoard();
-                } else if (tab == 2) {
-                    view.showOnlineInter();
+                switch (tab) {
+                    case 1:
+                       view.showRREDashBoard();
+                        break;
+                    case 2:
+//                        view.showOnlineInter();
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + tab);
                 }
                 break;
 
+            default:
+                throw new IllegalStateException("Unexpected value: " + role);
         }
     }
 
@@ -94,7 +114,9 @@ public class HomePresenter implements Utils.UtilAlertInterface, NetworkCall.Netw
     public void alertResponse(String status) {
         if (status.equals("$LOGOUT")) {
             if (utils.isOnline(context)) {
-                String token = repo.getData(constants.getCACHE_TOKEN());
+                String token = repo.getData(constants.getcacheTokenKey());
+                repo.storeData(constants.getcacheIsLoggedKey(), "false");
+                repo.storeData(constants.getCACHE_USER_INFO(), null);
                 networkCall.logout(apiInterface, token, this);
             }
 
@@ -103,23 +125,6 @@ public class HomePresenter implements Utils.UtilAlertInterface, NetworkCall.Netw
         }
     }
 
-    @Override
-    public void onSuccess(LogoutModel body) {
-        String message = body.getData().getMessage();
-        Integer statusCode = body.getStatusCode();
-        if (statusCode != null && statusCode == 200) {
-            repo.storeData(constants.getCACHE_IS_LOGGED(), "false");
-            view.logout();
-        }
-
-    }
-
-    @Override
-    public void onFailure(String message) {
-//        view.showErrorMessage("Unable to Logout");
-        repo.storeData(constants.getCACHE_IS_LOGGED(), "false");
-        view.logout();
-    }
 
     public void pickImage() {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -134,15 +139,16 @@ public class HomePresenter implements Utils.UtilAlertInterface, NetworkCall.Netw
 
     public void apiUpdateAvatar(Bitmap bitmap) {
         if (utils.isOnline(context)) {
-            /*  Compress Actual Image   */
-            Bitmap compressedBmp = getResizedBitmap(bitmap, 400);
+            /*  Resize Actual Image   */
+            Bitmap compressedBmp = getResizedBitmap(bitmap, 500);
 
             /*   Convert bitmap  to base 64 */
             String encoded = getEncodedString(compressedBmp);
 
-            String token = repo.getData(constants.getCACHE_TOKEN());
+            String token = repo.getData(constants.getcacheTokenKey());
             JsonObject jObj = builder.getAvatarJson(encoded);
             networkCall.updateAvatar(apiInterface, token, jObj, this);
+            compressedBmp.recycle();
         } else {
             view.showErrorMessage(context.getResources().getString(R.string.network_alert));
         }
@@ -155,19 +161,6 @@ public class HomePresenter implements Utils.UtilAlertInterface, NetworkCall.Netw
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
-    @Override
-    public void onAvatarSuccess(AvatarModel body) {
-        String url = body.getUrl();
-        if (url != null) {
-            repo.storeData(constants.getCACHE_USER_PROFILE_URL(), url);
-            view.updateProfileImage(url);
-        }
-    }
-
-    @Override
-    public void onAvatarFailure(String s) {
-        view.showErrorMessage(context.getResources().getString(R.string.avatar_update_failed));
-    }
 
     public String getProfileImage() {
         String data = repo.getData(constants.getCACHE_USER_INFO());
@@ -180,7 +173,7 @@ public class HomePresenter implements Utils.UtilAlertInterface, NetworkCall.Netw
         GetUserInfoModel jS = new Gson().fromJson(data, GetUserInfoModel.class);
 
 
-        return jS.getData().getUser().getName();
+        return jS.getData().getUser().getFirstname() + " " + jS.getData().getUser().getLastName();
     }
 
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
@@ -198,6 +191,40 @@ public class HomePresenter implements Utils.UtilAlertInterface, NetworkCall.Netw
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
+    @Override
+    public void onCallSuccess(Object response) {
+        if (response instanceof LogoutModel) {
+            LogoutModel body = ((LogoutModel) response);
+            Integer statusCode = body.getStatusCode();
+            if (statusCode != null && statusCode == 200) {
+                sessionExpired();
+            }
+        }else if(response instanceof AvatarModel){
+            String url = ((AvatarModel) response).getUrl();
+            if (url != null) {
+                repo.storeData(constants.getcacheUserProfileUrlKey(), url);
+                view.updateProfileImage(url);
+            }
+        }
+    }
+
+    @Override
+    public void onCallFail(String message) {
+        if (message.contains("$LOGOUT$")) {
+            sessionExpired();
+        }else if(message.contains("$PROFILE$UPLOAD$FAILED$")){
+            view.showErrorMessage(context.getResources().getString(R.string.avatar_update_failed));
+
+        }
+    }
+
+    @Override
+    public void sessionExpired() {
+        repo.storeData(constants.getcacheIsLoggedKey(), "false");
+        repo.storeData(constants.getCACHE_USER_INFO(), null);
+        utils.sessionExpired(context);
+    }
+
 
     public interface View {
 
@@ -205,13 +232,11 @@ public class HomePresenter implements Utils.UtilAlertInterface, NetworkCall.Netw
 
         void showNewProject();
 
-        void showRRE_DashBoard();
+        void showRREDashBoard();
 
         void showOnlineInter();
 
         void showErrorMessage(String message);
-
-        void logout();
 
         void updateProfileImage(String url);
     }

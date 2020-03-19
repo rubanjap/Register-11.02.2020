@@ -62,7 +62,7 @@
 
         </RelativeLayout>
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/img_back_pressed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,6 +70,18 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:src="@drawable/backpressed"/>-->
+
+         <ImageView
+            android:id="@+id/img_back_pressed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear_header_home"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
             android:visibility="gone"
             android:src="@drawable/backpressed"/>
 

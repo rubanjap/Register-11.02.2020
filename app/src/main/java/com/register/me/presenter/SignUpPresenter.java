@@ -8,11 +8,12 @@ import android.view.Gravity;
 import com.google.gson.JsonObject;
 import com.onurkaganaldemir.ktoastlib.KToast;
 import com.register.me.APIs.ApiInterface;
-import com.register.me.APIs.NetworkCall;
+import com.register.me.APIs.ClientNetworkCall;
 import com.register.me.R;
 import com.register.me.model.JsonBuilder;
 import com.register.me.model.data.Constants;
 import com.register.me.model.data.model.RegisterModel;
+import com.register.me.model.data.repository.CacheRepo;
 import com.register.me.model.data.util.Utils;
 import com.register.me.view.BaseActivity;
 
@@ -26,7 +27,7 @@ import retrofit2.Retrofit;
 /**
  * Created by Jennifer - AIT on 15-02-2020PM 04:15.
  */
-public class SignUpPresenter implements NetworkCall.NetworkSignUpInterface {
+public class SignUpPresenter implements ClientNetworkCall.NetworkCallInterface {
 
     private Context context;
     @Inject
@@ -38,7 +39,9 @@ public class SignUpPresenter implements NetworkCall.NetworkSignUpInterface {
     @Inject
     Retrofit retrofit;
     @Inject
-    NetworkCall networkCall;
+    CacheRepo repo;
+    @Inject
+    ClientNetworkCall networkCall;
     private ISignUp listener;
 
     public void init(Context context, ISignUp listener) {
@@ -77,20 +80,33 @@ public class SignUpPresenter implements NetworkCall.NetworkSignUpInterface {
     }
 
     @Override
-    public void onRegisterSuccess(RegisterModel body) {
-        listener.dismissProgress();
-        boolean status = body.getData().getStatus();
-        String message = body.getData().getMessage();
-        if (status && message.equals("New user is added successfully.")) {
-            listener.showAlert();
-        }else if(!status && message.equals("Email Address already registered")){
-            listener.showErrorMessage(message);
+    public void onCallSuccess(Object response) {
+        if(response instanceof RegisterModel){
+            listener.dismissProgress();
+            RegisterModel.Data body = ((RegisterModel) response).getData();
+            boolean status = body.getStatus();
+            String message = body.getMessage();
+            if (status && message.equals("New user is added successfully.")) {
+                listener.showAlert();
+            }else if(!status && message.equals("Email Address already registered")){
+                listener.showErrorMessage(message);
+            }
         }
     }
 
     @Override
-    public void onRegisterFailure(String message) {
+    public void onCallFail(String message) {
         listener.dismissProgress();
+        listener.showErrorMessage(message);
+    }
+
+    @Override
+    public void sessionExpired() {
+        listener.dismissProgress();
+        listener.showErrorMessage("Session Expired");
+        repo.storeData(constants.getcacheIsLoggedKey(), "false");
+        repo.storeData(constants.getCACHE_USER_INFO(),null);
+        utils.sessionExpired(context);
     }
 
     public interface ISignUp {

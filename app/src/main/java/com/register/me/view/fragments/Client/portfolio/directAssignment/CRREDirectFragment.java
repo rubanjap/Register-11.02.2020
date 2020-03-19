@@ -42,6 +42,7 @@ public class CRREDirectFragment extends BaseFragment implements IFragment, Utils
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector().inject(this);
+        fragmentChannel.setTitle(getResources().getString(R.string.crre_direct));
 
     }
 
@@ -52,11 +53,6 @@ public class CRREDirectFragment extends BaseFragment implements IFragment, Utils
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) getActivity()).setHeaderText(getResources().getString(R.string.crre_direct));
-    }
 
 
     @Override

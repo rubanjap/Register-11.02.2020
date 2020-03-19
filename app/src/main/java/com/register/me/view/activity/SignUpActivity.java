@@ -74,10 +74,9 @@ public class SignUpActivity extends BaseActivity implements SignUpPresenter.ISig
         }
     }
 
-
     @Override
     public void showAlert() {
-        utils.showAlert(this,1,this);
+        utils.showAlert(this, 1, this);
     }
 
     @Override
@@ -87,8 +86,9 @@ public class SignUpActivity extends BaseActivity implements SignUpPresenter.ISig
 
     @Override
     public void alertResponse(String success) {
-        if(success.equals("Success")){
+        if (success.equals("Success")) {
             finish();
         }
     }
+
 }

@@ -1,27 +1,27 @@
 package com.register.me.view.fragmentmanager;
 
 
+import com.register.me.model.data.model.ViewActCompProject;
+
+import java.util.List;
+
 public interface FragmentChannel {
 
     void popUp();
 
     void popUpAll();
 
-    void fadeOutToolbar();
-
     void updateNavigation();
 
     void showHome();
+
+    void setTitle(String title);
 
     void showChangePassword();
 
     void showPortFolio();
 
     void showAddProduct();
-
-    void showPortFolioDetail();
-
-    void showPortProductDetail();
 
     void showViewProductDetails();
 
@@ -35,8 +35,6 @@ public interface FragmentChannel {
 
     void showActiveProjectsSub();
 
-    void showCompleteProject();
-
     void showCountryScreen();
 
     void showRREDashboard();
@@ -44,4 +42,8 @@ public interface FragmentChannel {
     void showOnlineInterView();
 
     void showPersonalInfo();
+
+    void showProjectAssign(String name, int locationid, String region);
+
+    void showCommentScreen(List<ViewActCompProject.Comment> comments, int projectAssignId);
 }

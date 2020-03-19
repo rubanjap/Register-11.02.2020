@@ -14,7 +14,6 @@ import com.register.me.model.di.app.DaggerApplicationComponent;
 import com.register.me.view.BaseActivity;
 import com.register.me.util.CrashlyticsUtil;
 import com.crashlytics.android.Crashlytics;
-import com.squareup.leakcanary.LeakCanary;
 
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
@@ -27,12 +26,12 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
+       /* if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
             return;
         }
-        LeakCanary.install(this);
+        LeakCanary.install(this);*/
 
         Fabric.with(this, new Crashlytics());
 

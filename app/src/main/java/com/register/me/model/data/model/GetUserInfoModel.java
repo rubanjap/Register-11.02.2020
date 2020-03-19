@@ -100,9 +100,12 @@ public class GetUserInfoModel {
         @SerializedName("emailAddress")
         @Expose
         private String emailAddress;
-        @SerializedName("name")
+        @SerializedName("firstName")
         @Expose
-        private String name;
+        private String firstname;
+        @SerializedName("lastName")
+        @Expose
+        private String lastName;
         @SerializedName("imageUrl")
         @Expose
         private String imageUrl;
@@ -138,12 +141,20 @@ public class GetUserInfoModel {
             this.emailAddress = emailAddress;
         }
 
-        public String getName() {
-            return name;
+        public String getFirstname() {
+            return firstname;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setFirstname(String firstname) {
+            this.firstname = firstname;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
         }
 
         public String getImageUrl() {

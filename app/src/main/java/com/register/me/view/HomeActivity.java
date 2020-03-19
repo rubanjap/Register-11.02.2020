@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
@@ -25,14 +26,16 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.onurkaganaldemir.ktoastlib.KToast;
 import com.register.me.R;
+import com.register.me.model.data.model.ViewActCompProject;
 import com.register.me.presenter.HomePresenter;
 import com.register.me.view.activity.LoginActivity;
 import com.register.me.view.fragmentmanager.FragmentChannel;
 import com.register.me.view.fragmentmanager.manager.FragmentManagerHandler;
 import com.register.me.view.fragments.Client.DashBoardFragment;
-import com.register.me.view.fragments.Client.activeProjects.ActiveProjectSubFragment;
+import com.register.me.view.fragments.Client.activeProjects.ActiveProjectCompFragment;
 import com.register.me.view.fragments.Client.activeProjects.ActiveProjectsFragment;
-import com.register.me.view.fragments.Client.activeProjects.CompletedProjectFragment;
+import com.register.me.view.fragments.Client.activeProjects.CommentFragment;
+import com.register.me.view.fragments.Client.activeProjects.ProjectAssignFragment;
 import com.register.me.view.fragments.Client.auctions.AuctionFragment;
 import com.register.me.view.fragments.Client.portfolio.PortFolioFragment;
 import com.register.me.view.fragments.Client.portfolio.addProducts.AddProductFragment;
@@ -45,13 +48,15 @@ import com.register.me.view.fragments.REA.applicationSubmission.PersonalInfoFrag
 import com.register.me.view.fragments.REA.onlineInterview.OnlineInterviewFragment;
 import com.register.me.view.fragments.navigation.ChangePasswordFragment;
 
-import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.view.Gravity.LEFT;
 
 
 public class HomeActivity extends BaseActivity implements HomePresenter.View, FragmentChannel, NavigationView.OnNavigationItemSelectedListener {
@@ -70,14 +75,11 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
     ImageView mBackPressed;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-    private String from;
-
     @BindView(R.id.img_user_profile)
     ImageView userProfile;
     @BindView(R.id.img_user_notification)
     ImageView notification;
     private CircleImageView profileImage;
-    private Uri imageUri;
     private boolean isProfileClicked = false;
 
     @Override
@@ -91,17 +93,13 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
         super.onCreate(savedInstanceState);
         injector().inject(this);
         fragmentManagerHandler.setFragmentContainerId(flContainer);
-        if (getIntent() != null) {
-            from = getIntent().getStringExtra("from");
-        }
         homePresenter.setView(this);
         if (savedInstanceState == null) {
-            homePresenter.init(this, from);
+            homePresenter.init(this);
         }
         navigationView.setNavigationItemSelectedListener(this);
         setNavigationHeader();
         updateProfileImage(null);
-
 
     }
 
@@ -109,12 +107,15 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
         View hView = navigationView.getHeaderView(0);
         profileImage = (CircleImageView) hView.findViewById(R.id.profile_image);
         TextView profileName = (TextView) hView.findViewById(R.id.txt_profile_name);
-        Glide.with(this).load(homePresenter.getProfileImage()).into(profileImage);
+        String profileImage = homePresenter.getProfileImage();
+        if(profileImage!=null){
+        Glide.with(this).load(profileImage).into(this.profileImage);}
+
         profileName.setText(homePresenter.getUserName());
-        profileImage.setOnClickListener(new View.OnClickListener() {
+        this.profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                profileImage.setClickable(false);
+                HomeActivity.this.profileImage.setClickable(false);
                 homePresenter.pickImage();
             }
         });
@@ -124,13 +125,19 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
+            case R.id.nav_home:
+                finish();
+                break;
             case R.id.nav_change_password:
                 showChangePassword();
                 break;
             case R.id.nav_logout:
                 homePresenter.logout();
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + id);
         }
+        mDrawerLayout.closeDrawer(LEFT);
         return true;
     }
 
@@ -149,27 +156,13 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
         try {
             if (resultCode == RESULT_OK &&
                     data != null && data.getData() != null) {
-
-                imageUri = data.getData();
+                Uri imageUri = data.getData();
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                Bitmap converetdImage = homePresenter.getResizedBitmap(bitmap, 400);
-                try {
-
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    converetdImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                    byte[] byteArray = outputStream.toByteArray();
-                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-//                Log.d("Encoded", encoded);
-
-                    homePresenter.apiUpdateAvatar(bitmap);
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                homePresenter.apiUpdateAvatar(bitmap);
+                bitmap.recycle();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("Exception", e.getMessage());
         }
     }
 
@@ -203,30 +196,20 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
 
     @OnClick(R.id.img_nav_click)
     public void onNavClick() {
-        mDrawerLayout.openDrawer(Gravity.LEFT);
+        mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
     @OnClick(R.id.img_back_pressed)
-    public void onBackpressed() {
-       onBackPressed();
-//        fragmentManagerHandler.onBackPressed();
+    public void onClickBackpressed() {
+        onBackPressed();
     }
 
-    @Override
-    public void fadeOutToolbar() {
-      /*  if (tlMain.getAlpha() > 0f) {
-            Utils.fadeOut(tlMain);
-        }*/
-    }
-
-    private void fadeInToolbar() {
-        /*if (tlMain.getAlpha() < 1f) {
-            Utils.fadeIn(tlMain);
-        }*/
-    }
 
     @Override
     public void popUp() {
+        if(fragmentManagerHandler.getFragmentName().equals("PersonalInfo")){
+            isProfileClicked=false;
+        }
         fragmentManagerHandler.popUp();
     }
 
@@ -244,13 +227,16 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
     public void showHome() {
         fragmentManagerHandler.popUpAll();
         showClientDashBoard();
-        fadeInToolbar();
+    }
+
+    @Override
+    public void setTitle(String title) {
+        mBackPressed.setVisibility(View.VISIBLE);
+        mHeaderText.setText(title.toUpperCase());
     }
 
     @Override
     public void showChangePassword() {
-        mDrawerLayout.closeDrawer(Gravity.LEFT);
-        fragmentManagerHandler.popUpAll();
         fragmentManagerHandler.replaceFragment(ChangePasswordFragment.newInstance(), this);
     }
 
@@ -264,24 +250,10 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
         fragmentManagerHandler.replaceFragment(AddProductFragment.newInstance(), this);
     }
 
-    @Override
-    public void showPortFolioDetail() {
-//        fragmentManagerHandler.replaceFragment(PortFolioDetailFragment.newInstance(), this);
-    }
-
-    @Override
-    public void showPortProductDetail() {
-//        fragmentManagerHandler.replaceFragment(PortFolioProductDetailFragment.newInstance(), this);
-    }
 
     @Override
     public void showViewProductDetails() {
         fragmentManagerHandler.replaceFragment(ViewProductDetailsFragment.newInstance(), this);
-    }
-
-    public void setHeaderText(String header) {
-        mBackPressed.setVisibility(View.VISIBLE);
-        mHeaderText.setText(header);
     }
 
     @Override
@@ -296,7 +268,7 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
     }
 
     @Override
-    public void showRRE_DashBoard() {
+    public void showRREDashBoard() {
         showRREDashboard();
     }
 
@@ -310,19 +282,15 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
         KToast.customColorToast(this, message, Gravity.BOTTOM, KToast.LENGTH_SHORT, R.color.red);
     }
 
-    @Override
-    public void logout() {
-        startActivity(new Intent(this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-    }
 
     @Override
     public void updateProfileImage(String url) {
 
         if (url == null) {
             url = homePresenter.getProfileImage();
-        } else {
-            profileImage.setClickable(true);
         }
+            profileImage.setClickable(true);
+
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true);
@@ -355,12 +323,7 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
 
     @Override
     public void showActiveProjectsSub() {
-        fragmentManagerHandler.replaceFragment(ActiveProjectSubFragment.newInstance(), this);
-    }
-
-    @Override
-    public void showCompleteProject() {
-        fragmentManagerHandler.replaceFragment(CompletedProjectFragment.newInstance(), this);
+        fragmentManagerHandler.replaceFragment(ActiveProjectCompFragment.newInstance(), this);
     }
 
     @Override
@@ -384,13 +347,25 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View, Fr
     }
 
     @Override
+    public void showProjectAssign(String name, int locationid, String region) {
+        fragmentManagerHandler.replaceFragment(ProjectAssignFragment.newInstance(name, locationid,region),this);
+    }
+
+    @Override
+    public void showCommentScreen(List<ViewActCompProject.Comment> comments, int projectAssignId) {
+        fragmentManagerHandler.replaceFragment(CommentFragment.newInstance(comments,projectAssignId),this);
+    }
+
+    @Override
     public void onBackPressed() {
         if (isProfileClicked) {
             isProfileClicked = false;
         }
-        fragmentManagerHandler.onBackPressed();
-
+        if(fragmentManagerHandler.getStack()>0) {
+            fragmentManagerHandler.onBackPressed();
+        }else {
+            super.onBackPressed();
+        }
     }
-
 
 }
