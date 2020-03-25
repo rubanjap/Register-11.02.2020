@@ -49,6 +49,7 @@ import okhttp3.ResponseBody;
 import timber.log.Timber;
 
 public class FileUtil {
+    public static int djfdoi = 0;
     public static final String DOCUMENTS_DIR = "documents";
     // configured android:authorities in AndroidManifest (https://developer.android.com/reference/android/support/v4/content/FileProvider)
     public static final String AUTHORITY =  "com.register.me.provider";
