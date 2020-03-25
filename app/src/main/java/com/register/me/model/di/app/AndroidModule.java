@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 
 import com.register.me.APIs.ClientNetworkCall;
+import com.register.me.APIs.RRENetworkCall;
 import com.register.me.model.JsonBuilder;
 import com.register.me.model.data.Constants;
 import com.register.me.model.data.repository.CacheRepo;
@@ -31,8 +32,10 @@ public class AndroidModule {
 //    private String BASE_URL = "http://3.81.189.43/api/";
     private String BASE_URL = "http://my.registermeapp.com/api/";
 
-    //    private String BASE_URL = "http://192.168.88.68:8090/api/";
-//    private String BASE_URL = "http://192.168.2.132:8090/api/";
+//        private String BASE_URL = "http://192.168.88.68:8090/api/";
+//        private String BASE_URL = "http://192.168.2.148:8090/api/";
+//        private String BASE_URL = "http://192.168.88.56:8090/api/";
+
     public AndroidModule(Context context) {
         this.context = context;
     }
@@ -94,6 +97,10 @@ public class AndroidModule {
     ClientNetworkCall provideNetworkCall(){
         return new ClientNetworkCall();
     }
+
+    @Singleton
+    @Provides
+    RRENetworkCall provideRRENetworkCall(){return new RRENetworkCall(); }
 
     @Singleton
     @Provides

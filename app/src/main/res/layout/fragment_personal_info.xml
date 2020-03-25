@@ -65,6 +65,54 @@
         android:layout_marginTop="25dp"
         app:layout_constraintTop_toBottomOf="@id/sub_header"/>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+   android:id="@+id/notification_layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            app:layout_constraintTop_toBottomOf="@id/profile_container">
+
+            <TextView
+                android:id="@+id/itemTextTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:text="@string/notification"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/itemTextTitle">
+                <CheckBox
+                    android:id="@+id/chk_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX=".90"
+                    android:scaleY=".90"
+                    android:text="BY EMAIL"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toBottomOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/chk_sms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:scaleX=".90"
+                    android:scaleY=".90"
+                    android:text="BY SMS"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="parent" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_layout"
         android:layout_width="match_parent"
@@ -75,7 +123,7 @@
         app:layout_goneMarginBottom="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/profile_container">
+        app:layout_constraintTop_toBottomOf="@id/notification_layout">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_update"
@@ -126,12 +174,15 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
         <View
             android:id="@+id/disableClick"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sub_header"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

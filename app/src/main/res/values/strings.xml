@@ -137,6 +137,14 @@
         <item>Single-Use Disposable</item>
     </string-array>
 
+    <string-array name="mime_types">
+        <item>application/pdf</item>
+        <item>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</item>
+        <item>application/vnd.openxmlformats-officedocument.presentationml.presentation</item>
+        <item>application/vnd.openxmlformats-officedocument.wordprocessingml.document</item>
+        <item>application/vnd.ms-excel</item>
+    </string-array>
+
     <string name="rre_dashboard">REGULATORY EXPERT APPLICATION</string>
     <string name="network_alert">Please check your network connection</string>
     <string name="empty_email_alert">Please enter your email address</string>

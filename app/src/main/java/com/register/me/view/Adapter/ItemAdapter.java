@@ -83,7 +83,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        switch (dataList.get(position).getType()) {
+        switch (dataList.get(position).getViewType()) {
             case 1:
                 return EDIT;
             case 2:

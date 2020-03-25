@@ -94,4 +94,7 @@ public class PresenterModule {
         return new CommentPresenter();
     }
 
+    @Provides
+    public DocumentPresenter provideDocumentPresenter() {return new DocumentPresenter();}
+
 }

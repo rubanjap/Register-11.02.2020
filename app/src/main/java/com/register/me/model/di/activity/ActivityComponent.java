@@ -1,11 +1,13 @@
 package com.register.me.model.di.activity;
 
+import com.register.me.APIs.RRENetworkCall;
 import com.register.me.presenter.ActiveAuctionPresenter;
 import com.register.me.presenter.ActiveCompProjectPresenter;
 import com.register.me.presenter.AddProductPresenter;
 import com.register.me.presenter.ChangePasswordPresenter;
 import com.register.me.presenter.CommentPresenter;
 import com.register.me.presenter.CountryPresenter;
+import com.register.me.presenter.DocumentPresenter;
 import com.register.me.presenter.HomePresenter;
 import com.register.me.presenter.InitiateRegistrationPresenter;
 import com.register.me.presenter.LoginPresenter;
@@ -24,6 +26,7 @@ import com.register.me.view.fragments.Client.activeProjects.CommentFragment;
 import com.register.me.view.fragments.Client.activeProjects.ProjectAssignFragment;
 import com.register.me.view.fragments.Client.auctions.ActiveAuctionFragment;
 import com.register.me.view.fragments.Client.auctions.BidsToEvaluateFragment;
+import com.register.me.view.fragments.REA.applicationSubmission.DocumentFragment;
 import com.register.me.view.fragments.REA.applicationSubmission.PersonalInfoFragment;
 import com.register.me.view.fragments.REA.onlineInterview.OnlineInterviewFragment;
 import com.register.me.view.fragments.Client.DashBoardFragment;
@@ -88,9 +91,8 @@ public interface ActivityComponent {
 
     void inject(CommentFragment commentFragment);
 
+    void inject(DocumentFragment DocumentFragment);
 
-
-    void inject(WelcomeRREActivity welcomeRREActivity);
 
 
 
@@ -129,8 +131,10 @@ public interface ActivityComponent {
 
     void inject(CommentPresenter commentPresenter);
 
+    void inject(DocumentPresenter documentPresenter);
 
 
+    void inject(RRENetworkCall rreNetworkCall);
 
     @Subcomponent.Builder
     interface Builder {

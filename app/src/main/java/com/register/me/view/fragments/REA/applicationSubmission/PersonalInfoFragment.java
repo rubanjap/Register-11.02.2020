@@ -3,13 +3,13 @@ package com.register.me.view.fragments.REA.applicationSubmission;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,7 +27,6 @@ import com.register.me.R;
 import com.register.me.model.data.model.QandA;
 import com.register.me.presenter.PersonalInfoPresenter;
 import com.register.me.view.BaseFragment;
-import com.register.me.view.HomeActivity;
 import com.register.me.view.fragmentmanager.manager.IFragment;
 
 import java.util.ArrayList;
@@ -58,6 +57,10 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
     private ArrayList<QandA> info;
     @BindView(R.id.progressbar)
     ConstraintLayout progressLayout;
+    @BindView(R.id.chk_email)
+    CheckBox emailChk;
+    @BindView(R.id.chk_sms)
+    CheckBox smsChk;
     @BindView(R.id.layPbar)
     ConstraintLayout layoutPbar;
     @BindView(R.id.scroll)
@@ -66,6 +69,8 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
     @Inject
     PersonalInfoPresenter presenter;
     private boolean isExit;
+    private ArrayList<QandA> subInfo;
+    private ArrayList<QandA> notificaionInfo;
 
     public static IFragment newInstance() {
         return new PersonalInfoFragment();
@@ -91,25 +96,47 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(presenter.getRole() == 1){
+        if (presenter.getRole() == 1) {
             subHeader.setVisibility(View.GONE);
             disableView.setVisibility(View.GONE);
             layoutBTN.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             layoutBTN.setVisibility(View.GONE);
         }
         presenter.getUserDetails();
+        notificaionInfo = new ArrayList<>();
+        emailChk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (notificaionInfo.size() > 0) {
+                    QandA n1 = notificaionInfo.get(0);
+                    if (n1 != null) {
+                        n1.setAnswer(String.valueOf(isChecked));
+                    }
+                }
+            }
+        });
+        smsChk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (notificaionInfo.size() > 1) {
+                    QandA n2 = notificaionInfo.get(1);
+                    if (n2 != null) {
+                        n2.setAnswer(String.valueOf(isChecked));
+                    }
+                }
+            }
+        });
     }
 
-    private void updateUI() {
+    private void updateUI(ArrayList<QandA> info) {
 
         View inflateView;
-        container.removeAllViews();
         int i = 0;
         for (QandA item : info) {
             String question = item.getQuestion();
             String answer = item.getAnswer();
-            switch (item.getType()) {
+            switch (item.getViewType()) {
                 /*
                  * case 1 : Edit Text
                  * case 2 : Radio Button
@@ -124,7 +151,7 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
                     txtAns.setImeOptions(item.getAction() == 1 ? EditorInfo.IME_ACTION_NEXT : EditorInfo.IME_ACTION_DONE);
 
                     int inputType = item.getInputType();
-                   txtAns.setInputType(presenter.getInputType(inputType));
+                    txtAns.setInputType(presenter.getInputType(inputType));
 
 
                     int finalI = i;
@@ -164,10 +191,11 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
                     RadioButton email = inflateView.findViewById(R.id.rdValue_yes);
                     RadioButton sms = inflateView.findViewById(R.id.rdValue_no);
                     email.setText("Email");
-                    if(presenter.getRole()==0){
-                    sms.setVisibility(View.GONE);}
-                    else {
-                        sms.setVisibility(View.VISIBLE);}
+                    if (presenter.getRole() == 0) {
+                        sms.setVisibility(View.GONE);
+                    } else {
+                        sms.setVisibility(View.VISIBLE);
+                    }
                     int finalI1 = i;
                     if (answer.equals("true")) {
                         email.setChecked(true);
@@ -177,8 +205,19 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
                     group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            if (checkedId == R.id.rdValue_yes) {
-                                info.get(finalI1).setAnswer("true");
+                            boolean isEmail = false;
+                            boolean isSMS = false;
+                            if (checkedId == email.getId()) {
+                                PersonalInfoFragment.this.info.get(finalI1).setAnswer("true");
+                                isEmail = true;
+                                isSMS = false;
+                            } else if (checkedId == sms.getId()) {
+                                isEmail = false;
+                                isSMS = true;
+                            }
+                            if (presenter.getRole() == 1) {
+                                PersonalInfoFragment.this.info.add(new QandA("Notification", String.valueOf(isEmail), 2, 0, 0, "emailnotification", null, null));
+                                PersonalInfoFragment.this.info.add(new QandA("Notification", String.valueOf(isSMS), 2, 0, 0, "smsnotification", null, null));
                             }
                         }
                     });
@@ -190,12 +229,19 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
                     txtSpinnerView.setText(question);
                     break;
                 default:
-                    throw new IllegalStateException("Unexpected value: " + item.getType());
+                    throw new IllegalStateException("Unexpected value: " + item.getViewType());
             }
             container.addView(inflateView);
             base.setVisibility(View.VISIBLE);
 
             i = i + 1;
+        }
+
+        if (presenter.isEmail()) {
+            emailChk.setChecked(true);
+        }
+        if (presenter.isSMS()) {
+            smsChk.setChecked(true);
         }
     }
 
@@ -211,15 +257,32 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
     }
 
     @Override
-    public void updateUI(ArrayList<QandA> body) {
-        if(isExit) {
+    public void updateUI(ArrayList<QandA> personalInfo, ArrayList<QandA> countryInfo) {
+        if (isExit) {
             fragmentChannel.updateNavigation();
             return;
         }
-        info = new ArrayList<QandA>();
-        info = (ArrayList<QandA>) body.clone();
-        updateUI();
-
+        container.removeAllViews();
+        this.info = new ArrayList<QandA>();
+        this.subInfo = new ArrayList<QandA>();
+        this.notificaionInfo = new ArrayList<QandA>();
+        this.info = (ArrayList<QandA>) personalInfo.clone();
+        this.subInfo.addAll(countryInfo);
+        updateUI(info);
+        int role = presenter.getRole();
+        boolean org = presenter.hasORG();
+        if ((role == 0 && !org)||role == 1) {
+            updateUI(subInfo);
+        }
+        if (presenter.getRole() == 1) {
+            smsChk.setVisibility(View.VISIBLE);
+            notificaionInfo.clear();
+            notificaionInfo.add(new QandA("Notification", String.valueOf(presenter.isEmail()), 0, 0, 0, "emailNotification", null, null));
+            notificaionInfo.add(new QandA("Notification", String.valueOf(presenter.isSMS()), 0, 0, 0, "smsNotification", null, null));
+            return;
+        }
+        notificaionInfo.clear();
+        notificaionInfo.add(new QandA("Notification", String.valueOf(presenter.isEmail()), 0, 0, 0, "emailNotification", null, null));
     }
 
     @Override
@@ -229,9 +292,9 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
 
     @Override
     public void exitScreen() {
-        isExit =true;
+        isExit = true;
         presenter.getUserDetails();
-        fragmentChannel.popUp();
+//        fragmentChannel.popUp();
     }
 
     @Override
@@ -267,6 +330,8 @@ public class PersonalInfoFragment extends BaseFragment implements IFragment, Per
 
     @OnClick(R.id.card_update)
     public void onClickUpdate() {
+        info.addAll(subInfo);
+        info.addAll(notificaionInfo);
         presenter.validate(info);
 //        presenter.updateUser(info);
 

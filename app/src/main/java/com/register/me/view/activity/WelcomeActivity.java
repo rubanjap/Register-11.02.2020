@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.register.me.APIs.RRENetworkCall;
 import com.register.me.R;
 import com.register.me.model.data.Constants;
 import com.register.me.presenter.WelcomePresenter;
@@ -19,13 +20,16 @@ import com.register.me.view.BaseActivity;
 import com.register.me.view.HomeActivity;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observer;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.observers.DisposableLambdaObserver;
 
 public class WelcomeActivity extends BaseActivity {
 
@@ -44,6 +48,8 @@ public class WelcomeActivity extends BaseActivity {
 
     @Inject
     WelcomePresenter welcomePresenter;
+    @Inject
+    RRENetworkCall rreNetworkCall;
 
     @Inject
     Constants constants;
@@ -113,7 +119,8 @@ public class WelcomeActivity extends BaseActivity {
                     Toast.makeText(WelcomeActivity.this, "Complete", Toast.LENGTH_SHORT).show();
                 }
             };
-            welcomePresenter.getStepStatus(getStepObserver);
+            rreNetworkCall.init(this,message);
+            rreNetworkCall.getStepStatus(getStepObserver);
 
 
         }
@@ -156,9 +163,9 @@ public class WelcomeActivity extends BaseActivity {
             } else if (i == title.size() - 1) {
                 bottomLine.setVisibility(View.GONE);
             }
-            if(i+1<stepFromResponse){
+            if (i + 1 < stepFromResponse) {
                 imageBtn.setImageResource(R.drawable.btn_green);
-            }else if(i+1 == stepFromResponse){
+            } else if (i + 1 == stepFromResponse) {
                 imageBtn.setImageResource(R.drawable.btn_blue);
             }
 
@@ -191,5 +198,10 @@ public class WelcomeActivity extends BaseActivity {
         if (constants.getuserRole() == 0) {
             startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

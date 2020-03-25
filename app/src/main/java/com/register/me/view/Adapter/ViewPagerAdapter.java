@@ -9,7 +9,7 @@ import com.register.me.view.fragments.Client.auctions.ActiveAuctionFragment;
 import com.register.me.view.fragments.Client.auctions.BidsToEvaluateFragment;
 import com.register.me.view.fragments.Client.portfolio.addProducts.AddProductFragment;
 import com.register.me.view.fragments.REA.applicationSubmission.ActivityFragment;
-import com.register.me.view.fragments.REA.applicationSubmission.ApplicationFormFragment;
+import com.register.me.view.fragments.REA.applicationSubmission.DocumentFragment;
 import com.register.me.view.fragments.REA.applicationSubmission.PersonalInfoFragment;
 
 /**
@@ -49,7 +49,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 //                        return new ApplicationFormFragment();
                         return new AddProductFragment();
                     case 2:
-                        return new ActivityFragment();
+                        return new DocumentFragment();
                     case 3:
                         return new ActivityFragment();
 

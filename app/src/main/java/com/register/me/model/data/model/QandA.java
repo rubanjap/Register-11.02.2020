@@ -17,11 +17,12 @@ public class QandA {
      * 4 - RadioRadio
      * 5 - RadioSpinner
      */
-    int type;
+    int viewType;
     /*
      * 1 - text
      * 2 - email
      * 3- password
+     * 4 - number
      * */
     private final int inputType;
     /*
@@ -38,7 +39,7 @@ public class QandA {
     public QandA(String question, String answer, int type, int inputType, int action,String apiKey,QandA subQA,List<String> subList) {
         this.question = question;
         this.answer = answer;
-        this.type = type;
+        this.viewType = type;
         this.inputType = inputType;
         this.action = action;
         this.apiKey = apiKey;
@@ -62,12 +63,12 @@ public class QandA {
         this.answer = answer;
     }
 
-    public int getType() {
-        return type;
+    public int getViewType() {
+        return viewType;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
     }
 
     public int getInputType() {

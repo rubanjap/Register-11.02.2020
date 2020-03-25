@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.register.me.model.data.model.ActiveAuction;
 import com.register.me.model.data.model.ActiveCompProject;
 import com.register.me.model.data.model.AddProductModel;
+import com.register.me.model.data.model.ApplicationRRESubmission;
 import com.register.me.model.data.model.AvatarModel;
 import com.register.me.model.data.model.ChangePasswordModel;
 import com.register.me.model.data.model.CrreList;
@@ -14,6 +15,7 @@ import com.register.me.model.data.model.LoginModel;
 import com.register.me.model.data.model.LogoutModel;
 import com.register.me.model.data.model.PostReply;
 import com.register.me.model.data.model.ProjectModel;
+import com.register.me.model.data.model.RREApplication;
 import com.register.me.model.data.model.RegisterModel;
 import com.register.me.model.data.model.RequestRegion;
 import com.register.me.model.data.model.Steps;
@@ -116,7 +118,13 @@ public interface ApiInterface {
 
     @POST("postreplymail")
     Call<PostReply> postReply(@Header("Authorization") String token, @Body JsonObject obj);
-
+/*************************************************     RRE PROCESS    ****************************************/
     @GET("rrprocesssteps")
     Observable<Response<Steps>> getStepStatus(@Header("Authorization") String token);
+
+    @GET("rreviewapplication")
+    Observable<Response<RREApplication>> getRREApplication(@Header("Authorization") String token);
+
+    @POST("rreaddapplicationform")
+    Observable<Response<ApplicationRRESubmission>>submitRREApplicationForm(@Header("Authorization") String token, @Body JsonObject obj);
 }

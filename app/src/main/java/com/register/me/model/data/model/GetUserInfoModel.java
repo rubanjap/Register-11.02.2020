@@ -118,6 +118,10 @@ public class GetUserInfoModel {
         @SerializedName("emailNotification")
         @Expose
         private Boolean emailNotification;
+
+        @SerializedName("smsNotification")
+        @Expose
+        private Boolean smsNotification;
         @SerializedName("role")
         @Expose
         private String role;
@@ -187,6 +191,14 @@ public class GetUserInfoModel {
 
         public void setEmailNotification(Boolean emailNotification) {
             this.emailNotification = emailNotification;
+        }
+
+        public Boolean getSmsNotification() {
+            return smsNotification;
+        }
+
+        public void setSmsNotification(Boolean smsNotification) {
+            this.smsNotification = smsNotification;
         }
 
         public String getRole() {

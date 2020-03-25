@@ -42,6 +42,9 @@ public class PersonalInfoPresenter implements ClientNetworkCall.NetworkCallInter
     JsonBuilder builder;
     private Context context;
     private IPersonalInfo listener;
+    private boolean OrgHasData;
+    private boolean isEmail;
+    private boolean isSMS;
 
     public void init(Context context, IPersonalInfo listener) {
         this.context = context;
@@ -51,6 +54,18 @@ public class PersonalInfoPresenter implements ClientNetworkCall.NetworkCallInter
 
     public int getRole() {
         return constants.getuserRole();
+    }
+
+    public boolean hasORG() {
+        return OrgHasData;
+    }
+
+    public boolean isEmail() {
+        return isEmail;
+    }
+
+    public boolean isSMS() {
+        return isSMS;
     }
 
     public void getUserDetails() {
@@ -74,6 +89,10 @@ public class PersonalInfoPresenter implements ClientNetworkCall.NetworkCallInter
         for (QandA item : info) {
             if (item.getAnswer() == null || item.getAnswer().isEmpty()) {
                 listener.showErrorMessage("Please enter " + item.getQuestion());
+                return;
+            }
+            if (item.getQuestion().equals("Notification") && getRole() == 0 && item.getAnswer().equals("false")) {
+                listener.showErrorMessage("Please enable " + item.getQuestion());
                 return;
             }
         }
@@ -100,7 +119,9 @@ public class PersonalInfoPresenter implements ClientNetworkCall.NetworkCallInter
 
     @Override
     public void alertResponse(String success) {
-        listener.exitScreen();
+        if (getRole() == 0) {
+            listener.exitScreen();
+        }
     }
 
     public int getInputType(int inputType) {
@@ -115,7 +136,9 @@ public class PersonalInfoPresenter implements ClientNetworkCall.NetworkCallInter
         } else if (response instanceof GetUserInfoModel) {
             GetUserInfoModel body = ((GetUserInfoModel) response);
             GetUserInfoModel.User user = body.getData().getUser();
-            ArrayList<QandA> info = new ArrayList<QandA>();
+            ArrayList<QandA> personalInfo = new ArrayList<QandA>();
+            ArrayList<QandA> countryInfo = new ArrayList<QandA>();
+            ArrayList<QandA> notificaionInfo = new ArrayList<QandA>();
             repo.storeData(constants.getCACHE_USER_INFO(), new Gson().toJson(body));
 
             /*
@@ -130,24 +153,35 @@ public class PersonalInfoPresenter implements ClientNetworkCall.NetworkCallInter
              * 2 - password
              * */
 
-            info.add(new QandA("First Name", user.getFirstname(), 1, 1, 1, "firstname", null, null));
-            info.add(new QandA("Last Name", user.getLastName(), 1, 1, 1, "lastname", null, null));
-            info.add(new QandA("Email", user.getEmailAddress(), 1, 2, 1, "email", null, null));
-            info.add(new QandA("Telephone", user.getTelephone(), 1, 4, 1, "telephone", null, null));
-            info.add(new QandA("Cell Phone", user.getCellPhone(), 1, 4, 2, "cellphone", null, null));
-             if (getRole() == 1) {
-                info.add(new QandA("Company Name", "Test Company", 1, 1, 1, "text_key", null, null));
-                info.add(new QandA("Address 1", "Test Address", 1, 1, 1, "text_key", null, null));
-                info.add(new QandA("Address 1", "Test Address", 1, 1, 1, "text_key", null, null));
-                info.add(new QandA("City", "Test City", 1, 1, 1, "text_key", null, null));
-                info.add(new QandA("State", "Test State", 1, 1, 1, "text_key", null, null));
-                info.add(new QandA("Postal Code", "Test Postal", 1, 1, 1, "text_key", null, null));
-                info.add(new QandA("Country", "Test Country", 1, 1, 1, "text_key", null, null));
+            personalInfo.add(new QandA("First Name", user.getFirstname() == null ? "" : user.getFirstname(), 1, 1, 1, "firstname", null, null));
+            personalInfo.add(new QandA("Last Name", user.getLastName() == null ? "" : user.getLastName(), 1, 1, 1, "lastname", null, null));
+            personalInfo.add(new QandA("Email", user.getEmailAddress() == null ? "" : user.getEmailAddress(), 1, 2, 1, "email", null, null));
+            personalInfo.add(new QandA("Telephone", user.getTelephone() == null ? "" : user.getTelephone(), 1, 4, 1, "telephone", null, null));
+            personalInfo.add(new QandA("Cell Phone", user.getCellPhone() == null || user.getCellPhone().equals("null") ? "" : user.getCellPhone(), 1, 4, 2, "cellphone", null, null));
+
+            countryInfo.add(new QandA("Company Name", user.getOrganization() == null ? "" : user.getOrganization().getCompanyName(), 1, 1, 1, "companyname", null, null));
+            countryInfo.add(new QandA("Division", user.getOrganization() == null ? "" : user.getOrganization().getDivision(), 1, 1, 1, "division", null, null));
+            countryInfo.add(new QandA("Address 1", user.getOrganization() == null ? "" : user.getOrganization().getAddress(), 1, 1, 1, "address1", null, null));
+            countryInfo.add(new QandA("Address 2", user.getOrganization() == null ? "" : user.getOrganization().getAddress2(), 1, 1, 1, "address2", null, null));
+            countryInfo.add(new QandA("City", user.getOrganization() == null ? "" : user.getOrganization().getCity(), 1, 1, 1, "city", null, null));
+            countryInfo.add(new QandA("State", user.getOrganization() == null ? "" : user.getOrganization().getState(), 1, 1, 1, "state", null, null));
+            countryInfo.add(new QandA("Postal Code", user.getOrganization() == null ? "" : user.getOrganization().getPostalCode(), 1, 1, 1, "postalcode", null, null));
+            countryInfo.add(new QandA("Country", user.getOrganization() == null ? "" : user.getOrganization().getCountry(), 1, 1, 1, "country", null, null));
+
+            if (user.getEmailNotification() != null) {
+                isEmail = user.getEmailNotification();
             }
-            info.add(new QandA("Notification", String.valueOf(user.getEmailNotification()), 2, 0, 0, "notification", null, null));
+            if (user.getSmsNotification() != null) {
+                isSMS = user.getSmsNotification();
+            }
+//            notificaionInfo.add(new QandA("Notification", user.getOrganization() == null ? "" : String.valueOf(user.getEmailNotification()), 2, 0, 0, "emailNotification", null, null));
 
-
-            listener.updateUI(info);
+            if (user.getOrganization() == null) {
+                OrgHasData = false;
+            } else {
+                OrgHasData = true;
+            }
+            listener.updateUI(personalInfo, countryInfo);
         }
     }
 
@@ -171,7 +205,7 @@ public class PersonalInfoPresenter implements ClientNetworkCall.NetworkCallInter
 
         void showErrorMessage(String mesage);
 
-        void updateUI(ArrayList<QandA> body);
+        void updateUI(ArrayList<QandA> info, ArrayList<QandA> subinfo);
 
         void errorFetchingData(String s);
 

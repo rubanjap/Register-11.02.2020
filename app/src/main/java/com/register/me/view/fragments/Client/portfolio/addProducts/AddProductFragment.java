@@ -23,13 +23,18 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.gson.JsonObject;
 import com.onurkaganaldemir.ktoastlib.KToast;
+import com.register.me.APIs.RRENetworkCall;
 import com.register.me.R;
+import com.register.me.model.data.model.ApplicationRRESubmission;
 import com.register.me.model.data.model.QandA;
+import com.register.me.model.data.model.RREApplication;
 import com.register.me.presenter.AddProductPresenter;
 import com.register.me.view.BaseActivity;
 import com.register.me.view.BaseFragment;
 import com.register.me.view.HomeActivity;
+import com.register.me.view.activity.WelcomeActivity;
 import com.register.me.view.fragmentmanager.manager.IFragment;
 import com.thomashaertel.widget.MultiSpinner;
 
@@ -43,6 +48,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Jennifer - AIT.
@@ -65,7 +72,52 @@ public class AddProductFragment extends BaseFragment implements IFragment, AddPr
     private String mFalse = "false";
     private String mSelect = "Select ";
     private Context context;
-    List<EditText> editList;
+    private List<EditText> editList;
+    @Inject
+    RRENetworkCall rreNetworkCall;
+    private Observer<RREApplication> applicationObserver = new Observer<RREApplication>() {
+        @Override
+        public void onSubscribe(Disposable d) {
+
+        }
+
+        @Override
+        public void onNext(RREApplication rreApplication) {
+            questList = addProductPresenter.getRREApplication(rreApplication);
+            buildUI();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    };
+    private Observer<String> message = new Observer<String>() {
+        @Override
+        public void onSubscribe(Disposable d) {
+        }
+
+        @Override
+        public void onNext(String s) {
+            Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    };
+    private Observer<ApplicationRRESubmission> submitObserver;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +129,7 @@ public class AddProductFragment extends BaseFragment implements IFragment, AddPr
         ((Activity) context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         editList = new ArrayList<>();
         fragmentChannel.setTitle(getResources().getString(R.string.add_product));
+        rreNetworkCall.init(getContext(),message);
     }
 
     @Override
@@ -95,10 +148,12 @@ public class AddProductFragment extends BaseFragment implements IFragment, AddPr
             fragmentChannel.setTitle(lable.toUpperCase());
         } else if (addProductPresenter.getRole() == 1) {
             subHeader.setVisibility(View.GONE);
-            questList = addProductPresenter.getRREApplication();
+            rreNetworkCall.viewRREApplication(applicationObserver);
             addEditBtn.setText("SUBMIT");
         }
-        buildUI();
+        if (questList != null) {
+            buildUI();
+        }
     }
 
     private void buildUI() {
@@ -108,7 +163,7 @@ public class AddProductFragment extends BaseFragment implements IFragment, AddPr
         int i = 0;
         container.removeAllViews();
         for (QandA item : questList) {
-            switch (item.getType()) {
+            switch (item.getViewType()) {
                 case 1:
                     inflateView = getEditTextView(inflater, i, item);
                     break;
@@ -127,7 +182,7 @@ public class AddProductFragment extends BaseFragment implements IFragment, AddPr
 
                     break;
                 default:
-                    throw new IllegalStateException("Unexpected value: " + item.getType());
+                    throw new IllegalStateException("Unexpected value: " + item.getViewType());
             }
             container.addView(inflateView);
             i++;
@@ -413,10 +468,10 @@ public class AddProductFragment extends BaseFragment implements IFragment, AddPr
         txtAns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               for (EditText et : editList){
-                   et.setFocusable(true);
-                   et.requestFocus();
-               }
+                for (EditText et : editList) {
+                    et.setFocusable(true);
+                    et.requestFocus();
+                }
             }
         });
 
@@ -520,5 +575,31 @@ public class AddProductFragment extends BaseFragment implements IFragment, AddPr
             ((BaseActivity) context).onBackPressed();
         }
         KToast.customColorToast((Activity) context, message, Gravity.BOTTOM, KToast.LENGTH_AUTO, R.color.red);
+    }
+
+    @Override
+    public void triggerApi(JsonObject data) {
+        submitObserver = new Observer<ApplicationRRESubmission>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(ApplicationRRESubmission applicationRRESubmission) {
+                Toast.makeText(context, applicationRRESubmission.getData().getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+        rreNetworkCall.submitRREApplication(data,submitObserver);
     }
 }

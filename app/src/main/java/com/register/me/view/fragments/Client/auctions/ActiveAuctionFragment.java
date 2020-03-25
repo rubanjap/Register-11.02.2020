@@ -65,14 +65,14 @@ public class ActiveAuctionFragment extends BaseFragment implements ActiveAuction
         presenter.getAuctionList();
     }
 
-    private void setAdapter(List<ActiveAuction.Auctionsprogress> data) {
-        ArrayList<Object> dataList = new ArrayList<>(data);
-        auctionAdapter.init(getContext(), dataList, this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(auctionAdapter);
-    }
+        private void setAdapter(List<ActiveAuction.Auctionsprogress> data) {
+            ArrayList<Object> dataList = new ArrayList<>(data);
+            auctionAdapter.init(getContext(), dataList, this);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            layoutManager.setOrientation(RecyclerView.VERTICAL);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(auctionAdapter);
+        }
 
     @Override
     public void showMessage(String message) {

@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
@@ -98,28 +99,35 @@ public class WelcomePresenter implements ClientNetworkCall.NetworkCallInterface 
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.computation()).
                         observeOn(AndroidSchedulers.mainThread());
-        Disposable subscribe = observable.subscribe(stepsResponse -> {
+
+        Disposable dis = observable.subscribe(stepsResponse -> {
             int code = stepsResponse.code();
-            Observable<String> messageObs;
+
             switch (code) {
                 case 200:
-//                    Observable<Integer> obs = Observable.just(stepsResponse.body().getData().getCurrentstep());
-                    Observable<Integer> obs = Observable.just(2);
+                    assert stepsResponse.body() != null;
+                    Observable<Integer> obs = Observable.just(stepsResponse.body().getData().getCurrentstep());
+//                    Observable<Integer> obs = Observable.just(4);
+
                     obs.subscribe(getStepObserver);
+
                     break;
                 case 401:
                     Error errorData = new Gson().fromJson(stepsResponse.errorBody().charStream(), Error.class);
                     String message = errorData.getMessage();
-                    messageObs = Observable.just(message);
+                    Observable<String> messageObs = Observable.just("Session Expired");
                     messageObs.subscribe(messageObserver);
+                    repo.storeData(constants.getcacheIsLoggedKey(), "false");
+                    repo.storeData(constants.getCACHE_USER_INFO(), null);
+                    utils.sessionExpired(context);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected Error: " + code);
             }
         }, error -> {
-
+            Observable<String> messageObs = Observable.just(error.getMessage());
+            messageObs.subscribe(messageObserver);
         });
-
     }
 
 }
